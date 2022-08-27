@@ -26,6 +26,10 @@ import nyle from "./images/nyle.jpeg";
 import maddo from "./images/maddo.jpeg";
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
+import { RadioGroup, Radio } from "@blueprintjs/core";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import { DropdownItemProps } from "react-bootstrap/DropdownItem";
 
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
@@ -157,8 +161,10 @@ function App() {
     );
   };
 
+  const [whichWallet, setWhichWallet] = useState("");
+  const [wallets, setWallets] = useState([]);
   const [term, setTerm] = useState("");
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [noApe, setNoApe] = useState(false);
   const [noLoadout, setNoLoadout] = useState(false);
@@ -169,10 +175,13 @@ function App() {
     )
   );
   const [walletContent, setWalletContent] = useState({});
+  /* const [imageContent, setImageContent] = useState({}); */
+  const [filtered, setFiltered] = useState({});
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(500);
 
   useEffect(() => {
+    pollWallets();
     if (isLoading && gotContent) {
       simulateNetworkRequest().then(() => {
         if (term === "addrx") {
@@ -195,11 +204,17 @@ function App() {
         }
       });
     }
-  }, [isLoading, walletContent]);
+  }, [isLoading, walletContent, filtered]);
 
-  function onWalletContent(walletContent) {
+  function onWalletContent(walletContent, filtered) {
     if (walletContent != {}) {
       setWalletContent(walletContent);
+      if (Object.keys(filtered).length == 0) {
+        setNoApe(true);
+      } else {
+        setFiltered(filtered);
+      }
+
       setGotContent(true);
     }
   }
@@ -211,8 +226,8 @@ function App() {
   }
 
   function simulateNetworkRequest() {
-    if (walletContent["{SOCIETY}"] != undefined)
-      setSocietyToken(parseInt(walletContent["{SOCIETY}"]) / 1000000);
+    if (walletContent["SOCIETY"] != undefined)
+      setSocietyToken(Math.trunc(parseInt(walletContent["SOCIETY"]) / 1000000));
     else {
       setSocietyToken(0);
     }
@@ -228,11 +243,16 @@ function App() {
   }
 
   function handleRefresh() {
+    setWalletContent({});
+    setFiltered({});
     setGotContent(false);
     setIsLoading(true);
   }
 
   function handleEditWallet() {
+    setWalletContent({});
+    setFiltered({});
+    setIsLoading(false);
     setIsConnected(false);
     setNoLoadout(false);
     setNoApe(false);
@@ -340,6 +360,29 @@ function App() {
     [droppedLoadoutNames, dustbins_row3]
   );
 
+  function handleWalletSelect(val) {
+    const whichWalletSelected = val.target.text;
+    // console.log(val.target);
+    setWhichWallet(whichWalletSelected);
+  }
+
+  function pollWallets(count = 0) {
+    const wallets = [];
+    for (const key in window.cardano) {
+      if (window.cardano[key].enable && wallets.indexOf(key) === -1) {
+        wallets.push(key);
+      }
+    }
+    if (wallets.length === 0 && count < 3) {
+      setTimeout(() => {
+        pollWallets(count + 1);
+      }, 1000);
+      return;
+    }
+
+    setWallets(wallets);
+  }
+
   return (
     <div className="homepage">
       <Container>
@@ -349,6 +392,8 @@ function App() {
             <Connector
               walletContent={onWalletContent}
               getChange={getChangeAddy}
+              filtered={onWalletContent}
+              whichWalletSet={whichWallet}
             />
             <Loading />
           </div>
@@ -358,8 +403,49 @@ function App() {
 
         <Row style={{ paddingTop: "10px" }}>
           <Col>
+            {wallets ? (
+              <Dropdown>
+                <Dropdown.Toggle
+                  variant="light"
+                  className="buttons_tas"
+                  id="dropdown-basic"
+                  style={{ marginLeft: `${isConnected ? "0" : "95px"}` }}
+                >
+                  Wallet: {whichWallet}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {wallets.map((val) => {
+                    console.log();
+                    return (
+                      <Dropdown.Item
+                        key={val}
+                        onClick={(val) => {
+                          handleWalletSelect(val);
+                        }}
+                      >
+                        <img
+                          src={window.cardano[val].icon}
+                          width={24}
+                          height={24}
+                        />
+                        {val}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              ""
+            )}
+          </Col>
+          <Col
+            style={{
+              position: `${!isConnected ? "absolute" : "relative"}`,
+              width: "auto",
+            }}
+          >
             {isConnected ? (
-              <div style={{ fontSize: "16px" }}>
+              <div style={{ fontSize: "16px", paddingTop: "3px" }}>
                 <img src={society} style={{ width: "35px" }} />
                 <span style={{ color: "wheat" }}> {societyToken} | </span>
                 <span
@@ -369,51 +455,39 @@ function App() {
                 </span>
                 <span>
                   {" "}
-                  <Button variant="light" onClick={handleEditWallet}>
+                  <Button
+                    variant="light"
+                    onClick={handleEditWallet}
+                    className="buttons_tas"
+                  >
                     Disconnect
                   </Button>{" "}
                 </span>
-                <span>
+                {/* <span>
+                  {" "}
                   {" "}
                   <Button variant="light" onClick={handleRefresh}>
                     Refresh
                   </Button>{" "}
-                </span>
+                  
+                </span>*/}
               </div>
             ) : (
-              <InputGroup
-                value={term}
-                onChange={(e) => {
-                  onTermChange(e);
+              <Button
+                onClick={onSubmitAddy}
+                variant="outline-secondary"
+                id="button-addon1"
+                style={{
+                  color: "white",
+                  background: "#2b802b",
+                  marginLeft: "",
                 }}
-                className="mb-3"
+                disabled={!whichWallet}
               >
-                <Form.Control
-                  placeholder="Wallet address "
-                  aria-label="wallet_address"
-                  aria-describedby="basic-addon1"
-                />
-                <Button
-                  onClick={onSubmitAddy}
-                  variant="outline-secondary"
-                  id="button-addon1"
-                  style={{ color: "white", background: "#2b802b" }}
-                >
-                  Connect
-                </Button>
-              </InputGroup>
+                Connect
+              </Button>
             )}
           </Col>
-          {!isConnected ? (
-            <Col>
-              {" "}
-              <Button disabled={!isConnected} variant="light">
-                Refresh
-              </Button>{" "}
-            </Col>
-          ) : (
-            ""
-          )}
           <Col>
             {" "}
             <Button
@@ -430,6 +504,10 @@ function App() {
             </Button>{" "}
           </Col>
         </Row>
+
+        {/*  <Row style={{ marginTop: "-35px", float: "right" }}>
+        
+        </Row> */}
 
         {isConnected && !noLoadout ? (
           <div className="loadout">
@@ -472,17 +550,12 @@ function App() {
             <Col>
               <div className="big_box">
                 <Carousel width="426px" showIndicators={false}>
-                  <div>
-                    <img src={ape_green} />{" "}
-                  </div>
-
-                  <div>
-                    <img src={nyle} />{" "}
-                  </div>
-
-                  <div>
-                    <img src={maddo} />{" "}
-                  </div>
+                  {filtered
+                    ? Object.keys(filtered) &&
+                      Object.keys(filtered).map((val, index) => {
+                        return <img src={filtered[val]} key={index} />;
+                      })
+                    : ""}
                 </Carousel>
               </div>
             </Col>

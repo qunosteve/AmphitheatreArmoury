@@ -77,6 +77,9 @@ export default class Connector extends React.Component {
             walletAPIVersion: undefined,
             wallets: [],
             walletContent: undefined,
+            imageContent: undefined,
+            filtered: undefined,
+            filterSuccess: false,
 
             networkId: undefined,
             Utxos: undefined,
@@ -170,16 +173,22 @@ export default class Connector extends React.Component {
             }, 1000);
             return;
         }
+        // console.log(this.props.whichWalletSet);
 
         this.setState(
             {
                 wallets,
-                whichWalletSelected: wallets[wallets.length - 1],
+                whichWalletSelected: this.props.whichWalletSet,
             },
             () => {
+                //console.log(this.state.wallets);
                 this.refreshData();
             }
         );
+    };
+
+    onGetWalletSelection = () => {
+        this.state.whichWalletSelected(this.props.walletSelection);
     };
 
     /**
@@ -345,6 +354,7 @@ export default class Connector extends React.Component {
     getUtxos = async () => {
         let Utxos = [];
         let walletContent = {};
+        let imageContent = {};
 
         try {
             const rawUtxos = await this.API.getUtxos();
@@ -362,6 +372,7 @@ export default class Connector extends React.Component {
                 const output = utxo.output();
                 const amount = output.amount().coin().to_str(); // ADA amount in lovelace
                 const multiasset = output.amount().multiasset();
+                //console.log(multiasset);
                 let multiAssetStr = "";
 
                 if (multiasset) {
@@ -375,10 +386,13 @@ export default class Connector extends React.Component {
                             policyId.to_bytes(),
                             "utf8"
                         ).toString("hex");
+
                         // console.log(`policyId: ${policyIdHex}`)
                         const assets = multiasset.get(policyId);
+
                         const assetNames = assets.keys();
                         const K = assetNames.len();
+
                         // console.log(`${K} Assets in the Multiasset`)
 
                         for (let j = 0; j < K; j++) {
@@ -387,6 +401,7 @@ export default class Connector extends React.Component {
                                 assetName.name(),
                                 "utf8"
                             ).toString();
+
                             //console.log(assetName);
                             const assetNameHex = Buffer.from(
                                 assetName.name(),
@@ -398,8 +413,12 @@ export default class Connector extends React.Component {
                             );
                             multiAssetStr += `+ ${multiassetAmt.to_str()} + ${policyIdHex}.${assetNameHex} (${assetNameString})`;
                             walletContent[
-                                `{${assetNameString}}`
+                                `${assetNameString}`
                             ] = `${multiassetAmt.to_str()}`;
+                            imageContent[`${assetNameString}`] = `${
+                                policyIdHex.toString() + assetNameHex
+                            }`;
+
                             // walletContent.push({
                             //     name: `{${assetNameString}}`,
                             //     Quantity: `${multiassetAmt.to_str()}`,
@@ -424,8 +443,55 @@ export default class Connector extends React.Component {
 
             this.setState({ Utxos });
             this.setState({ walletContent });
+            this.setState({ imageContent }, () => {
+                this.SetFilteredFunction();
+            });
         } catch (err) {
             console.log(err);
+        }
+    };
+
+    RequestImageService = async () => {
+        this.filterImageContentFunction();
+        if (this.state.imageContent) {
+            let imageLinks = {};
+            try {
+                for (var key in this.state.imageContent) {
+                    // console.log(key);
+                    const requestString = `https://cardano-mainnet.blockfrost.io/api/v0/assets/${this.state.imageContent[key]}`;
+                    const response = await fetch(requestString, {
+                        headers: {
+                            project_id:
+                                "mainnetbUyZDnp0NCCAkitKJk6jeiu28axzzpzG",
+                        },
+                    });
+
+                    const data = await response.json();
+                    imageLinks[
+                        key
+                    ] = `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
+                        7
+                    )}`;
+                }
+            } catch (error) {
+                return [];
+            }
+            return imageLinks;
+        }
+    };
+
+    SetFilteredFunction = async () => {
+        const images = await this.RequestImageService();
+        this.setState({ filtered: images }, () => {
+            this.setState({ filterSuccess: true });
+        });
+    };
+
+    filterImageContentFunction = () => {
+        for (var key in this.state.imageContent) {
+            if (!key.startsWith("adape")) {
+                delete this.state.imageContent[key];
+            }
         }
     };
 
@@ -655,9 +721,11 @@ export default class Connector extends React.Component {
     }
 
     getWalletContent = () => {
-        console.log(this.props.walletContent);
-        if (this.state.walletContent) {
-            this.props.walletContent(this.state.walletContent);
+        if (this.state.walletContent && this.state.filterSuccess) {
+            this.props.walletContent(
+                this.state.walletContent,
+                this.state.filtered
+            );
         }
 
         if (this.state.changeAddress) {

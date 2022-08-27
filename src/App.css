@@ -154,6 +154,15 @@ p {
   margin-top: 20px;
 }
 
+.buttons_tas {
+  background: none !important;
+  color: wheat !important;
+  border-color: gold !important;
+}
+
+.col {
+}
+
 .big_box_noApe {
   display: flex;
   justify-content: center;
@@ -162,7 +171,7 @@ p {
   border-radius: 5px;
   height: 430px;
   float: right;
-  width: 500px;
+  width: 426px;
   color: wheat;
   margin-right: 40px;
   margin-top: 20px;
