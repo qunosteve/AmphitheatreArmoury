@@ -706,7 +706,7 @@ function App() {
           <Row>
             <Col>
               <div className="big_box_noApe">
-                <h2> No ape found! </h2>
+                <h2 style={{ marginTop: "186px" }}> No ape found </h2>
               </div>
             </Col>
           </Row>
