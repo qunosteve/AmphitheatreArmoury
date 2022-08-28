@@ -30,6 +30,7 @@ import { RadioGroup, Radio } from "@blueprintjs/core";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { DropdownItemProps } from "react-bootstrap/DropdownItem";
+import Modal from "react-bootstrap/Modal";
 
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
@@ -164,21 +165,30 @@ function App() {
   const [whichWallet, setWhichWallet] = useState("");
   const [wallets, setWallets] = useState([]);
   const [term, setTerm] = useState("");
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [noApe, setNoApe] = useState(false);
   const [noLoadout, setNoLoadout] = useState(false);
-  const [walletAddress, setWalletAddress] = useState(
-    truncate(
-      "addr1qx2a877rg4v079ws59y2gkd86gptzwydfklsj69rd3rty52vasn3q2x6fqtyp754ujllxnjsr8cm2affkn3jldad7p0qe8ghyu",
-      11
-    )
-  );
+  const [walletAddress, setWalletAddress] = useState("No address set");
   const [walletContent, setWalletContent] = useState({});
   /* const [imageContent, setImageContent] = useState({}); */
   const [filtered, setFiltered] = useState({});
   const [gotContent, setGotContent] = useState(false);
-  const [societyToken, setSocietyToken] = useState(500);
+  const [societyToken, setSocietyToken] = useState(0);
+  const [lgShow, setLgShow] = useState(false);
+  const [userLoadout, setUserLoadout] = useState({
+    head: "",
+    shoulders: "",
+    torso: "",
+    arms: "",
+    legs: "",
+    item0: "",
+    item1: "",
+    item2: "",
+    item3: "",
+    horse: "",
+    saddle: "",
+  });
 
   useEffect(() => {
     pollWallets();
@@ -232,6 +242,10 @@ function App() {
       setSocietyToken(0);
     }
     return new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   function onTermChange(event) {
@@ -302,6 +316,10 @@ function App() {
 
   const handleDrop1 = useCallback(
     (index, item, accepts) => {
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [accepts[0]]: item.name,
+      }));
       user_loadout[accepts] = item;
       const { name } = item;
       setDroppedLoadoutNames(
@@ -322,7 +340,11 @@ function App() {
 
   const handleDrop2 = useCallback(
     (index, item, accepts) => {
-      user_loadout[accepts] = item;
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [accepts[0]]: item.name,
+      }));
+
       const { name } = item;
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
@@ -342,7 +364,11 @@ function App() {
 
   const handleDrop3 = useCallback(
     (index, item, accepts) => {
-      user_loadout[accepts] = item;
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [accepts[0]]: item.name,
+      }));
+
       const { name } = item;
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
@@ -463,14 +489,6 @@ function App() {
                     Disconnect
                   </Button>{" "}
                 </span>
-                {/* <span>
-                  {" "}
-                  {" "}
-                  <Button variant="light" onClick={handleRefresh}>
-                    Refresh
-                  </Button>{" "}
-                  
-                </span>*/}
               </div>
             ) : (
               <Button
@@ -499,9 +517,51 @@ function App() {
                 height: "100px",
                 fontSize: "18px",
               }}
+              onClick={() => setLgShow(true)}
             >
               Go To War
             </Button>{" "}
+            <Modal
+              size="lg"
+              show={lgShow}
+              onHide={() => setLgShow(false)}
+              aria-labelledby="example-modal-sizes-title-lg"
+            >
+              <Modal.Body bsPrefix="modal-bg">
+                <div class="modal-title">
+                  <h2> Confirm your selection </h2>
+                </div>
+                {Object.keys(userLoadout).map((key, index) => {
+                  return (
+                    <p
+                      key={index}
+                      style={{
+                        paddingTop: "5px",
+                        fontSize: "20px",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {" "}
+                      {capitalizeFirstLetter(key)} - {userLoadout[key]}{" "}
+                    </p>
+                  );
+                })}
+                <div className="modal-button ">
+                  <Button
+                    variant="success"
+                    style={{
+                      float: "right",
+                      width: "150px",
+                      height: "75px",
+                      fontSize: "18px",
+                    }}
+                    onClick={() => setLgShow(false)}
+                  >
+                    Confirm
+                  </Button>
+                </div>
+              </Modal.Body>
+            </Modal>
           </Col>
         </Row>
 

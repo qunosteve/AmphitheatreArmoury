@@ -24,6 +24,30 @@
   height: 100vh;
 }
 
+.modal-bg {
+  background: url(images/cold.png);
+  background-size: cover;
+  width: 100%;
+  padding: 50px;
+  text-align: center;
+  border: 2px solid gold;
+}
+
+.modal-title {
+  color: wheat;
+  margin-bottom: 30px !important;
+}
+
+.modal-button {
+  padding-top: 38px;
+  justify-content: center;
+  display: flex;
+}
+
+.cold-bg {
+  background: url(images/cold.png);
+}
+
 /*html,
 body {
   margin: 0;
