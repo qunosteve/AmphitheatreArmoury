@@ -31,6 +31,10 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import { DropdownItemProps } from "react-bootstrap/DropdownItem";
 import Modal from "react-bootstrap/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
@@ -225,6 +229,7 @@ function App() {
     item3: "",
     horse: "",
     saddle: "",
+    ape: "",
   });
 
   useEffect(() => {
@@ -253,6 +258,14 @@ function App() {
     }
   }, [isLoading, walletContent, filtered]);
 
+  const myPromise = new Promise(
+    (resolve) =>
+      fetch("https://jsonplaceholder.typicode.com/todos/1")
+        .then((response) => response.json())
+        .then((json) => setTimeout(() => resolve(json), 3000))
+    // setTimeout just for the example , cause it will load quickly without it .
+  );
+
   function onWalletContent(walletContent, filtered) {
     if (walletContent != {}) {
       setWalletContent(walletContent);
@@ -265,6 +278,16 @@ function App() {
       setGotContent(true);
     }
   }
+
+  /* function checkIfFilteredIsOne() {
+    if (Object.keys(filtered).length === 1) {
+      console.log("i camr here");
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        Ape: Object.keys(filtered)[0].slice(5),
+      }));
+    }
+  } */
 
   function getChangeAddy(changeAddress) {
     if (changeAddress) {
@@ -463,8 +486,23 @@ function App() {
     setWallets(wallets);
   }
 
+  const notify = () => {
+    toast.promise(myPromise, {
+      pending: "We're submitting your loadout",
+      success: "Loadout submitted",
+      error: "error",
+    });
+
+    setLgShow(false);
+  };
+
   return (
     <div className="homepage">
+      <ToastContainer
+        position="top-left"
+        bodyClassName="toastBody"
+        progressClassName="toastBody"
+      />
       <Container>
         {isLoading ? (
           <div>
@@ -581,7 +619,9 @@ function App() {
                 height: "100px",
                 fontSize: "18px",
               }}
-              onClick={() => setLgShow(true)}
+              onClick={() => {
+                setLgShow(true);
+              }}
             >
               <p style={{ color: "white" }}> Go To War </p>
             </Button>{" "}
@@ -624,7 +664,7 @@ function App() {
                       fontSize: "18px",
                       fontFamily: "Cabin, sans-serif",
                     }}
-                    onClick={() => setLgShow(false)}
+                    onClick={() => notify()}
                   >
                     Confirm
                   </Button>

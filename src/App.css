@@ -17,6 +17,13 @@ h4 {
   }
 }
 
+.toastBody {
+  font-family: "Cabin", sans-serif;
+}
+.toastProgress {
+  font-family: "Cabin", sans-serif;
+}
+
 .wallets-wrapper {
   display: flex;
 }
