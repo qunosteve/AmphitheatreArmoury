@@ -459,7 +459,7 @@ function App() {
     setApeSelected(true);
     setUserLoadout((prevUserLoadout) => ({
       ...prevUserLoadout,
-      Ape: Object.keys(filtered)[event].slice(5),
+      ape: Object.keys(filtered)[event].slice(5),
     }));
   }
 
@@ -467,6 +467,23 @@ function App() {
     const whichWalletSelected = val.target.text;
     // console.log(val.target);
     setWhichWallet(whichWalletSelected);
+  }
+
+  function handleIsError(error) {
+    if (error) {
+      toast.error("Error connecting to wallet. Please try again", {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+
+      setIsLoading(false);
+      setIsConnected(false);
+    }
   }
 
   function pollWallets(count = 0) {
@@ -512,6 +529,7 @@ function App() {
               getChange={getChangeAddy}
               filtered={onWalletContent}
               whichWalletSet={whichWallet}
+              isError={handleIsError}
             />
             <Loading />
           </div>

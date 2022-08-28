@@ -275,6 +275,7 @@ export default class Connector extends React.Component {
             walletIsEnabled = await window.cardano[walletName].isEnabled();
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
         this.setState({ walletIsEnabled });
 
@@ -295,6 +296,7 @@ export default class Connector extends React.Component {
             this.API = await window.cardano[walletKey].enable();
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
         return this.checkIfWalletEnabled();
     };
@@ -337,6 +339,7 @@ export default class Connector extends React.Component {
             this.setState({ networkId });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -448,6 +451,7 @@ export default class Connector extends React.Component {
             });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -527,6 +531,7 @@ export default class Connector extends React.Component {
             this.setState({ CollatUtxos });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -546,6 +551,7 @@ export default class Connector extends React.Component {
             this.setState({ balance });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -563,6 +569,7 @@ export default class Connector extends React.Component {
             this.setState({ changeAddress });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -581,6 +588,7 @@ export default class Connector extends React.Component {
             this.setState({ rewardAddress });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -599,6 +607,7 @@ export default class Connector extends React.Component {
             this.setState({ usedAddress });
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
@@ -660,6 +669,7 @@ export default class Connector extends React.Component {
             }
         } catch (err) {
             console.log(err);
+            this.props.isError(err);
         }
     };
 
