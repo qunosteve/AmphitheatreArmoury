@@ -165,7 +165,7 @@ function App() {
   const [whichWallet, setWhichWallet] = useState("");
   const [wallets, setWallets] = useState([]);
   const [term, setTerm] = useState("");
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [noApe, setNoApe] = useState(false);
   const [noLoadout, setNoLoadout] = useState(false);
@@ -176,6 +176,7 @@ function App() {
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(0);
   const [lgShow, setLgShow] = useState(false);
+  const [apeSelected, setApeSelected] = useState(false);
   const [userLoadout, setUserLoadout] = useState({
     head: "",
     shoulders: "",
@@ -322,6 +323,7 @@ function App() {
       }));
       user_loadout[accepts] = item;
       const { name } = item;
+
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
       );
@@ -385,6 +387,14 @@ function App() {
     },
     [droppedLoadoutNames, dustbins_row3]
   );
+
+  function apeUpdateInfo(event) {
+    setApeSelected(true);
+    setUserLoadout((prevUserLoadout) => ({
+      ...prevUserLoadout,
+      Ape: Object.keys(filtered)[event].slice(5),
+    }));
+  }
 
   function handleWalletSelect(val) {
     const whichWalletSelected = val.target.text;
@@ -548,6 +558,7 @@ function App() {
                 })}
                 <div className="modal-button ">
                   <Button
+                    disabled={!apeSelected}
                     variant="success"
                     style={{
                       float: "right",
@@ -582,7 +593,10 @@ function App() {
                     img={img}
                   />
                   <div style={{ textAlign: "center" }}>
-                    <p style={{ fontWeight: "bold" }}> {type} </p>
+                    <p style={{ fontWeight: "bold" }}>
+                      {" "}
+                      {capitalizeFirstLetter(type)}{" "}
+                    </p>
                     <p> {name} </p>
                   </div>
                 </Col>
@@ -609,10 +623,16 @@ function App() {
           <Row>
             <Col>
               <div className="big_box">
-                <Carousel width="426px" showIndicators={false}>
+                <Carousel
+                  width="426px"
+                  showIndicators={false}
+                  onChange={apeUpdateInfo}
+                  onClickItem={apeUpdateInfo}
+                >
                   {filtered
                     ? Object.keys(filtered) &&
                       Object.keys(filtered).map((val, index) => {
+                        //console.log(val);
                         return <img src={filtered[val]} key={index} />;
                       })
                     : ""}

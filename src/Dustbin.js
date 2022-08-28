@@ -65,6 +65,7 @@ export const Dustbin = memo(function Dustbin({
         }}
         data-testid="dustbin"
       >
+        {console.log(lastDroppedItem)}
         {lastDroppedItem && (
           <img
             src={ImagePlaceHolders[accept]}
@@ -77,7 +78,10 @@ export const Dustbin = memo(function Dustbin({
         {isActive
           ? "Release to drop"
           : lastDroppedItem
-          ? `${JSON.stringify(lastDroppedItem["name"])}`
+          ? `${JSON.stringify(lastDroppedItem["name"]).replace(
+              /"([^"]+)":/g,
+              "$1:"
+            )}`
           : `${accept}`}
       </div>
     </div>
