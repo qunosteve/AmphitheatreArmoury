@@ -74,7 +74,14 @@ export const Dustbin = memo(function Dustbin({
           />
         )}
       </div>
-      <div style={{ textAlign: "center", color: "wheat" }}>
+      <div
+        style={{
+          textAlign: "center",
+          color: "wheat",
+          fontFamily: "Cabin, sans-serif",
+          fontSize: "16px",
+        }}
+      >
         {isActive
           ? "Release to drop"
           : lastDroppedItem

@@ -61,6 +61,12 @@ function App() {
         "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
     },
     {
+      name: "Dracon",
+      type: ItemTypes.SHOULDERS,
+      img:
+        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
+    },
+    {
       name: "Celestial Plate",
       type: ItemTypes.TORSO,
       img:
@@ -73,10 +79,46 @@ function App() {
         "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
     },
     {
+      name: "Arkinai",
+      type: ItemTypes.TORSO,
+      img:
+        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
+    },
+    {
+      name: "Dark Knight",
+      type: ItemTypes.TORSO,
+      img:
+        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
+    },
+    {
+      name: "Spartan",
+      type: ItemTypes.HEAD,
+      img:
+        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
+    },
+    {
+      name: "Achilles",
+      type: ItemTypes.HEAD,
+      img:
+        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
+    },
+    {
       name: "Black Fury",
       type: ItemTypes.LEGS,
       img:
         "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
+    },
+    {
+      name: "Achilles Heel",
+      type: ItemTypes.LEGS,
+      img:
+        "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
+    },
+    {
+      name: "Leaded Gloves",
+      type: ItemTypes.ARMS,
+      img:
+        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
     },
     {
       name: "Harmonica",
@@ -101,12 +143,6 @@ function App() {
       type: ItemTypes.ITEM1,
       img:
         "https://drive.google.com/thumbnail?id=1suEcPcNkUX4MiGKnAS29ksqnRklpN965",
-    },
-    {
-      name: "Spartan",
-      type: ItemTypes.HEAD,
-      img:
-        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
     },
     {
       name: "Potion",
@@ -236,9 +272,17 @@ function App() {
     }
   }
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   function simulateNetworkRequest() {
     if (walletContent["SOCIETY"] != undefined)
-      setSocietyToken(Math.trunc(parseInt(walletContent["SOCIETY"]) / 1000000));
+      setSocietyToken(
+        numberWithCommas(
+          Math.trunc(parseInt(walletContent["SOCIETY"]) / 1000000)
+        )
+      );
     else {
       setSocietyToken(0);
     }
@@ -483,9 +527,19 @@ function App() {
             {isConnected ? (
               <div style={{ fontSize: "16px", paddingTop: "3px" }}>
                 <img src={society} style={{ width: "35px" }} />
-                <span style={{ color: "wheat" }}> {societyToken} | </span>
                 <span
-                  style={{ color: "wheat", paddingRight: "10px", fontSize: "" }}
+                  style={{ color: "wheat", fontFamily: "Cabin, sans-serif" }}
+                >
+                  {" "}
+                  {societyToken} |{" "}
+                </span>
+                <span
+                  style={{
+                    color: "wheat",
+                    paddingRight: "10px",
+                    fontSize: "",
+                    fontFamily: "Cabin, sans-serif",
+                  }}
                 >
                   {walletAddress}
                 </span>
@@ -496,7 +550,7 @@ function App() {
                     onClick={handleEditWallet}
                     className="buttons_tas"
                   >
-                    Disconnect
+                    <p>Disconnect</p>
                   </Button>{" "}
                 </span>
               </div>
@@ -529,7 +583,7 @@ function App() {
               }}
               onClick={() => setLgShow(true)}
             >
-              Go To War
+              <p style={{ color: "white" }}> Go To War </p>
             </Button>{" "}
             <Modal
               size="lg"
