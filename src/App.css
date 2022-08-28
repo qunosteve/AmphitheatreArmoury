@@ -36,7 +36,7 @@ p {
   width: 100%;
   padding: 50px;
   text-align: center;
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
 }
 
 .modal-title {
@@ -73,7 +73,7 @@ p {
 .loadout {
   display: grid;
   justify-content: center;
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   float: right;
   overflow: scroll;
   height: 590px;
@@ -86,7 +86,7 @@ p {
 .loadout_no_gear {
   display: grid;
   justify-content: center;
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   float: right;
   overflow: scroll;
   height: 200px;
@@ -104,7 +104,7 @@ p {
 }
 
 .small_box_loadout {
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
@@ -113,7 +113,7 @@ p {
 }
 
 .small_box_body {
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   text-align: center;
   height: 100px;
@@ -127,7 +127,7 @@ p {
 }
 
 .small_box_item {
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
@@ -135,7 +135,7 @@ p {
 }
 
 .small_box_mount {
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
@@ -176,7 +176,7 @@ p {
   display: flex;
   justify-content: center;
   background-size: cover;
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   height: 430px;
   float: right;
@@ -187,7 +187,7 @@ p {
 .buttons_tas {
   background: none !important;
   color: wheat !important;
-  border-color: gold !important;
+  border-color: #eec07a !important;
 }
 
 .col {
@@ -197,7 +197,7 @@ p {
   display: flex;
   justify-content: center;
   background-size: cover;
-  border: 2px solid gold;
+  border: 2px solid #eec07a;
   border-radius: 5px;
   height: 430px;
   float: right;

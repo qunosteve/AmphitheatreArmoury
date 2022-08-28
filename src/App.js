@@ -592,7 +592,10 @@ function App() {
               aria-labelledby="example-modal-sizes-title-lg"
             >
               <Modal.Body bsPrefix="modal-bg">
-                <div class="modal-title">
+                <div
+                  class="modal-title"
+                  style={{ fontFamily: "Cabin, sans-serif" }}
+                >
                   <h2> Confirm your selection </h2>
                 </div>
                 {Object.keys(userLoadout).map((key, index) => {
@@ -619,6 +622,7 @@ function App() {
                       width: "150px",
                       height: "75px",
                       fontSize: "18px",
+                      fontFamily: "Cabin, sans-serif",
                     }}
                     onClick={() => setLgShow(false)}
                   >
@@ -766,6 +770,7 @@ function App() {
             <h1
               style={{
                 color: "wheat",
+                fontFamily: "Cabin, sans-serif",
               }}
               className="sk-grid-position"
             >
