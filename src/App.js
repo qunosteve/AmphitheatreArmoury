@@ -558,9 +558,12 @@ function App() {
                   variant="light"
                   className="buttons_tas"
                   id="dropdown-basic"
-                  style={{ marginLeft: `${isConnected ? "0" : "95px"}` }}
+                  style={{
+                    marginLeft: `${isConnected ? "0" : "95px"}`,
+                    fontFamily: "Cabin",
+                  }}
                 >
-                  Wallet: {whichWallet}
+                  Wallet: {capitalizeFirstLetter(whichWallet)}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {wallets.map((val) => {
