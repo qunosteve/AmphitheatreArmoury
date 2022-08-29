@@ -65,7 +65,6 @@ export const Dustbin = memo(function Dustbin({
         }}
         data-testid="dustbin"
       >
-        {console.log(lastDroppedItem)}
         {lastDroppedItem && (
           <img
             src={ImagePlaceHolders[accept]}

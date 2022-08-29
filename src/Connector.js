@@ -235,18 +235,18 @@ export default class Connector extends React.Component {
         const addrBech32 = addr.to_bech32();
 
         // hash of the address generated from script
-        console.log(Buffer.from(addr.to_bytes(), "utf8").toString("hex"));
+        //console.log(Buffer.from(addr.to_bytes(), "utf8").toString("hex"));
 
         // hash of the address generated using cardano-cli
         const ScriptAddress = Address.from_bech32(
             "addr_test1wpnlxv2xv9a9ucvnvzqakwepzl9ltx7jzgm53av2e9ncv4sysemm8"
         );
-        console.log(
-            Buffer.from(ScriptAddress.to_bytes(), "utf8").toString("hex")
-        );
+        //  console.log(
+        //       Buffer.from(ScriptAddress.to_bytes(), "utf8").toString("hex")
+        //   );
 
-        console.log(ScriptAddress.to_bech32());
-        console.log(addrBech32);
+        //  console.log(ScriptAddress.to_bech32());
+        //  console.log(addrBech32);
     };
 
     /**
@@ -456,7 +456,9 @@ export default class Connector extends React.Component {
     };
 
     RequestImageService = async () => {
+        const delay = (ms) => new Promise((r) => setTimeout(r, ms));
         this.filterImageContentFunction();
+        //console.log(this.state.imageContent);
         if (this.state.imageContent) {
             let imageLinks = {};
             try {
@@ -471,13 +473,15 @@ export default class Connector extends React.Component {
                     });
 
                     const data = await response.json();
+                    // await delay(150);
                     imageLinks[
                         key
                     ] = `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
                         7
                     )}`;
                 }
-            } catch (error) {
+            } catch (err) {
+                console.log(err);
                 return [];
             }
             return imageLinks;
@@ -485,10 +489,15 @@ export default class Connector extends React.Component {
     };
 
     SetFilteredFunction = async () => {
-        const images = await this.RequestImageService();
-        this.setState({ filtered: images }, () => {
-            this.setState({ filterSuccess: true });
-        });
+        try {
+            const images = await this.RequestImageService();
+            this.setState({ filtered: images }, () => {
+                this.setState({ filterSuccess: true });
+            });
+            this.refreshData();
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     filterImageContentFunction = () => {
@@ -732,6 +741,7 @@ export default class Connector extends React.Component {
 
     getWalletContent = () => {
         if (this.state.walletContent && this.state.filterSuccess) {
+            console.log("gotWalletContent");
             this.props.walletContent(
                 this.state.walletContent,
                 this.state.filtered

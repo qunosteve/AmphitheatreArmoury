@@ -235,7 +235,6 @@ function App() {
   useEffect(() => {
     pollWallets();
     if (!apeSelected && Object.keys(filtered).length != 0) {
-      console.log("I came here");
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
         ape: Object.keys(filtered)[0].slice(5),
@@ -276,6 +275,7 @@ function App() {
 
   function onWalletContent(walletContent, filtered) {
     if (walletContent != {}) {
+      console.log("I made it here");
       setWalletContent(walletContent);
       if (Object.keys(filtered).length == 0) {
         setNoApe(true);
