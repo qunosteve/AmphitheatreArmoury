@@ -234,6 +234,14 @@ function App() {
 
   useEffect(() => {
     pollWallets();
+    if (!apeSelected && Object.keys(filtered).length != 0) {
+      console.log("I came here");
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        ape: Object.keys(filtered)[0].slice(5),
+      }));
+      setApeSelected(true);
+    }
     if (isLoading && gotContent) {
       simulateNetworkRequest().then(() => {
         if (term === "addrx") {
@@ -256,13 +264,13 @@ function App() {
         }
       });
     }
-  }, [isLoading, walletContent, filtered]);
+  }, [isLoading, walletContent, filtered, userLoadout]);
 
   const myPromise = new Promise(
     (resolve) =>
       fetch("https://jsonplaceholder.typicode.com/todos/1")
         .then((response) => response.json())
-        .then((json) => setTimeout(() => resolve(json), 3000))
+        .then((json) => setTimeout(() => resolve(json), 2000))
     // setTimeout just for the example , cause it will load quickly without it .
   );
 
@@ -278,16 +286,6 @@ function App() {
       setGotContent(true);
     }
   }
-
-  /* function checkIfFilteredIsOne() {
-    if (Object.keys(filtered).length === 1) {
-      console.log("i camr here");
-      setUserLoadout((prevUserLoadout) => ({
-        ...prevUserLoadout,
-        Ape: Object.keys(filtered)[0].slice(5),
-      }));
-    }
-  } */
 
   function getChangeAddy(changeAddress) {
     if (changeAddress) {
@@ -334,11 +332,26 @@ function App() {
   function handleEditWallet() {
     setWalletContent({});
     setFiltered({});
+    setUserLoadout({
+      head: "",
+      shoulders: "",
+      torso: "",
+      arms: "",
+      legs: "",
+      item0: "",
+      item1: "",
+      item2: "",
+      item3: "",
+      horse: "",
+      saddle: "",
+      ape: "",
+    });
     setIsLoading(false);
     setIsConnected(false);
     setNoLoadout(false);
     setNoApe(false);
     setGotContent(false);
+    setApeSelected(false);
 
     ResetDustbins();
   }
