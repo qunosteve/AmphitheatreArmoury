@@ -16,27 +16,28 @@ const style = {
 };
 
 const ImagePlaceHolders = {
-  head:
+  Head:
     "https://cdn2.iconfinder.com/data/icons/rpg-fantasy-game-basic-ui/512/head_helmet_armor_warrior_knight_helm-512.png",
-  shoulders:
+  Shoulders:
     "https://cdn.iconscout.com/icon/free/png-256/shoulder-pads-4867477-4049103.png",
-  torso:
+  Torso:
     "https://cdn2.iconfinder.com/data/icons/rpg-fantasy-game-basic-ui/512/equipment_costume_armor_body_warrior_metal_knight_protection-512.png",
-  arms:
+  Arms:
     "https://cdn2.iconfinder.com/data/icons/rpg-fantasy-game-basic-ui/512/equipment_costume_armor_glove_hand_metal_knight_warrior_protection_2-512.png",
-  legs:
+  Legs:
     "https://cdn2.iconfinder.com/data/icons/rpg-fantasy-game-basic-ui/512/equipment_costume_armor_boot_foot_metal_knight_warrior_protection_leg_2-512.png",
-  item0: "https://static.thenounproject.com/png/3401757-200.png",
-  item1: "https://cdn-icons-png.flaticon.com/512/3455/3455304.png",
-  item2: "https://static.thenounproject.com/png/1121420-200.png",
-  item3: "https://freesvg.org/img/Scroll2Blank.png",
-  horse: "http://cdn.onlinewebfonts.com/svg/img_91457.png",
-  saddle: "https://freesvg.org/img/warszawianka_Jumping_horse_outline_2.png",
+  Item0: "https://static.thenounproject.com/png/3401757-200.png",
+  Item1: "https://cdn-icons-png.flaticon.com/512/3455/3455304.png",
+  Item2: "https://static.thenounproject.com/png/1121420-200.png",
+  Item3: "https://freesvg.org/img/Scroll2Blank.png",
+  Horse: "http://cdn.onlinewebfonts.com/svg/img_91457.png",
+  Saddle: "https://freesvg.org/img/warszawianka_Jumping_horse_outline_2.png",
 };
 export const Dustbin = memo(function Dustbin({
   accept,
   lastDroppedItem,
   onDrop,
+  img,
 }) {
   const [{ isOver, canDrop }, drop] = useDrop({
     accept,
@@ -67,7 +68,7 @@ export const Dustbin = memo(function Dustbin({
       >
         {lastDroppedItem && (
           <img
-            src={ImagePlaceHolders[accept]}
+            src={img}
             className="loadout_img"
             style={{ background: "none !important" }}
           />
@@ -84,10 +85,7 @@ export const Dustbin = memo(function Dustbin({
         {isActive
           ? "Release to drop"
           : lastDroppedItem
-          ? `${JSON.stringify(lastDroppedItem["name"]).replace(
-              /"([^"]+)":/g,
-              "$1:"
-            )}`
+          ? `${lastDroppedItem["name"]}`
           : `${accept}`}
       </div>
     </div>

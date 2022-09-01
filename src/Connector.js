@@ -80,6 +80,9 @@ export default class Connector extends React.Component {
             imageContent: undefined,
             filtered: undefined,
             filterSuccess: false,
+            userLoadoutContent: undefined,
+            userLoadoutContentArray: [],
+            contentQunatity: undefined,
 
             networkId: undefined,
             Utxos: undefined,
@@ -343,11 +346,6 @@ export default class Connector extends React.Component {
         }
     };
 
-    /*  getWalletContent = async () => {
-        try {
-        }
-    }; */
-
     /**
      * Gets the UTXOs from the user's wallet and then
      * stores in an object in the state
@@ -358,6 +356,11 @@ export default class Connector extends React.Component {
         let Utxos = [];
         let walletContent = {};
         let imageContent = {};
+        let userLoadoutContent = {};
+        let contentQunatity = {};
+        let societyCounter = 0;
+        let prevContentQuantity = {};
+        let prevAmount = 0;
 
         try {
             const rawUtxos = await this.API.getUtxos();
@@ -390,7 +393,7 @@ export default class Connector extends React.Component {
                             "utf8"
                         ).toString("hex");
 
-                        // console.log(`policyId: ${policyIdHex}`)
+                        //console.log(`policyId: ${policyIdHex}`);
                         const assets = multiasset.get(policyId);
 
                         const assetNames = assets.keys();
@@ -399,6 +402,7 @@ export default class Connector extends React.Component {
                         // console.log(`${K} Assets in the Multiasset`)
 
                         for (let j = 0; j < K; j++) {
+                            let amount = 0;
                             const assetName = assetNames.get(j);
                             const assetNameString = Buffer.from(
                                 assetName.name(),
@@ -415,12 +419,47 @@ export default class Connector extends React.Component {
                                 assetName
                             );
                             multiAssetStr += `+ ${multiassetAmt.to_str()} + ${policyIdHex}.${assetNameHex} (${assetNameString})`;
-                            walletContent[
-                                `${assetNameString}`
-                            ] = `${multiassetAmt.to_str()}`;
+                            if (assetNameString === "SOCIETY") {
+                                // console.log(multiassetAmt);
+                                societyCounter =
+                                    societyCounter +
+                                    parseInt(multiassetAmt.to_str());
+                            }
+
+                            walletContent[assetNameString] =
+                                assetNameString === "SOCIETY"
+                                    ? societyCounter
+                                    : multiassetAmt.to_str();
+
                             imageContent[`${assetNameString}`] = `${
                                 policyIdHex.toString() + assetNameHex
                             }`;
+                            if (
+                                policyIdHex ===
+                                "eadf13a24880c3b601c3332fb7b1b227bd50bd2dc3245ae15e278bb7"
+                            ) {
+                                userLoadoutContent[`${assetNameString}`] = `${
+                                    policyIdHex.toString() + assetNameHex
+                                }`;
+
+                                /*      if (prevContentQuantity === {}) {
+                                    prevAmount = 0;
+                                } else {
+                                    if (!prevAmount[assetNameString])
+                                        prevAmount = 0;
+                                    else {
+                                        prevAmount =
+                                            prevAmount[assetNameString];
+                                    }
+                                } */
+
+                                if (contentQunatity[assetNameString]) {
+                                    amount = contentQunatity[assetNameString];
+                                }
+
+                                contentQunatity[assetNameString] =
+                                    parseInt(multiassetAmt.to_str()) + amount;
+                            }
 
                             // walletContent.push({
                             //     name: `{${assetNameString}}`,
@@ -447,16 +486,58 @@ export default class Connector extends React.Component {
             this.setState({ Utxos });
             this.setState({ walletContent });
             this.setState({ imageContent }, () => {
-                this.SetFilteredFunction();
+                this.setFilteredFunction();
             });
+            this.setState({ userLoadoutContent }, () => {
+                this.setOnChainLoadout();
+            });
+            this.setState({ contentQunatity });
         } catch (err) {
             console.log(err);
             this.props.isError(err);
         }
     };
 
+    getUserLoadoutContent = async () => {
+        if (this.state.userLoadoutContent.length != 0) {
+            let userLoadout = [];
+
+            try {
+                for (var key in this.state.userLoadoutContent) {
+                    const requestString = `https://cardano-mainnet.blockfrost.io/api/v0/assets/${this.state.userLoadoutContent[key]}`;
+                    const response = await fetch(requestString, {
+                        headers: {
+                            project_id:
+                                "mainnetbUyZDnp0NCCAkitKJk6jeiu28axzzpzG",
+                        },
+                    });
+
+                    const data = await response.json();
+                    userLoadout.push({
+                        name: data.onchain_metadata.name,
+                        slot: data.onchain_metadata.slot,
+                        amount: this.state.contentQunatity[key],
+                        image: `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
+                            7
+                        )}`,
+                    });
+                }
+                return userLoadout;
+            } catch (err) {
+                console.log(err);
+                return [];
+            }
+        }
+    };
+
+    setOnChainLoadout = async () => {
+        const loadout = await this.getUserLoadoutContent();
+        this.setState({
+            userLoadoutContentArray: loadout,
+        });
+    };
+
     RequestImageService = async () => {
-        const delay = (ms) => new Promise((r) => setTimeout(r, ms));
         this.filterImageContentFunction();
         //console.log(this.state.imageContent);
         if (this.state.imageContent) {
@@ -473,7 +554,6 @@ export default class Connector extends React.Component {
                     });
 
                     const data = await response.json();
-                    // await delay(150);
                     imageLinks[
                         key
                     ] = `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
@@ -488,7 +568,7 @@ export default class Connector extends React.Component {
         }
     };
 
-    SetFilteredFunction = async () => {
+    setFilteredFunction = async () => {
         try {
             const images = await this.RequestImageService();
             this.setState({ filtered: images }, () => {
@@ -739,14 +819,29 @@ export default class Connector extends React.Component {
         await this.refreshData();
     }
 
+    /* async componentWillUnmount() {
+        console.log("I have unmounted");
+        this.setState({
+            walletContent: undefined,
+            filterSuccess: undefined,
+            userLoadoutContent: undefined,
+        });
+    } */
+
     getWalletContent = () => {
-        if (this.state.walletContent && this.state.filterSuccess) {
-            console.log("gotWalletContent");
+        if (
+            this.state.walletContent &&
+            this.state.filterSuccess &&
+            this.state.userLoadoutContentArray
+        ) {
             this.props.walletContent(
                 this.state.walletContent,
-                this.state.filtered
+                this.state.filtered,
+                this.state.userLoadoutContentArray
             );
         }
+
+        // console.log(this.state.walletContent);
 
         if (this.state.changeAddress) {
             this.props.getChange(this.state.changeAddress);

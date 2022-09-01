@@ -112,11 +112,11 @@ p {
   border: 2px solid #eec07a;
   float: right;
   overflow: scroll;
-  height: 200px;
+  height: 400px;
   width: 150px;
   margin-top: 20px;
   border-radius: 5px;
-  margin-left: 10px;
+  margin-right: 10px;
   color: wheat;
 }
 
@@ -133,6 +133,7 @@ p {
   height: 100px;
   margin-top: 20px;
   cursor: move;
+  margin-left: 7px;
 }
 
 .small_box_body {

@@ -39,13 +39,13 @@ import Tooltip from "react-bootstrap/Tooltip";
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
     { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
-    { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
-    { accepts: [ItemTypes.TORSO], lastDroppedItem: null },
+    { accepts: [ItemTypes.BODY], lastDroppedItem: null },
+    { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
   ]);
 
   const [dustbins_row2, setDustbins2] = useState([
-    { accepts: [ItemTypes.ARMS], lastDroppedItem: null },
-    { accepts: [ItemTypes.LEGS], lastDroppedItem: null },
+    { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
+    { accepts: [ItemTypes.LEG], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
   ]);
 
@@ -54,137 +54,9 @@ function App() {
     { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
-    { accepts: [ItemTypes.SADDLE], lastDroppedItem: null },
+    { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
   ]);
 
-  const [loadouts] = useState([
-    {
-      name: "Girded Gild",
-      type: ItemTypes.SHOULDERS,
-      img:
-        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
-    },
-    {
-      name: "Dracon",
-      type: ItemTypes.SHOULDERS,
-      img:
-        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
-    },
-    {
-      name: "Celestial Plate",
-      type: ItemTypes.TORSO,
-      img:
-        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
-    },
-    {
-      name: "Gladiator",
-      type: ItemTypes.HEAD,
-      img:
-        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
-    },
-    {
-      name: "Arkinai",
-      type: ItemTypes.TORSO,
-      img:
-        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
-    },
-    {
-      name: "Dark Knight",
-      type: ItemTypes.TORSO,
-      img:
-        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
-    },
-    {
-      name: "Spartan",
-      type: ItemTypes.HEAD,
-      img:
-        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
-    },
-    {
-      name: "Achilles",
-      type: ItemTypes.HEAD,
-      img:
-        "https://drive.google.com/thumbnail?id=10xoX8jTIx-8adZGueLMxd4gOpg9Rnvt3",
-    },
-    {
-      name: "Black Fury",
-      type: ItemTypes.LEGS,
-      img:
-        "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
-    },
-    {
-      name: "Achilles Heel",
-      type: ItemTypes.LEGS,
-      img:
-        "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
-    },
-    {
-      name: "Leaded Gloves",
-      type: ItemTypes.ARMS,
-      img:
-        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
-    },
-    {
-      name: "Harmonica",
-      type: ItemTypes.ITEM0,
-      img:
-        "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
-    },
-    {
-      name: "Kings Armor",
-      type: ItemTypes.TORSO,
-      img:
-        "https://drive.google.com/thumbnail?id=1jEd0GDKB5KtkbkzwpXmDi8F4_EKfP4W_",
-    },
-    {
-      name: "Bell Trinity",
-      type: ItemTypes.ARMS,
-      img:
-        "https://drive.google.com/thumbnail?id=1MBcXYisYKMmRwWfMTx5IaVSqqk20oMLB",
-    },
-    {
-      name: "Mace",
-      type: ItemTypes.ITEM1,
-      img:
-        "https://drive.google.com/thumbnail?id=1suEcPcNkUX4MiGKnAS29ksqnRklpN965",
-    },
-    {
-      name: "Potion",
-      type: ItemTypes.ITEM2,
-      img:
-        "https://drive.google.com/thumbnail?id=1j835-H2TOJKypIYO0YeVFBmzni5GNjqa",
-    },
-    {
-      name: "Letter of Invite",
-      type: ItemTypes.ITEM3,
-      img:
-        "https://drive.google.com/thumbnail?id=1pKEHDiefFMlYIepZo4mVCGCMHJYpBzH7",
-    },
-    {
-      name: "Stallion",
-      type: ItemTypes.HORSE,
-      img:
-        "https://drive.google.com/thumbnail?id=1pmC7Sq96Hr4GLPodHgKjfJTchEVoF-Mt",
-    },
-    {
-      name: "Flori",
-      type: ItemTypes.SADDLE,
-      img:
-        "https://drive.google.com/thumbnail?id=1pmC7Sq96Hr4GLPodHgKjfJTchEVoF-Mt",
-    },
-    {
-      name: "Bethesta",
-      type: ItemTypes.HORSE,
-      img:
-        "https://drive.google.com/thumbnail?id=1pmC7Sq96Hr4GLPodHgKjfJTchEVoF-Mt",
-    },
-    {
-      name: "Devils Fury",
-      type: ItemTypes.LEGS,
-      img:
-        "https://drive.google.com/thumbnail?id=10vrnQGGiYW7Buftu4IusxsfSAUmHQWnW",
-    },
-  ]);
   var truncate = function (fullStr, strLen, separator) {
     if (fullStr.length <= strLen) return fullStr;
 
@@ -218,52 +90,40 @@ function App() {
   const [lgShow, setLgShow] = useState(false);
   const [apeSelected, setApeSelected] = useState(false);
   const [userLoadout, setUserLoadout] = useState({
-    head: "",
-    shoulders: "",
-    torso: "",
-    arms: "",
-    legs: "",
-    item0: "",
-    item1: "",
-    item2: "",
-    item3: "",
-    horse: "",
-    saddle: "",
-    ape: "",
+    Head: "",
+    Body: "",
+    Cape: "",
+    Gloves: "",
+    Leg: "",
+    Item0: "",
+    Item1: "",
+    Item2: "",
+    Item3: "",
+    Horse: "",
+    HorseHarness: "",
+    Ape: "",
   });
+
+  const [onChainLoadout, setOnChainLoadout] = useState([]);
+  const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
     pollWallets();
     if (!apeSelected && Object.keys(filtered).length != 0) {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        ape: Object.keys(filtered)[0].slice(5),
+        Ape: Object.keys(filtered)[0].slice(5),
       }));
       setApeSelected(true);
     }
     if (isLoading && gotContent) {
       simulateNetworkRequest().then(() => {
-        if (term === "addrx") {
-          setNoApe(true);
-          setIsConnected(true);
-          setIsLoading(false);
-        } else if (term === "addry") {
-          setNoLoadout(true);
-          setIsConnected(true);
-          setIsLoading(false);
-        } else if (term === "addrz") {
-          setNoLoadout(true);
-          setNoApe(true);
-          setIsConnected(true);
-          setIsLoading(false);
-        } else {
-          setIsConnected(true);
-          setIsLoading(false);
-          ResetDustbins();
-        }
+        setIsConnected(true);
+        setIsLoading(false);
+        ResetDustbins();
       });
     }
-  }, [isLoading, walletContent, filtered, userLoadout]);
+  }, [isLoading, gotContent]);
 
   const myPromise = new Promise(
     (resolve) =>
@@ -273,16 +133,20 @@ function App() {
     // setTimeout just for the example , cause it will load quickly without it .
   );
 
-  function onWalletContent(walletContent, filtered) {
+  function onWalletContent(walletContent, filtered, userLoadoutContentArray) {
     if (walletContent != {}) {
-      console.log("I made it here");
       setWalletContent(walletContent);
       if (Object.keys(filtered).length == 0) {
         setNoApe(true);
       } else {
         setFiltered(filtered);
       }
-
+      if (userLoadoutContentArray.length == 0) {
+        setNoLoadout(true);
+      } else {
+        setOnChainLoadout(userLoadoutContentArray);
+        transformOnchainLoadout();
+      }
       setGotContent(true);
     }
   }
@@ -300,9 +164,7 @@ function App() {
   function simulateNetworkRequest() {
     if (walletContent["SOCIETY"] != undefined)
       setSocietyToken(
-        numberWithCommas(
-          Math.trunc(parseInt(walletContent["SOCIETY"]) / 1000000)
-        )
+        numberWithCommas(Math.trunc(walletContent["SOCIETY"] / 1000000))
       );
     else {
       setSocietyToken(0);
@@ -322,6 +184,17 @@ function App() {
     setIsLoading(true);
   }
 
+  function transformOnchainLoadout() {
+    let transformedLoad = {};
+    if (onChainLoadout != {}) {
+      onChainLoadout.map(({ name, type, amount, image }, index) => {
+        //console.log(name);
+        transformedLoad[name] = image;
+      });
+      setTransformedLoadout(transformedLoad);
+    }
+  }
+
   function handleRefresh() {
     setWalletContent({});
     setFiltered({});
@@ -330,28 +203,28 @@ function App() {
   }
 
   function handleEditWallet() {
-    setWalletContent({});
-    setFiltered({});
-    setUserLoadout({
-      head: "",
-      shoulders: "",
-      torso: "",
-      arms: "",
-      legs: "",
-      item0: "",
-      item1: "",
-      item2: "",
-      item3: "",
-      horse: "",
-      saddle: "",
-      ape: "",
-    });
-    setIsLoading(false);
     setIsConnected(false);
+    setIsLoading(false);
     setNoLoadout(false);
     setNoApe(false);
     setGotContent(false);
     setApeSelected(false);
+    setWalletContent({});
+    setFiltered({});
+    setUserLoadout({
+      Head: "",
+      Body: "",
+      Cape: "",
+      Gloves: "",
+      Leg: "",
+      Item0: "",
+      Item1: "",
+      Item2: "",
+      Item3: "",
+      Horse: "",
+      HorseHarness: "",
+      Ape: "",
+    });
 
     ResetDustbins();
   }
@@ -359,12 +232,12 @@ function App() {
   function ResetDustbins() {
     setDustbins1([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
-      { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
-      { accepts: [ItemTypes.TORSO], lastDroppedItem: null },
+      { accepts: [ItemTypes.BODY], lastDroppedItem: null },
+      { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
     ]);
     setDustbins2([
-      { accepts: [ItemTypes.ARMS], lastDroppedItem: null },
-      { accepts: [ItemTypes.LEGS], lastDroppedItem: null },
+      { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
+      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
       { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
     ]);
     setDustbins3([
@@ -372,7 +245,7 @@ function App() {
       { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
-      { accepts: [ItemTypes.SADDLE], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
     ]);
   }
 
@@ -382,17 +255,18 @@ function App() {
   }
 
   let user_loadout = {
-    head: "",
-    shoulders: "",
-    torso: "",
-    arms: "",
-    legs: "",
-    item0: "",
-    item1: "",
-    item2: "",
-    item3: "",
-    horse: "",
-    saddle: "",
+    Head: "",
+    Body: "",
+    Cape: "",
+    Gloves: "",
+    Leg: "",
+    Item0: "",
+    Item1: "",
+    Item2: "",
+    Item3: "",
+    Horse: "",
+    HorseHarness: "",
+    Ape: "",
   };
 
   const handleDrop1 = useCallback(
@@ -407,6 +281,7 @@ function App() {
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
       );
+
       setDustbins1(
         update(dustbins_row1, {
           [index]: {
@@ -428,8 +303,12 @@ function App() {
       }));
 
       const { name } = item;
+      const { amount } = item;
       setDroppedLoadoutNames(
-        update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
+        update(
+          droppedLoadoutNames,
+          name && amount ? { $push: [name], $push: [amount] } : { $push: [] }
+        )
       );
       setDustbins2(
         update(dustbins_row2, {
@@ -472,13 +351,13 @@ function App() {
     setApeSelected(true);
     setUserLoadout((prevUserLoadout) => ({
       ...prevUserLoadout,
-      ape: Object.keys(filtered)[event].slice(5),
+      Ape: Object.keys(filtered)[event].slice(5),
     }));
   }
 
   function handleWalletSelect(val) {
     const whichWalletSelected = val.target.text;
-    // console.log(val.target);
+
     setWhichWallet(whichWalletSelected);
   }
 
@@ -543,6 +422,7 @@ function App() {
               filtered={onWalletContent}
               whichWalletSet={whichWallet}
               isError={handleIsError}
+              userLoadoutContentArray={onWalletContent}
             />
             <Loading />
           </div>
@@ -667,7 +547,7 @@ function App() {
             >
               <Modal.Body bsPrefix="modal-bg">
                 <div
-                  class="modal-title"
+                  className="modal-title"
                   style={{ fontFamily: "Cabin, sans-serif" }}
                 >
                   <h2> Confirm your selection </h2>
@@ -714,26 +594,27 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div className="loadout">
-            {loadouts.map(({ name, type, img }, index) => (
-              <Row>
-                <Col>
-                  <Box
-                    name={name}
-                    type={type}
-                    isDropped={isDropped(name)}
-                    key={index}
-                    img={img}
-                  />
-                  <div style={{ textAlign: "center" }}>
-                    <p style={{ fontWeight: "bold" }}>
-                      {" "}
-                      {capitalizeFirstLetter(type)}{" "}
-                    </p>
-                    <p> {name} </p>
-                  </div>
-                </Col>
-              </Row>
-            ))}
+            {onChainLoadout.length > 0 &&
+              onChainLoadout.map(({ name, slot, amount, image }, index) => (
+                <Row>
+                  <Col>
+                    <Box
+                      name={name}
+                      type={slot}
+                      isDropped={isDropped(name)}
+                      key={index}
+                      img={image}
+                    />
+                    <div style={{ textAlign: "center" }}>
+                      <p style={{ fontWeight: "bold" }}> {slot} </p>
+                      <p>
+                        {" "}
+                        {name} x{amount}{" "}
+                      </p>
+                    </div>
+                  </Col>
+                </Row>
+              ))}
           </div>
         ) : (
           ""
@@ -743,7 +624,10 @@ function App() {
           <div className="loadout_no_gear">
             <Row>
               <Col>
-                <h2 style={{ textAlign: "center" }}> No Gear Found! </h2>
+                <h2 style={{ textAlign: "center", marginTop: "100px" }}>
+                  {" "}
+                  No Gear Found{" "}
+                </h2>
               </Col>
             </Row>
           </div>
@@ -796,7 +680,11 @@ function App() {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item) => handleDrop1(index, item, accepts)}
                   key={index}
-                  color="blue"
+                  img={
+                    lastDroppedItem
+                      ? transformedLoadout[lastDroppedItem["name"]]
+                      : ""
+                  }
                 />
               </Col>
             ))}
@@ -814,6 +702,11 @@ function App() {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item) => handleDrop2(index, item, accepts)}
                   key={index}
+                  img={
+                    lastDroppedItem
+                      ? transformedLoadout[lastDroppedItem["name"]]
+                      : ""
+                  }
                 />
               </Col>
             ))}
@@ -830,6 +723,11 @@ function App() {
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item) => handleDrop3(index, item, accepts)}
                   key={index}
+                  img={
+                    lastDroppedItem
+                      ? transformedLoadout[lastDroppedItem["name"]]
+                      : ""
+                  }
                 />
               </Col>
             ))}
