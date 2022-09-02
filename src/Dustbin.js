@@ -49,6 +49,16 @@ export const Dustbin = memo(function Dustbin({
   });
   const isActive = isOver && canDrop;
 
+  function shortenTokenLength(tokenName) {
+    const tokenWords = tokenName.split(" ");
+    let formattedItemName = "";
+    for (let i = 4; i < tokenWords.length; i++) {
+      formattedItemName +=
+        tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
+    }
+    return formattedItemName;
+  }
+
   let backgroundColor = "none";
 
   // if (isActive) {
@@ -85,7 +95,7 @@ export const Dustbin = memo(function Dustbin({
         {isActive
           ? "Release to drop"
           : lastDroppedItem
-          ? `${lastDroppedItem["name"]}`
+          ? `${shortenTokenLength(lastDroppedItem["name"])}`
           : `${accept}`}
       </div>
     </div>
