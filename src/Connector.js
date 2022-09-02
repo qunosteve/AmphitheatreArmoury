@@ -60,6 +60,7 @@ import {
 } from "@emurgo/cardano-serialization-lib-asmjs";
 import "./App.css";
 import { blake2b } from "blakejs";
+
 let Buffer = require("buffer/").Buffer;
 let blake = require("blakejs");
 
@@ -441,17 +442,6 @@ export default class Connector extends React.Component {
                                 userLoadoutContent[`${assetNameString}`] = `${
                                     policyIdHex.toString() + assetNameHex
                                 }`;
-
-                                /*      if (prevContentQuantity === {}) {
-                                    prevAmount = 0;
-                                } else {
-                                    if (!prevAmount[assetNameString])
-                                        prevAmount = 0;
-                                    else {
-                                        prevAmount =
-                                            prevAmount[assetNameString];
-                                    }
-                                } */
 
                                 if (contentQunatity[assetNameString]) {
                                     amount = contentQunatity[assetNameString];

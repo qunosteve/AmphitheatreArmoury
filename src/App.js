@@ -104,6 +104,31 @@ function App() {
     Ape: "",
   });
 
+  /* async function getWallet() {
+    const lucid = await Lucid.new(
+      new Blockfrost(
+        "https://cardano-testnet.blockfrost.io/api/v0",
+        "mainnetbUyZDnp0NCCAkitKJk6jeiu28axzzpzG"
+      ),
+      "Testnet"
+    );
+
+    // Assumes you are in a browser environment
+    const api = await window.cardano.nami.enable();
+    lucid.selectWallet(api);
+
+    const tx = await lucid
+      .newTx()
+      .payToAddress("addr...", { lovelace: 5000000n })
+      .complete();
+
+    const signedTx = await tx.sign().complete();
+
+    const txHash = await signedTx.submit();
+
+    console.log(txHash);
+  } */
+
   const [onChainLoadout, setOnChainLoadout] = useState([]);
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
@@ -132,6 +157,16 @@ function App() {
         .then((json) => setTimeout(() => resolve(json), 2000))
     // setTimeout just for the example , cause it will load quickly without it .
   );
+
+  function shortenTokenLength(tokenName) {
+    const tokenWords = tokenName.split(" ");
+    let formattedItemName = "";
+    for (let i = 4; i < tokenWords.length; i++) {
+      formattedItemName +=
+        tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
+    }
+    return formattedItemName;
+  }
 
   function onWalletContent(walletContent, filtered, userLoadoutContentArray) {
     if (walletContent != {}) {
@@ -609,7 +644,7 @@ function App() {
                       <p style={{ fontWeight: "bold" }}> {slot} </p>
                       <p>
                         {" "}
-                        {name} x{amount}{" "}
+                        {shortenTokenLength(name)} x{amount}{" "}
                       </p>
                     </div>
                   </Col>
