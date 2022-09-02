@@ -98,7 +98,7 @@ p {
   justify-content: center;
   border: 2px solid #eec07a;
   float: right;
-  overflow: scroll;
+  overflow-y: scroll;
   height: 590px;
   width: 150px;
   margin-top: 20px;
@@ -133,7 +133,7 @@ p {
   height: 100px;
   margin-top: 20px;
   cursor: move;
-  margin-left: 7px;
+  margin-left: 11px;
 }
 
 .small_box_body {

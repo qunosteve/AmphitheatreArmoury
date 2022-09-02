@@ -628,28 +628,30 @@ function App() {
         </Row> */}
 
         {isConnected && !noLoadout ? (
-          <div className="loadout">
-            {onChainLoadout.length > 0 &&
-              onChainLoadout.map(({ name, slot, amount, image }, index) => (
-                <Row>
-                  <Col>
-                    <Box
-                      name={name}
-                      type={slot}
-                      isDropped={isDropped(name)}
-                      key={index}
-                      img={image}
-                    />
-                    <div style={{ textAlign: "center" }}>
-                      <p style={{ fontWeight: "bold" }}> {slot} </p>
-                      <p>
-                        {" "}
-                        {shortenTokenLength(name)} x{amount}{" "}
-                      </p>
-                    </div>
-                  </Col>
-                </Row>
-              ))}
+          <div>
+            <div className="loadout">
+              {onChainLoadout.length > 0 &&
+                onChainLoadout.map(({ name, slot, amount, image }, index) => (
+                  <Row>
+                    <Col>
+                      <Box
+                        name={name}
+                        type={slot}
+                        isDropped={isDropped(name)}
+                        key={index}
+                        img={image}
+                      />
+                      <div style={{ textAlign: "center" }}>
+                        <p style={{ fontWeight: "bold" }}> {slot} </p>
+                        <p>
+                          {" "}
+                          {shortenTokenLength(name)} x{amount}{" "}
+                        </p>
+                      </div>
+                    </Col>
+                  </Row>
+                ))}
+            </div>
           </div>
         ) : (
           ""
