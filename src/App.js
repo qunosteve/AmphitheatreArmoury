@@ -681,6 +681,10 @@ function App() {
                             {" "}
                             {arm_armor ? `Arm armor: ${arm_armor}` : ""}{" "}
                           </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {weight ? `Weight: ${weight}` : ""}{" "}
+                          </p>
                         </div>
                       </Col>
                     </Row>
