@@ -35,6 +35,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+//import { Blockfrost, Lucid } from "lucid-cardano";
 
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
@@ -107,11 +108,13 @@ function App() {
   /* async function getWallet() {
     const lucid = await Lucid.new(
       new Blockfrost(
-        "https://cardano-testnet.blockfrost.io/api/v0",
+        "https://cardano-mainnet.blockfrost.io/api/v0",
         "mainnetbUyZDnp0NCCAkitKJk6jeiu28axzzpzG"
       ),
-      "Testnet"
+      "Mainnet"
     );
+
+    console.log(`Lucid: ${lucid}`);
 
     // Assumes you are in a browser environment
     const api = await window.cardano.nami.enable();
@@ -133,6 +136,7 @@ function App() {
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
+    console.log(onChainLoadout);
     pollWallets();
     if (!apeSelected && Object.keys(filtered).length != 0) {
       setUserLoadout((prevUserLoadout) => ({
@@ -631,26 +635,57 @@ function App() {
           <div>
             <div className="loadout">
               {onChainLoadout.length > 0 &&
-                onChainLoadout.map(({ name, slot, amount, image }, index) => (
-                  <Row>
-                    <Col>
-                      <Box
-                        name={name}
-                        type={slot}
-                        isDropped={isDropped(name)}
-                        key={index}
-                        img={image}
-                      />
-                      <div style={{ textAlign: "center" }}>
-                        <p style={{ fontWeight: "bold" }}> {slot} </p>
-                        <p>
-                          {" "}
-                          {shortenTokenLength(name)} x{amount}{" "}
-                        </p>
-                      </div>
-                    </Col>
-                  </Row>
-                ))}
+                onChainLoadout.map(
+                  (
+                    {
+                      name,
+                      slot,
+                      amount,
+                      image,
+                      weight,
+                      leg_armor,
+                      body_armor,
+                      head_armor,
+                      arm_armor,
+                    },
+                    index
+                  ) => (
+                    <Row>
+                      <Col>
+                        <Box
+                          name={name}
+                          type={slot}
+                          isDropped={isDropped(name)}
+                          key={index}
+                          img={image}
+                        />
+                        <div style={{ textAlign: "center" }}>
+                          <p style={{ fontWeight: "bold" }}> [{slot}] </p>
+                          <p style={{ fontSize: "15px" }}>
+                            {" "}
+                            {shortenTokenLength(name)} x{amount}{" "}
+                          </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}
+                          </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {body_armor ? `Body armor: ${body_armor}` : ""}{" "}
+                          </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {head_armor ? `Head armor: ${head_armor}` : ""}{" "}
+                          </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {arm_armor ? `Arm armor: ${arm_armor}` : ""}{" "}
+                          </p>
+                        </div>
+                      </Col>
+                    </Row>
+                  )
+                )}
             </div>
           </div>
         ) : (
