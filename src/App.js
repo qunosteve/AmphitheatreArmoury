@@ -650,7 +650,7 @@ function App() {
                     },
                     index
                   ) => (
-                    <Row>
+                    <Row style={{ justifyContent: "center", display: "grid" }}>
                       <Col>
                         <Box
                           name={name}
@@ -661,7 +661,13 @@ function App() {
                         />
                         <div style={{ textAlign: "center" }}>
                           <p style={{ fontWeight: "bold" }}> [{slot}] </p>
-                          <p style={{ fontSize: "15px" }}>
+                          <p
+                            style={{
+                              fontSize: "15px",
+                              width: "100px",
+                              overflow: "initial",
+                            }}
+                          >
                             {" "}
                             {shortenTokenLength(name)} x{amount}{" "}
                           </p>
