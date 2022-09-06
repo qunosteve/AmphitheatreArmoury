@@ -8,6 +8,7 @@ import {
     InputGroup,
     NumericInput,
 } from "@blueprintjs/core";
+import Button from "react-bootstrap/Button";
 import "../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 import "../node_modules/@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "../node_modules/normalize.css/normalize.css";
@@ -30,6 +31,9 @@ import {
     TransactionOutputBuilder,
     LinearFee,
     BigNum,
+    encode_json_str_to_metadatum,
+    GeneralTransactionMetadata,
+    AuxiliaryData,
     BigInt,
     TransactionHash,
     TransactionInputs,
@@ -83,7 +87,9 @@ export default class Connector extends React.Component {
             filterSuccess: false,
             userLoadoutContent: undefined,
             userLoadoutContentArray: [],
+            userLoadoutMetadata: undefined,
             contentQunatity: undefined,
+            isEntered: false,
 
             networkId: undefined,
             Utxos: undefined,
@@ -100,7 +106,7 @@ export default class Connector extends React.Component {
 
             addressBech32SendADA:
                 "addr_test1qrt7j04dtk4hfjq036r2nfewt59q8zpa69ax88utyr6es2ar72l7vd6evxct69wcje5cs25ze4qeshejy828h30zkydsu4yrmm",
-            lovelaceToSend: 3000000,
+            lovelaceToSend: 1000000,
             assetNameHex: "4c494645",
             assetPolicyIdHex:
                 "ae02017105527c6c0c9840397a39cc5ca39fabe5b9998ba70fda5f2f",
@@ -717,7 +723,9 @@ export default class Connector extends React.Component {
                     await this.getChangeAddress();
                     await this.getRewardAddresses();
                     await this.getUsedAddresses();
-                    this.getWalletContent();
+                    if (!this.props.userLoadoutMetadata) {
+                        this.getWalletContent();
+                    }
                 } else {
                     await this.setState({
                         Utxos: null,
@@ -799,6 +807,89 @@ export default class Connector extends React.Component {
         return txOutputs;
     };
 
+    /*  buildSendADATransaction = async () => {
+        const generalMetadata = GeneralTransactionMetadata.new();
+        const auxiliaryData = AuxiliaryData.new();
+        const txBuilder = await this.initTransactionBuilder();
+        const shelleyOutputAddress = Address.from_bech32(
+            this.state.changeAddress
+        );
+        const shelleyChangeAddress = Address.from_bech32(
+            this.state.changeAddress
+        );
+
+        generalMetadata.insert(
+            BigNum.from_str("674"),
+            encode_json_str_to_metadatum(
+                JSON.stringify(this.props.userLoadoutMetadata)
+            )
+        );
+
+        //console.log(generalMetadata);
+
+        if (generalMetadata.len() > 0) {
+            console.log("ser");
+            auxiliaryData.set_metadata(generalMetadata);
+        }
+
+        if (auxiliaryData) {
+            txBuilder.set_auxiliary_data(auxiliaryData);
+        }
+
+        txBuilder.add_output(
+            TransactionOutput.new(
+                shelleyOutputAddress,
+                Value.new(BigNum.from_str(this.state.lovelaceToSend.toString()))
+            )
+        );
+
+        // Find the available UTXOs in the wallet and
+        // us them as Inputs
+        const txUnspentOutputs = await this.getTxUnspentOutputs();
+        txBuilder.add_inputs_from(txUnspentOutputs, 0);
+
+        // calculate the min fee required and send any change to an address
+        txBuilder.add_change_if_needed(shelleyChangeAddress);
+
+        // once the transaction is ready, we build it to get the tx body without witnesses
+        const txBody = txBuilder.build();
+
+        // Tx witness
+        const transactionWitnessSet = TransactionWitnessSet.new();
+
+        const tx = Transaction.new(
+            txBody,
+            TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes()),
+            txBuilder.get_auxiliary_data()
+        );
+
+        let txVkeyWitnesses = await this.API.signTx(
+            Buffer.from(tx.to_bytes(), "utf8").toString("hex"),
+            true
+        );
+
+        console.log(txVkeyWitnesses);
+
+        txVkeyWitnesses = TransactionWitnessSet.from_bytes(
+            Buffer.from(txVkeyWitnesses, "hex")
+        );
+
+        transactionWitnessSet.set_vkeys(txVkeyWitnesses.vkeys());
+
+        const signedTx = Transaction.new(
+            tx.body(),
+            transactionWitnessSet,
+            tx.auxiliary_data()
+        );
+
+        const submittedTxHash = await this.API.submitTx(
+            Buffer.from(signedTx.to_bytes(), "utf8").toString("hex")
+        );
+        this.setState({ isEntered: true });
+        console.log(submittedTxHash);
+        //this.setState({ submittedTxHash });
+    }; */
+
     /**
      * The transaction is build in 3 stages:
      * 1 - initialize the Transaction Builder
@@ -815,25 +906,18 @@ export default class Connector extends React.Component {
         await this.refreshData();
     }
 
-    /* async componentWillUnmount() {
-        console.log("I have unmounted");
-        this.setState({
-            walletContent: undefined,
-            filterSuccess: undefined,
-            userLoadoutContent: undefined,
-        });
-    } */
-
-    getWalletContent = () => {
+    getWalletContent = async () => {
         if (
             this.state.walletContent &&
             this.state.filterSuccess &&
-            this.state.userLoadoutContentArray
+            this.state.userLoadoutContentArray &&
+            this.getTxUnspentOutputs()
         ) {
             this.props.walletContent(
                 this.state.walletContent,
                 this.state.filtered,
-                this.state.userLoadoutContentArray
+                this.state.userLoadoutContentArray,
+                await this.getTxUnspentOutputs()
             );
         }
 
@@ -845,6 +929,6 @@ export default class Connector extends React.Component {
     };
 
     render() {
-        return <div> </div>;
+        return <div></div>;
     }
 }

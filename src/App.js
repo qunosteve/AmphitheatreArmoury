@@ -35,7 +35,58 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
-//import { Blockfrost, Lucid } from "lucid-cardano";
+//import { Lucid, Blockfrost } from "lucid-cardano";
+import {
+  Address,
+  BaseAddress,
+  MultiAsset,
+  Assets,
+  ScriptHash,
+  Costmdls,
+  Language,
+  CostModel,
+  AssetName,
+  TransactionUnspentOutput,
+  TransactionUnspentOutputs,
+  TransactionOutput,
+  Value,
+  TransactionBuilder,
+  TransactionBuilderConfigBuilder,
+  TransactionOutputBuilder,
+  LinearFee,
+  BigNum,
+  encode_json_str_to_metadatum,
+  GeneralTransactionMetadata,
+  AuxiliaryData,
+  BigInt,
+  TransactionHash,
+  TransactionInputs,
+  TransactionInput,
+  TransactionWitnessSet,
+  Transaction,
+  PlutusData,
+  PlutusScripts,
+  PlutusScript,
+  PlutusList,
+  Redeemers,
+  Redeemer,
+  RedeemerTag,
+  Ed25519KeyHashes,
+  ConstrPlutusData,
+  ExUnits,
+  Int,
+  NetworkInfo,
+  EnterpriseAddress,
+  TransactionOutputs,
+  hash_transaction,
+  hash_script_data,
+  hash_plutus_data,
+  ScriptDataHash,
+  Ed25519KeyHash,
+  NativeScript,
+  StakeCredential,
+} from "@emurgo/cardano-serialization-lib-asmjs";
+let Buffer = require("buffer/").Buffer;
 
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
@@ -75,6 +126,8 @@ function App() {
     );
   };
 
+  const [txHash, setTxHash] = useState(undefined);
+  const [utxoSpent, setUtxoSpent] = useState(TransactionUnspentOutputs.new());
   const [whichWallet, setWhichWallet] = useState("");
   const [wallets, setWallets] = useState([]);
   const [term, setTerm] = useState("");
@@ -105,38 +158,28 @@ function App() {
     Ape: "",
   });
 
-  /* async function getWallet() {
-    const lucid = await Lucid.new(
-      new Blockfrost(
-        "https://cardano-mainnet.blockfrost.io/api/v0",
-        "mainnetbUyZDnp0NCCAkitKJk6jeiu28axzzpzG"
-      ),
-      "Mainnet"
-    );
+  let protocolParams = {
+    linearFee: {
+      minFeeA: "44",
+      minFeeB: "155381",
+    },
+    minUtxo: "34482",
+    poolDeposit: "500000000",
+    keyDeposit: "2000000",
+    maxValSize: 5000,
+    maxTxSize: 16384,
+    priceMem: 0.0577,
+    priceStep: 0.0000721,
+    coinsPerUtxoWord: "34482",
+  };
 
-    console.log(`Lucid: ${lucid}`);
-
-    // Assumes you are in a browser environment
-    const api = await window.cardano.nami.enable();
-    lucid.selectWallet(api);
-
-    const tx = await lucid
-      .newTx()
-      .payToAddress("addr...", { lovelace: 5000000n })
-      .complete();
-
-    const signedTx = await tx.sign().complete();
-
-    const txHash = await signedTx.submit();
-
-    console.log(txHash);
-  } */
+  let API = undefined;
+  const lovelaceToSend = 1000000;
 
   const [onChainLoadout, setOnChainLoadout] = useState([]);
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
-    console.log(onChainLoadout);
     pollWallets();
     if (!apeSelected && Object.keys(filtered).length != 0) {
       setUserLoadout((prevUserLoadout) => ({
@@ -154,14 +197,6 @@ function App() {
     }
   }, [isLoading, gotContent]);
 
-  const myPromise = new Promise(
-    (resolve) =>
-      fetch("https://jsonplaceholder.typicode.com/todos/1")
-        .then((response) => response.json())
-        .then((json) => setTimeout(() => resolve(json), 2000))
-    // setTimeout just for the example , cause it will load quickly without it .
-  );
-
   function shortenTokenLength(tokenName) {
     const tokenWords = tokenName.split(" ");
     let formattedItemName = "";
@@ -172,9 +207,18 @@ function App() {
     return formattedItemName;
   }
 
-  function onWalletContent(walletContent, filtered, userLoadoutContentArray) {
+  function onWalletContent(
+    walletContent,
+    filtered,
+    userLoadoutContentArray,
+    txUnspentOutput
+  ) {
     if (walletContent != {}) {
       setWalletContent(walletContent);
+      if (txUnspentOutput) {
+        console.log(txUnspentOutput);
+        setUtxoSpent(txUnspentOutput);
+      }
       if (Object.keys(filtered).length == 0) {
         setNoApe(true);
       } else {
@@ -192,7 +236,7 @@ function App() {
 
   function getChangeAddy(changeAddress) {
     if (changeAddress) {
-      setWalletAddress(truncate(changeAddress, 11));
+      setWalletAddress(changeAddress);
     }
   }
 
@@ -227,18 +271,10 @@ function App() {
     let transformedLoad = {};
     if (onChainLoadout != {}) {
       onChainLoadout.map(({ name, type, amount, image }, index) => {
-        //console.log(name);
         transformedLoad[name] = image;
       });
       setTransformedLoadout(transformedLoad);
     }
-  }
-
-  function handleRefresh() {
-    setWalletContent({});
-    setFiltered({});
-    setGotContent(false);
-    setIsLoading(true);
   }
 
   function handleEditWallet() {
@@ -293,28 +329,12 @@ function App() {
     return droppedLoadoutNames.indexOf(boxName) > -1;
   }
 
-  let user_loadout = {
-    Head: "",
-    Body: "",
-    Cape: "",
-    Gloves: "",
-    Leg: "",
-    Item0: "",
-    Item1: "",
-    Item2: "",
-    Item3: "",
-    Horse: "",
-    HorseHarness: "",
-    Ape: "",
-  };
-
   const handleDrop1 = useCallback(
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
         [accepts[0]]: item.name,
       }));
-      user_loadout[accepts] = item;
       const { name } = item;
 
       setDroppedLoadoutNames(
@@ -434,14 +454,144 @@ function App() {
     setWallets(wallets);
   }
 
-  const notify = () => {
-    toast.promise(myPromise, {
-      pending: "We're submitting your loadout",
-      success: "Loadout submitted",
-      error: "error",
+  const notifyError = () => {
+    toast.error("Something went wrong. Plese refresh and try again.", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
-
     setLgShow(false);
+  };
+
+  const notify = () => {
+    toast.success("Transaction submitted. Please check your wallet.", {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setLgShow(false);
+  };
+
+  const enableWallet = async () => {
+    const walletKey = whichWallet;
+    try {
+      API = await window.cardano[walletKey].enable();
+    } catch (err) {
+      console.log(err);
+      notifyError();
+    }
+  };
+
+  const initTransactionBuilder = async () => {
+    const txBuilder = TransactionBuilder.new(
+      TransactionBuilderConfigBuilder.new()
+        .fee_algo(
+          LinearFee.new(
+            BigNum.from_str(protocolParams.linearFee.minFeeA),
+            BigNum.from_str(protocolParams.linearFee.minFeeB)
+          )
+        )
+        .pool_deposit(BigNum.from_str(protocolParams.poolDeposit))
+        .key_deposit(BigNum.from_str(protocolParams.keyDeposit))
+        .coins_per_utxo_word(BigNum.from_str(protocolParams.coinsPerUtxoWord))
+        .max_value_size(protocolParams.maxValSize)
+        .max_tx_size(protocolParams.maxTxSize)
+        .prefer_pure_change(true)
+        .build()
+    );
+
+    return txBuilder;
+  };
+
+  const buildSendADATransaction = async () => {
+    try {
+      await enableWallet();
+      const generalMetadata = GeneralTransactionMetadata.new();
+      const auxiliaryData = AuxiliaryData.new();
+      const txBuilder = await initTransactionBuilder();
+      const shelleyOutputAddress = Address.from_bech32(walletAddress);
+      const shelleyChangeAddress = Address.from_bech32(walletAddress);
+
+      generalMetadata.insert(
+        BigNum.from_str("674"),
+        encode_json_str_to_metadatum(JSON.stringify(userLoadout))
+      );
+
+      if (generalMetadata.len() > 0) {
+        auxiliaryData.set_metadata(generalMetadata);
+      }
+
+      if (auxiliaryData) {
+        txBuilder.set_auxiliary_data(auxiliaryData);
+      }
+
+      txBuilder.add_output(
+        TransactionOutput.new(
+          shelleyOutputAddress,
+          Value.new(BigNum.from_str(lovelaceToSend.toString()))
+        )
+      );
+
+      // Find the available UTXOs in the wallet and
+      // us them as Inputs
+      const txUnspentOutputs = utxoSpent;
+      txBuilder.add_inputs_from(txUnspentOutputs, 0);
+
+      // calculate the min fee required and send any change to an address
+      txBuilder.add_change_if_needed(shelleyChangeAddress);
+
+      // once the transaction is ready, we build it to get the tx body without witnesses
+      const txBody = txBuilder.build();
+
+      // Tx witness
+      const transactionWitnessSet = TransactionWitnessSet.new();
+
+      const tx = Transaction.new(
+        txBody,
+        TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes()),
+        txBuilder.get_auxiliary_data()
+      );
+
+      let txVkeyWitnesses = await API.signTx(
+        Buffer.from(tx.to_bytes(), "utf8").toString("hex"),
+        true
+      );
+
+      console.log(txVkeyWitnesses);
+
+      txVkeyWitnesses = TransactionWitnessSet.from_bytes(
+        Buffer.from(txVkeyWitnesses, "hex")
+      );
+
+      transactionWitnessSet.set_vkeys(txVkeyWitnesses.vkeys());
+
+      const signedTx = Transaction.new(
+        tx.body(),
+        transactionWitnessSet,
+        tx.auxiliary_data()
+      );
+
+      const submittedTxHash = await API.submitTx(
+        Buffer.from(signedTx.to_bytes(), "utf8").toString("hex")
+      );
+
+      if (submittedTxHash) {
+        await setTxHash(submittedTxHash);
+        notify();
+      }
+      console.log(submittedTxHash);
+    } catch (error) {
+      console.log(error);
+      notifyError();
+    }
   };
 
   return (
@@ -532,7 +682,7 @@ function App() {
                     fontFamily: "Cabin, sans-serif",
                   }}
                 >
-                  {walletAddress}
+                  {truncate(walletAddress, 11)}
                 </span>
                 <span>
                   {" "}
@@ -564,7 +714,7 @@ function App() {
           <Col>
             {" "}
             <Button
-              disabled={!isConnected || noLoadout || noApe}
+              disabled={!isConnected}
               variant="success"
               style={{
                 float: "right",
@@ -608,7 +758,6 @@ function App() {
                 })}
                 <div className="modal-button ">
                   <Button
-                    disabled={!apeSelected}
                     variant="success"
                     style={{
                       float: "right",
@@ -617,7 +766,7 @@ function App() {
                       fontSize: "18px",
                       fontFamily: "Cabin, sans-serif",
                     }}
-                    onClick={() => notify()}
+                    onClick={() => buildSendADATransaction()}
                   >
                     Confirm
                   </Button>
