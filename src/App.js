@@ -455,15 +455,18 @@ function App() {
   }
 
   const notifyError = () => {
-    toast.error("Something went wrong. Plese refresh and try again.", {
-      position: "top-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.error(
+      "Something went wrong. Plese refresh and try again. Make sure you have enough ada in your wallet to cover your assets in change address.",
+      {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
     setLgShow(false);
   };
 
