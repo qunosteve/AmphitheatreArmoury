@@ -35,6 +35,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import ReactAudioPlayer from "react-audio-player";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 //import { Lucid, Blockfrost } from "lucid-cardano";
 import {
   Address,
@@ -126,6 +129,7 @@ function App() {
     );
   };
 
+  const [lookup, setLookup] = useState({});
   const [txHash, setTxHash] = useState(undefined);
   const [utxoSpent, setUtxoSpent] = useState(TransactionUnspentOutputs.new());
   const [whichWallet, setWhichWallet] = useState("");
@@ -157,6 +161,7 @@ function App() {
     HorseHarness: "",
     Ape: "",
   });
+  const [userLoadoutValues, setUserLoadoutValues] = useState({});
 
   let protocolParams = {
     linearFee: {
@@ -181,6 +186,7 @@ function App() {
 
   useEffect(() => {
     pollWallets();
+    lookupFunction();
     if (!apeSelected && Object.keys(filtered).length != 0) {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -195,7 +201,7 @@ function App() {
         ResetDustbins();
       });
     }
-  }, [isLoading, gotContent]);
+  }, [isLoading, gotContent, userLoadout]);
 
   function shortenTokenLength(tokenName) {
     const tokenWords = tokenName.split(" ");
@@ -229,6 +235,7 @@ function App() {
       } else {
         setOnChainLoadout(userLoadoutContentArray);
         transformOnchainLoadout();
+        //lookupFunction();
       }
       setGotContent(true);
     }
@@ -303,6 +310,13 @@ function App() {
 
     ResetDustbins();
   }
+  function lookupFunction() {
+    var lookup = {};
+    for (var i = 0, len = onChainLoadout.length; i < len; i++) {
+      lookup[onChainLoadout[i].name] = onChainLoadout[i];
+    }
+    setLookup(lookup);
+  }
 
   function ResetDustbins() {
     setDustbins1([
@@ -324,9 +338,36 @@ function App() {
     ]);
   }
 
+  let loadoutValues = {};
+
   const [droppedLoadoutNames, setDroppedLoadoutNames] = useState([]);
   function isDropped(boxName) {
     return droppedLoadoutNames.indexOf(boxName) > -1;
+  }
+
+  function getLoadoutTotals() {
+    console.log(userLoadoutValues);
+    let leg_armor = 0;
+    let arm_armor = 0;
+    let head_armor = 0;
+    let body_armor = 0;
+    let weight = 0;
+    if (userLoadoutValues != {}) {
+      Object.keys(userLoadoutValues).map((key, index) => {
+        leg_armor += parseInt(userLoadoutValues[key]?.leg_armor || 0);
+        arm_armor += parseInt(userLoadoutValues[key]?.arm_armor || 0);
+        head_armor += parseInt(userLoadoutValues[key]?.head_armor || 0);
+        body_armor += parseInt(userLoadoutValues[key]?.body_armor || 0);
+        weight += parseInt(userLoadoutValues[key]?.weight || 0);
+      });
+    }
+    return {
+      leg: leg_armor,
+      arm: arm_armor,
+      head: head_armor,
+      body: body_armor,
+      weight: weight,
+    };
   }
 
   const handleDrop1 = useCallback(
@@ -335,6 +376,11 @@ function App() {
         ...prevUserLoadout,
         [accepts[0]]: item.name,
       }));
+      setUserLoadoutValues((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [lookup[item.name]?.slot]: lookup[item.name],
+      }));
+
       const { name } = item;
 
       setDroppedLoadoutNames(
@@ -360,7 +406,10 @@ function App() {
         ...prevUserLoadout,
         [accepts[0]]: item.name,
       }));
-
+      setUserLoadoutValues((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [lookup[item.name]?.slot]: lookup[item.name],
+      }));
       const { name } = item;
       const { amount } = item;
       setDroppedLoadoutNames(
@@ -388,7 +437,10 @@ function App() {
         ...prevUserLoadout,
         [accepts[0]]: item.name,
       }));
-
+      setUserLoadoutValues((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        [lookup[item.name]?.slot]: lookup[item.name],
+      }));
       const { name } = item;
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
@@ -599,6 +651,12 @@ function App() {
 
   return (
     <div className="homepage">
+      {/*<AudioPlayer
+        autoPlay
+        src="http://example.com/audio.mp3"
+        onPlay={(e) => console.log("onPlay")}
+        // other props here
+      /> */}
       <ToastContainer
         position="top-left"
         bodyClassName="toastBody"
@@ -726,6 +784,7 @@ function App() {
                 fontSize: "18px",
               }}
               onClick={() => {
+                console.log(getLoadoutTotals());
                 setLgShow(true);
               }}
             >
@@ -755,10 +814,17 @@ function App() {
                       }}
                     >
                       {" "}
-                      {capitalizeFirstLetter(key)} - {userLoadout[key]}{" "}
+                      {capitalizeFirstLetter(key)} - {userLoadout[key]}
                     </p>
                   );
-                })}
+                })}{" "}
+                <div class="armor">
+                  <p> Arm Armor: {getLoadoutTotals()["arm"]} </p>{" "}
+                  <p> Head Armor: {getLoadoutTotals()["head"]} </p>{" "}
+                  <p> Chest Armor: {getLoadoutTotals()["body"]} </p>{" "}
+                  <p> Leg Armor: {getLoadoutTotals()["leg"]} </p>{" "}
+                  <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
+                </div>
                 <div className="modal-button ">
                   <Button
                     variant="success"
@@ -815,14 +881,20 @@ function App() {
                           <p style={{ fontWeight: "bold" }}> [{slot}] </p>
                           <p
                             style={{
-                              fontSize: "15px",
+                              fontSize: "16px",
                               width: "100px",
                               overflow: "initial",
+                              fontWeight: "500",
                             }}
                           >
                             {" "}
-                            {shortenTokenLength(name)} x{amount}{" "}
+                            {shortenTokenLength(name)}{" "}
                           </p>
+                          <p style={{ fontSize: "12.5px" }}>
+                            {" "}
+                            {`Qunatity: ${amount}`}{" "}
+                          </p>
+
                           <p style={{ fontSize: "12.5px" }}>
                             {" "}
                             {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}

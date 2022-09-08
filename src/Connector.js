@@ -513,10 +513,10 @@ export default class Connector extends React.Component {
                     userLoadout.push({
                         name: data.onchain_metadata.name,
                         slot: data.onchain_metadata.slot,
-                        arm_armor: data.onchain_metadata["arm armor"] || "",
-                        leg_armor: data.onchain_metadata["leg armor"] || "",
-                        body_armor: data.onchain_metadata["body armor"] || "",
-                        head_armor: data.onchain_metadata["head armor"] || "",
+                        arm_armor: data.onchain_metadata["arm armor"] || 0,
+                        leg_armor: data.onchain_metadata["leg armor"] || 0,
+                        body_armor: data.onchain_metadata["body armor"] || 0,
+                        head_armor: data.onchain_metadata["head armor"] || 0,
                         weight: data.onchain_metadata.weight,
                         amount: this.state.contentQunatity[key],
                         image: `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
