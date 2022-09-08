@@ -99,6 +99,7 @@ audio {
   border-right: none;
   border-left: none;
   text-align: center;
+  margin-bottom: -20px;
 }
 
 .modal-bg {
