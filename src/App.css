@@ -89,6 +89,18 @@ audio {
   font-size: 16px;
 }
 
+.armor-top {
+  width: 40%;
+  display: flex;
+  font-size: 15px;
+  font-size: -30px;
+  border: 2px solid #eec07a;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  text-align: center;
+}
+
 .modal-bg {
   background: url(images/cold.png);
   background-size: cover;

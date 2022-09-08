@@ -307,6 +307,7 @@ function App() {
       HorseHarness: "",
       Ape: "",
     });
+    setUserLoadoutValues({});
 
     ResetDustbins();
   }
@@ -784,7 +785,6 @@ function App() {
                 fontSize: "18px",
               }}
               onClick={() => {
-                console.log(getLoadoutTotals());
                 setLgShow(true);
               }}
             >
@@ -922,6 +922,21 @@ function App() {
                 )}
             </div>
           </div>
+        ) : (
+          ""
+        )}
+        {isConnected ? (
+          <Row>
+            <Col>
+              <div class="armor-top ">
+                <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
+                <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
+                <p> Chest: {getLoadoutTotals()["body"]} </p>{" "}
+                <p> Leg: {getLoadoutTotals()["leg"]} </p>{" "}
+                <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
+              </div>
+            </Col>
+          </Row>
         ) : (
           ""
         )}
