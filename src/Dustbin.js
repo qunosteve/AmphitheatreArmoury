@@ -72,7 +72,7 @@ export const Dustbin = memo(function Dustbin({
         className={isActive ? "small_box_body_ready" : "small_box_body"}
         ref={drop}
         style={{
-          backgroundColor: lastDroppedItem ? "#632623" : "none",
+          backgroundColor: "none",
         }}
         data-testid="dustbin"
       >

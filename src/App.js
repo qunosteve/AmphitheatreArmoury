@@ -408,7 +408,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: item.name,
+        [accepts[0]]: shortenTokenLength(item.name),
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -438,7 +438,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: item.name,
+        [accepts[0]]: shortenTokenLength(item.name),
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -469,7 +469,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: item.name,
+        [accepts[0]]: shortenTokenLength(item.name),
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -911,7 +911,7 @@ function App() {
                   {postedTransactions.map((key, index) => {
                     return (
                       <a
-                        href={`https://cardanoscan.io/transaction/${key}`}
+                        href={`https://cardanoscan.io/transaction/${key}?tab=metadata`}
                         target="_blank"
                       >
                         <p style={{ fontSize: "16px" }}>{key}</p>
