@@ -128,7 +128,8 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
-
+  const [refreshToken, setRefreshToken] = useState(false);
+  const [postedTransactions, setPostedTransactions] = useState([]);
   const [lookup, setLookup] = useState({});
   const [txHash, setTxHash] = useState(undefined);
   const [utxoSpent, setUtxoSpent] = useState(TransactionUnspentOutputs.new());
@@ -146,6 +147,7 @@ function App() {
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(0);
   const [lgShow, setLgShow] = useState(false);
+  const [lgShowLoad, setLgShowLoad] = useState(false);
   const [apeSelected, setApeSelected] = useState(false);
   const [userLoadout, setUserLoadout] = useState({
     Head: "",
@@ -179,7 +181,7 @@ function App() {
   };
 
   let API = undefined;
-  const lovelaceToSend = 1000000;
+  const lovelaceToSend = 1001001;
 
   const [onChainLoadout, setOnChainLoadout] = useState([]);
   const [transformedLoadout, setTransformedLoadout] = useState({});
@@ -222,22 +224,29 @@ function App() {
     if (walletContent != {}) {
       setWalletContent(walletContent);
       if (txUnspentOutput) {
-        console.log(txUnspentOutput);
         setUtxoSpent(txUnspentOutput);
       }
       if (Object.keys(filtered).length == 0) {
         setNoApe(true);
       } else {
+        setNoApe(false);
         setFiltered(filtered);
       }
       if (userLoadoutContentArray.length == 0) {
         setNoLoadout(true);
       } else {
+        setNoLoadout(false);
         setOnChainLoadout(userLoadoutContentArray);
         transformOnchainLoadout();
-        //lookupFunction();
       }
       setGotContent(true);
+    }
+  }
+
+  function getTransactionsPosted(postedTransactions) {
+    if (postedTransactions) {
+      const reversePosted = postedTransactions.reverse();
+      setPostedTransactions(reversePosted);
     }
   }
 
@@ -245,6 +254,27 @@ function App() {
     if (changeAddress) {
       setWalletAddress(changeAddress);
     }
+    /* if (changeAddress === walletAddress || walletAddress === "") {
+      setWalletAddress(changeAddress);
+    } else if (changeAddress !== walletAddress) {
+      setWalletAddress(changeAddress);
+      ResetDustbins();
+      setUserLoadoutValues({});
+      setUserLoadout({
+        Head: "",
+        Body: "",
+        Cape: "",
+        Gloves: "",
+        Leg: "",
+        Item0: "",
+        Item1: "",
+        Item2: "",
+        Item3: "",
+        Horse: "",
+        HorseHarness: "",
+        Ape: "",
+      });
+    }*/
   }
 
   function numberWithCommas(x) {
@@ -264,6 +294,10 @@ function App() {
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function handleLoadout() {
+    setLgShowLoad(true);
   }
 
   function onTermChange(event) {
@@ -308,8 +342,6 @@ function App() {
       Ape: "",
     });
     setUserLoadoutValues({});
-
-    ResetDustbins();
   }
   function lookupFunction() {
     var lookup = {};
@@ -347,7 +379,6 @@ function App() {
   }
 
   function getLoadoutTotals() {
-    console.log(userLoadoutValues);
     let leg_armor = 0;
     let arm_armor = 0;
     let head_armor = 0;
@@ -534,7 +565,14 @@ function App() {
       progress: undefined,
     });
     setLgShow(false);
+    //setRefreshToken(true);
   };
+
+  /*  const notifyRefresh = () => {
+    const refreshContent = toast.loading(
+      "We are fetching your latest onchain loadout. Please hold."
+    );
+  }; */
 
   const enableWallet = async () => {
     const walletKey = whichWallet;
@@ -652,12 +690,13 @@ function App() {
 
   return (
     <div className="homepage">
-      {/*<AudioPlayer
-        autoPlay
-        src="http://example.com/audio.mp3"
-        onPlay={(e) => console.log("onPlay")}
-        // other props here
-      /> */}
+      {/*
+        <ReactAudioPlayer
+          src="http://docs.google.com/uc?export=open&id=1g0-HJ2l1bHvuEIBqiASD5JEn08bNHRY9"
+          autoPlay
+          controls
+        />
+      */}
       <ToastContainer
         position="top-left"
         bodyClassName="toastBody"
@@ -674,8 +713,9 @@ function App() {
               whichWalletSet={whichWallet}
               isError={handleIsError}
               userLoadoutContentArray={onWalletContent}
+              getTransactions={getTransactionsPosted}
             />
-            <Loading />
+            {!refreshToken ? <Loading /> : ""}
           </div>
         ) : (
           ""
@@ -756,6 +796,15 @@ function App() {
                     <p>Disconnect</p>
                   </Button>{" "}
                 </span>
+                <span>
+                  <Button
+                    variant="light"
+                    onClick={handleLoadout}
+                    className="buttons_tas"
+                  >
+                    <p>Loadouts</p>
+                  </Button>
+                </span>
               </div>
             ) : (
               <Button
@@ -821,7 +870,7 @@ function App() {
                 <div class="armor">
                   <p> Arm Armor: {getLoadoutTotals()["arm"]} </p>{" "}
                   <p> Head Armor: {getLoadoutTotals()["head"]} </p>{" "}
-                  <p> Chest Armor: {getLoadoutTotals()["body"]} </p>{" "}
+                  <p> Body Armor: {getLoadoutTotals()["body"]} </p>{" "}
                   <p> Leg Armor: {getLoadoutTotals()["leg"]} </p>{" "}
                   <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
                 </div>
@@ -838,6 +887,50 @@ function App() {
                     onClick={() => buildSendADATransaction()}
                   >
                     Confirm
+                  </Button>
+                </div>
+              </Modal.Body>
+            </Modal>
+            <Modal
+              size="lg"
+              show={lgShowLoad}
+              onHide={() => setLgShowLoad(false)}
+              aria-labelledby="example-modal-sizes-title-lg"
+            >
+              <Modal.Body bsPrefix="modal-bg">
+                <div
+                  className="modal-title"
+                  style={{ fontFamily: "Cabin, sans-serif" }}
+                >
+                  <h2 style={{ paddingBottom: "10px" }}>
+                    {" "}
+                    Your On-Chain Loadouts{" "}
+                  </h2>
+                  {postedTransactions.map((key, index) => {
+                    return (
+                      <a
+                        href={`https://cardanoscan.io/transaction/${key}`}
+                        target="_blank"
+                      >
+                        <p style={{ fontSize: "16px" }}>{key}</p>
+                        <br />
+                      </a>
+                    );
+                  })}
+                </div>
+                <div className="modal-button">
+                  <Button
+                    className="buttons_tas"
+                    style={{
+                      float: "right",
+                      width: "100px",
+                      height: "50px",
+                      fontSize: "18px",
+                      fontFamily: "Cabin, sans-serif",
+                    }}
+                    onClick={() => setLgShowLoad(false)}
+                  >
+                    Close
                   </Button>
                 </div>
               </Modal.Body>
@@ -931,7 +1024,7 @@ function App() {
               <div class="armor-top ">
                 <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
-                <p> Chest: {getLoadoutTotals()["body"]} </p>{" "}
+                <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
                 <p> Leg: {getLoadoutTotals()["leg"]} </p>{" "}
                 <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
               </div>

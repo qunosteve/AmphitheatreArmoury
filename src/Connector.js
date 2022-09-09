@@ -90,6 +90,7 @@ export default class Connector extends React.Component {
             userLoadoutMetadata: undefined,
             contentQunatity: undefined,
             isEntered: false,
+            postedTransactions: [],
 
             networkId: undefined,
             Utxos: undefined,
@@ -368,6 +369,7 @@ export default class Connector extends React.Component {
         let societyCounter = 0;
         let prevContentQuantity = {};
         let prevAmount = 0;
+        let txID = [];
 
         try {
             const rawUtxos = await this.API.getUtxos();
@@ -384,6 +386,11 @@ export default class Connector extends React.Component {
                 const txindx = input.index();
                 const output = utxo.output();
                 const amount = output.amount().coin().to_str(); // ADA amount in lovelace
+                if (amount === "1001001") {
+                    if (!txID.find((tx) => tx === txid)) {
+                        txID.push(txid);
+                    }
+                }
                 const multiasset = output.amount().multiasset();
                 //console.log(multiasset);
                 let multiAssetStr = "";
@@ -476,7 +483,6 @@ export default class Connector extends React.Component {
                     TransactionUnspentOutput: utxo,
                 };
                 Utxos.push(obj);
-                // console.log(`utxo: ${str}`)
             }
 
             this.setState({ Utxos });
@@ -488,6 +494,9 @@ export default class Connector extends React.Component {
                 this.setOnChainLoadout();
             });
             this.setState({ contentQunatity });
+            this.setState({ postedTransactions: txID }, () => {
+                console.log(`from Connect ${this.state.postedTransactions}`);
+            });
         } catch (err) {
             console.log(err);
             this.props.isError(err);
@@ -723,9 +732,8 @@ export default class Connector extends React.Component {
                     await this.getChangeAddress();
                     await this.getRewardAddresses();
                     await this.getUsedAddresses();
-                    if (!this.props.userLoadoutMetadata) {
-                        this.getWalletContent();
-                    }
+                    this.getWalletContent();
+                    this.getPostedTx();
                 } else {
                     await this.setState({
                         Utxos: null,
@@ -905,6 +913,12 @@ export default class Connector extends React.Component {
         this.pollWallets();
         await this.refreshData();
     }
+
+    getPostedTx = () => {
+        if (this.state.postedTransactions) {
+            this.props.getTransactions(this.state.postedTransactions);
+        }
+    };
 
     getWalletContent = async () => {
         if (

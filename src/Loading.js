@@ -4,7 +4,7 @@ import Logo from "./images/logo-apes.png";
 
 const Loading = (props) => {
 	return (
-		<div>
+		<div className="isLoading">
 			<div className="sk-grid-position">
 				<div class="sk-grid">
 					<div class="sk-grid-cube"></div>

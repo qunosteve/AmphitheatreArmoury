@@ -82,11 +82,20 @@ audio {
   height: 15px;
 }
 
+.react-audio-player {
+  color: green;
+}
+
 .armor {
   padding-top: 40px;
   width: 100%;
   display: flex;
   font-size: 16px;
+}
+
+.isLoading {
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 .armor-top {
@@ -100,6 +109,11 @@ audio {
   border-left: none;
   text-align: center;
   margin-bottom: -20px;
+}
+
+a,
+u {
+  text-decoration: none !important;
 }
 
 .modal-bg {
