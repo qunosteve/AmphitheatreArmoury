@@ -128,6 +128,7 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
+  const [beenHere, setBeenHere] = useState(false);
   const [refreshToken, setRefreshToken] = useState(false);
   const [postedTransactions, setPostedTransactions] = useState([]);
   const [lookup, setLookup] = useState({});
@@ -244,9 +245,9 @@ function App() {
   }
 
   function getTransactionsPosted(postedTransactions) {
-    if (postedTransactions) {
-      const reversePosted = postedTransactions.reverse();
-      setPostedTransactions(reversePosted);
+    if (postedTransactions && !beenHere) {
+      setBeenHere(true);
+      setPostedTransactions(postedTransactions.reverse());
     }
   }
 
@@ -327,6 +328,7 @@ function App() {
     setApeSelected(false);
     setWalletContent({});
     setFiltered({});
+    setBeenHere(false);
     setUserLoadout({
       Head: "",
       Body: "",
