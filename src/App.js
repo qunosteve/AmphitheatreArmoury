@@ -904,7 +904,7 @@ function App() {
                   className="modal-title"
                   style={{ fontFamily: "Cabin, sans-serif" }}
                 >
-                  <h2 style={{ paddingBottom: "10px" }}>
+                  <h2 style={{ paddingBottom: "30px" }}>
                     {" "}
                     Your On-Chain Loadouts{" "}
                   </h2>
@@ -920,7 +920,7 @@ function App() {
                     );
                   })}
                 </div>
-                <div className="modal-button">
+                <div className="modal-button" style={{ paddingTop: "0px" }}>
                   <Button
                     className="buttons_tas"
                     style={{
