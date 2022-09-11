@@ -503,6 +503,10 @@ export default class Connector extends React.Component {
         }
     };
 
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
     getUserLoadoutContent = async () => {
         if (this.state.userLoadoutContent.length != 0) {
             let userLoadout = [];
@@ -521,7 +525,9 @@ export default class Connector extends React.Component {
 
                     userLoadout.push({
                         name: data.onchain_metadata.name,
-                        slot: data.onchain_metadata.slot,
+                        slot: this.capitalizeFirstLetter(
+                            data.onchain_metadata.slot
+                        ),
                         arm_armor: data.onchain_metadata["arm armor"] || 0,
                         leg_armor: data.onchain_metadata["leg armor"] || 0,
                         body_armor: data.onchain_metadata["body armor"] || 0,

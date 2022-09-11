@@ -188,6 +188,7 @@ function App() {
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
+    console.log(userLoadoutValues);
     pollWallets();
     lookupFunction();
     if (!apeSelected && Object.keys(filtered).length != 0) {
@@ -466,6 +467,7 @@ function App() {
   );
 
   const handleDrop3 = useCallback(
+    /* camel */
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -689,6 +691,8 @@ function App() {
       notifyError();
     }
   };
+
+  let acceptsItem = ["Item"];
 
   return (
     <div className="homepage">
@@ -1094,7 +1098,9 @@ function App() {
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => handleDrop1(index, item, accepts)}
+                  onDrop={(item) => {
+                    handleDrop1(index, item, accepts);
+                  }}
                   key={index}
                   img={
                     lastDroppedItem
@@ -1135,9 +1141,27 @@ function App() {
             {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
-                  accept={accepts}
+                  accept={
+                    accepts[0] === "Item0" ||
+                    accepts[0] === "Item1" ||
+                    accepts[0] === "Item2" ||
+                    accepts[0] === "Item3"
+                      ? acceptsItem
+                      : accepts
+                  }
                   lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => handleDrop3(index, item, accepts)}
+                  onDrop={(item) => {
+                    if (
+                      accepts === "Item0" ||
+                      accepts === "Item1" ||
+                      accepts === "Item2" ||
+                      accepts === "Item3"
+                    ) {
+                      accepts = "Item";
+                    }
+
+                    handleDrop3(index, item, accepts);
+                  }}
                   key={index}
                   img={
                     lastDroppedItem
@@ -1145,6 +1169,7 @@ function App() {
                       : ""
                   }
                 />
+                {console.log(acceptsItem[0])}
               </Col>
             ))}
           </Row>
