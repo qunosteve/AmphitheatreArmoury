@@ -36,6 +36,40 @@ h4 {
   align-items: center;
 }
 
+.input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid wheat;
+  color: wheat;
+  box-sizing: border-box;
+  font-family: "Cabin", sans-serif;
+  font-size: 13px;
+  padding: 10px 0px;
+}
+
+.input:focus + .underline {
+  transform: scale(1);
+}
+
+.underline {
+  display: inline-block;
+  height: 2px;
+  left: 50px;
+  margin-top: -4px;
+  position: absolute;
+  top: 185px;
+  -webkit-transform: scale(0, 1);
+  transform: scale(0, 1);
+  -webkit-transition: all 0.5s linear;
+  transition: all 0.5s linear;
+  width: 202px;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
 .wallet-label span {
   font-size: 20px;
   font-family: RobotoRegular;

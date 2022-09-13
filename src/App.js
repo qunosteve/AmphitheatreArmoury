@@ -38,6 +38,8 @@ import Tooltip from "react-bootstrap/Tooltip";
 import ReactAudioPlayer from "react-audio-player";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
+import ReactSearchBox from "react-search-box";
+import SearchBar from "./SearchBar.js";
 //import { Lucid, Blockfrost } from "lucid-cardano";
 import {
   Address,
@@ -165,6 +167,7 @@ function App() {
     Ape: "",
   });
   const [userLoadoutValues, setUserLoadoutValues] = useState({});
+  const [searchList, setSearchList] = useState([]);
 
   let protocolParams = {
     linearFee: {
@@ -188,7 +191,6 @@ function App() {
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
-    console.log(userLoadoutValues);
     pollWallets();
     lookupFunction();
     if (!apeSelected && Object.keys(filtered).length != 0) {
@@ -239,6 +241,7 @@ function App() {
       } else {
         setNoLoadout(false);
         setOnChainLoadout(userLoadoutContentArray);
+        setSearchList(userLoadoutContentArray);
         transformOnchainLoadout();
       }
       setGotContent(true);
@@ -694,6 +697,18 @@ function App() {
 
   let acceptsItem = ["Item"];
 
+  function OnInputSubmit(term) {
+    const List = onChainLoadout.filter((obj) => {
+      if (
+        obj["name"].toLowerCase().includes(term) ||
+        obj["slot"].toLowerCase().includes(term)
+      ) {
+        return obj;
+      }
+    });
+    setSearchList(List);
+  }
+
   return (
     <div className="homepage">
       {/*
@@ -951,8 +966,9 @@ function App() {
         {isConnected && !noLoadout ? (
           <div>
             <div className="loadout">
-              {onChainLoadout.length > 0 &&
-                onChainLoadout.map(
+              <SearchBar OnInputSubmit={OnInputSubmit} />
+              {searchList.length > 0 &&
+                searchList.map(
                   (
                     {
                       name,

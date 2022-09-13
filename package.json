@@ -26,6 +26,7 @@
     "react-h5-audio-player": "^3.8.5",
     "react-responsive-carousel": "^3.2.23",
     "react-scripts": "5.0.0",
+    "react-search-box": "^2.3.0",
     "react-toastify": "^9.0.8",
     "web-vitals": "^2.1.4"
   },
