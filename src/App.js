@@ -564,7 +564,7 @@ function App() {
   const notify = () => {
     toast.success("Transaction submitted. Please check your wallet.", {
       position: "top-left",
-      autoClose: 5000,
+      autoClose: 15000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
