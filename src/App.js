@@ -547,7 +547,7 @@ function App() {
 
   const notifyError = () => {
     toast.error(
-      "Something went wrong. Plese refresh and try again. Make sure you have enough ada in your wallet to cover your assets in change address.",
+      "Something went wrong. Please refresh and try again. Make sure you have enough ada in your wallet to cover your assets in change address.",
       {
         position: "top-left",
         autoClose: 5000,
