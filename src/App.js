@@ -858,7 +858,7 @@ function App() {
                 setLgShow(true);
               }}
             >
-              <p style={{ color: "white" }}> Go To War </p>
+              <p style={{ color: "white" }}> Enter the Arena! </p>
             </Button>{" "}
             <Modal
               size="lg"
