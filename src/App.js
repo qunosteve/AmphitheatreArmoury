@@ -622,7 +622,7 @@ function App() {
       const shelleyChangeAddress = Address.from_bech32(walletAddress);
 
       generalMetadata.insert(
-        BigNum.from_str("674"),
+        BigNum.from_str("1888"),
         encode_json_str_to_metadatum(JSON.stringify(userLoadout))
       );
 
