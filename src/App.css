@@ -210,12 +210,12 @@ p {
 
 .loadout::-webkit-scrollbar-thumb {
   background-color: wheat; /* Set the color of the scrollbar thumb */
-  border-radius: 10px; /* Round the edges of the thumb */
+  border-radius: 15px; /* Round the edges of the thumb */
 }
 
 .loadout::-webkit-scrollbar-track {
-  background-color: rgb(234, 213, 194); /* Set the color of the scrollbar track */
-  border-radius: 10px; /* Round the edges of the track */
+  background-color: ivory; /* Set the color of the scrollbar track */
+  border-radius: 15px; /* Round the edges of the track */
 }
 
 .loadout_no_gear {
