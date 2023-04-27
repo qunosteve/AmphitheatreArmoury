@@ -2,37 +2,39 @@ import React from "react";
 import "./App.css";
 
 class SearchBar extends React.Component {
+	state = { term: "" };
+
 	constructor(props) {
 		super(props);
-		this.state = { term: "" };
 	}
 
-	onTermChange = ({ target: { value } }) => {
-		this.setState({ term: value.toLowerCase() }, () => {
-			this.props.onInputSubmit(this.state.term);
+	OnTermChange = (event) => {
+		this.setState({ term: event.target.value }, () => {
+			this.props.OnInputSubmit(this.state.term.toLowerCase());
 		});
 	};
 
-	onSubmit = (event) => {
+	OnSubmit = (event) => {
 		event.preventDefault();
-		this.props.onInputSubmit(this.state.term);
+		this.props.OnInputSubmit(this.state.term);
 	};
 
 	render() {
 		return (
 			<div className="ui category search">
+				{" "}
 				<br />
-				<form onSubmit={this.onSubmit}>
-					<label id="formHome">{this.props.msg}</label>
+				<div onSubmit={this.OnSubmit}>
+					<label id="formHome"> {this.props.msg} </label>
 					<input
-						className="input"
+						class="input"
 						type="text"
 						placeholder="search your gear"
 						value={this.state.term}
-						onChange={this.onTermChange}
+						onChange={this.OnTermChange}
 					/>
-					<i className="search icon"></i>
-				</form>
+					<i class="search icon"></i>
+				</div>
 			</div>
 		);
 	}
