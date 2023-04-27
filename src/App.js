@@ -1007,7 +1007,7 @@ function App() {
                           </p>
                           <p style={{ fontSize: "12.5px" }}>
                             {" "}
-                            {`Qunatity: ${amount}`}{" "}
+                            {`Quantity: ${amount}`}{" "}
                           </p>
 
                           <p style={{ fontSize: "12.5px" }}>
