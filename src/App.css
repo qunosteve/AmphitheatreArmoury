@@ -209,7 +209,7 @@ p {
 }
 
 .loadout::-webkit-scrollbar-thumb {
-  background-color: wheat; /* Set the color of the scrollbar thumb */
+  background-color: #eec07a; /* Set the color of the scrollbar thumb */
 }
 
 .loadout::-webkit-scrollbar-track {
