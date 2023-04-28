@@ -999,14 +999,16 @@ function App() {
                           <p
                             style={{
                               fontSize: "16px",
-                              width: "100px",
+                              width: "120px",
+                              wordWrap: "break-word",
                               overflow: "initial",
+                              textAlign: "center",
                               fontWeight: "500",
                               color: changeTextColor(tier)
                             }}
                           >
                             {" "}
-                            {tier + " " + shortenTokenLength(name)}{" "}
+                            {shortenTokenLength(name)}{" "}
                           </p>
                           <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
