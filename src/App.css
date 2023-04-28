@@ -230,10 +230,10 @@ p {
   color: wheat;
 }
 
-.loadout_img {
-  width: 70px;
-  height: 70px;
-  margin: 12px;
+.gear_img {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
 }
 
 .small_box_loadout {

@@ -79,7 +79,7 @@ export const Dustbin = memo(function Dustbin({
         {lastDroppedItem && (
           <img
             src={img}
-            className="loadout_img"
+            className="gear_img"
             style={{ background: "none !important" }}
           />
         )}
