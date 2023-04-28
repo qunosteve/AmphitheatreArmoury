@@ -16,7 +16,7 @@ function changeTextColor(value) {
   if (value in colorOptions) {
     return colorOptions[value];
   } else {
-    return'#ivory';
+    return'ivory';
   }
 }
 
