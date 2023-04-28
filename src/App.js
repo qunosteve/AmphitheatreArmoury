@@ -965,7 +965,7 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div className="loadout">
+            <div className="inventory">
               <SearchBar OnInputSubmit={OnInputSubmit} />
               {searchList.length > 0 &&
                 searchList.map(
@@ -1057,7 +1057,7 @@ function App() {
         )}
 
         {noLoadout ? (
-          <div className="loadout_no_gear">
+          <div className="inventory_no_gear">
             <Row>
               <Col>
                 <h2 style={{ textAlign: "center", marginTop: "100px" }}>
