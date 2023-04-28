@@ -190,7 +190,7 @@ p {
   text-overflow: ellipsis;
 }
 
-.loadout {
+.inventory {
   display: grid;
   justify-content: center;
   border: 2px solid #eec07a;
@@ -204,19 +204,19 @@ p {
 }
 
 /* Style the scrollbar */
-.loadout::-webkit-scrollbar {
+.inventory::-webkit-scrollbar {
   width: 10px; /* Set the width of the scrollbar */
 }
 
-.loadout::-webkit-scrollbar-thumb {
+.inventory::-webkit-scrollbar-thumb {
   background-color: #eec07a; /* Set the color of the scrollbar thumb */
 }
 
-.loadout::-webkit-scrollbar-track {
+.inventory::-webkit-scrollbar-track {
   background-color: ivory; /* Set the color of the scrollbar track */
 }
 
-.loadout_no_gear {
+.inventory_no_gear {
   display: grid;
   justify-content: center;
   border: 2px solid #eec07a;
@@ -239,8 +239,8 @@ p {
 .small_box_loadout {
   border: 2px solid #eec07a;
   border-radius: 5px;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   margin-top: 20px;
   cursor: move;
 }
@@ -249,21 +249,21 @@ p {
   border: 2px solid #eec07a;
   border-radius: 5px;
   text-align: center;
-  height: 100px;
+  height: 120px;
 }
 
 .small_box_body_ready {
   border: 2px solid green;
   border-radius: 5px;
   text-align: center;
-  height: 100px;
+  height: 120px;
 }
 
 .small_box_item {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
-  height: 100px;
+  height: 120px;
   background-color: orange;
 }
 
@@ -271,7 +271,7 @@ p {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
-  height: 100px;
+  height: 120px;
   background-color: #297e9a;
 }
 .carousel {
