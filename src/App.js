@@ -398,7 +398,6 @@ function App() {
         head_armor += parseInt(userLoadoutValues[key]?.head_armor || 0);
         body_armor += parseInt(userLoadoutValues[key]?.body_armor || 0);
         weight += parseInt(userLoadoutValues[key]?.weight || 0);
-        tier += parseInt(userLoadoutValues[key]?.tier || 0);
       });
     }
     return {
