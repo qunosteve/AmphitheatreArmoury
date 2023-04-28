@@ -398,6 +398,7 @@ function App() {
         head_armor += parseInt(userLoadoutValues[key]?.head_armor || 0);
         body_armor += parseInt(userLoadoutValues[key]?.body_armor || 0);
         weight += parseInt(userLoadoutValues[key]?.weight || 0);
+        tier += parseInt(userLoadoutValues[key]?.tier || 0);
       });
     }
     return {
@@ -1012,7 +1013,7 @@ function App() {
                             {" "}
                             {`Quantity: ${amount}`}{" "}
                           </p>
-
+                          
                           <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}
@@ -1033,6 +1034,7 @@ function App() {
                             {" "}
                             {weight ? `Weight: ${weight}` : ""}{" "}
                           </p>
+                          
                         </div>
                       </Col>
                     </Row>
