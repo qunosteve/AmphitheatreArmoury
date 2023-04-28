@@ -1008,7 +1008,7 @@ function App() {
                             }}
                           >
                             {" "}
-                            {shortenTokenLength(name)}{" "}
+                            {tier ? tier + " " + shortenTokenLength(name) : shortenTokenLength(name)}{" "}
                           </p>
                           <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
