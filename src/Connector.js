@@ -525,10 +525,10 @@ export default class Connector extends React.Component {
 
                     userLoadout.push({
                         name: data.onchain_metadata.name,
+                        tier: data.onchain_metadata.tier,
                         slot: this.capitalizeFirstLetter(
                             data.onchain_metadata.slot
                         ),
-                        tier: data.onchain_metadata["tier"] || 0,
                         arm_armor: data.onchain_metadata["arm armor"] || 0,
                         leg_armor: data.onchain_metadata["leg armor"] || 0,
                         body_armor: data.onchain_metadata["body armor"] || 0,
