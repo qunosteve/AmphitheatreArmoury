@@ -40,7 +40,7 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import ReactSearchBox from "react-search-box";
 import SearchBar from "./SearchBar.js";
-import changeTextColor from ".tiercolor.js";
+import changeTextColor from "./tiercolor.js";
 //import { Lucid, Blockfrost } from "lucid-cardano";
 import {
   Address,
