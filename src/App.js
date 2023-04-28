@@ -1006,28 +1006,28 @@ function App() {
                             {" "}
                             {shortenTokenLength(name)}{" "}
                           </p>
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {`Quantity: ${amount}`}{" "}
                           </p>
 
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}
                           </p>
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {body_armor ? `Body armor: ${body_armor}` : ""}{" "}
                           </p>
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {head_armor ? `Head armor: ${head_armor}` : ""}{" "}
                           </p>
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {arm_armor ? `Arm armor: ${arm_armor}` : ""}{" "}
                           </p>
-                          <p style={{ fontSize: "12.5px" }}>
+                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {weight ? `Weight: ${weight}` : ""}{" "}
                           </p>
