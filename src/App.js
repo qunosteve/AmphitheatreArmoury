@@ -1001,7 +1001,6 @@ function App() {
                               fontSize: "16px",
                               width: "120px",
                               wordWrap: "break-word",
-                              overflow: "initial",
                               textAlign: "center",
                               fontWeight: "500",
                               color: changeTextColor(tier)
