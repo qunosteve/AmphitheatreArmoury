@@ -1000,7 +1000,7 @@ function App() {
                               width: "100px",
                               overflow: "initial",
                               fontWeight: "500",
-                              color: "48baff"
+                              color: "#48baff"
                             }}
                           >
                             {" "}
