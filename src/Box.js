@@ -30,3 +30,5 @@ export const Box = memo(function Box({ name, type, isDropped, img }) {
     </div>
   );
 });
+
+
