@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "./SpinKit.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -9,39 +8,19 @@ import { memo, useCallback, useState, useEffect } from "react";
 import { Box } from "./Box";
 import { ItemTypes } from "./ItemTypes.js";
 import { Dustbin } from "./Dustbin.js";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import king from "./images/king.png";
 import society from "./images/Society.png";
-import ra from "./images/ra.png";
-import mo from "./images/mo.png";
-import craftsman from "./images/craftsman.png";
-import merchants from "./images/merchants.png";
-import ape_green from "./images/green.jpeg";
-import nyle from "./images/nyle.jpeg";
-import maddo from "./images/maddo.jpeg";
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
-import { RadioGroup, Radio } from "@blueprintjs/core";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import { DropdownItemProps } from "react-bootstrap/DropdownItem";
 import Modal from "react-bootstrap/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import ReactAudioPlayer from "react-audio-player";
-import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import ReactSearchBox from "react-search-box";
 import SearchBar from "./SearchBar.js";
-import changeTextColor from "./colorTiers.js" ;
-//import { Lucid, Blockfrost } from "lucid-cardano";
 import {
   Address,
   BaseAddress,
