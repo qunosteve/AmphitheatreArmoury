@@ -1119,7 +1119,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px", marginTop: "-383px", marginLeft: "10px" }}>
+          <Row style={{ width: "600px", marginTop: "-383px", marginLeft: "10px" }}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1143,7 +1143,7 @@ function App() {
         )}
 
         {isConnected ? (
-          <Row style={{ width: "480px", marginTop: "80px", marginLeft: "10px" }}>
+          <Row style={{ width: "600px", marginTop: "80px", marginLeft: "10px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1164,7 +1164,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "480px", marginTop: "100px",marginLeft: "10px" }}>
+          <Row style={{ width: "600px", marginTop: "100px",marginLeft: "10px" }}>
             {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
