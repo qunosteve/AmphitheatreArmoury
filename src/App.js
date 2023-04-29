@@ -1052,7 +1052,7 @@ function App() {
         {isConnected ? (
           <Row>
             <Col>
-              <div class="armor-top ">
+              <div class="armor_totals_top">
                 <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
