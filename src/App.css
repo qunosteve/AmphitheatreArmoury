@@ -314,7 +314,6 @@ p {
   background-size: cover;
   border: 2px solid #eec07a;
   border-radius: 5px;
-  height: 480px;
   float: left;
   margin-right: 20px;
   margin-top: 20px;
@@ -335,9 +334,7 @@ p {
   background-size: cover;
   border: 2px solid #eec07a;
   border-radius: 5px;
-  height: 480px;
   float: left;
-  width: 480px;
   color: wheat;
   margin-right: 20px;
   margin-top: 20px;
