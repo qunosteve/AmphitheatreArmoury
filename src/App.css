@@ -133,7 +133,7 @@ audio {
 }
 
 .armor-top {
-  width: 40%;
+  width: 480px;
   display: flex;
   font-size: 15px;
   font-size: -30px;
@@ -142,7 +142,7 @@ audio {
   border-right: none;
   border-left: none;
   text-align: center;
-  margin-bottom: -20px;
+  margin-bottom: 10px;
 }
 
 a,
