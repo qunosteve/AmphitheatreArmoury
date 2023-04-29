@@ -95,13 +95,13 @@ function App() {
     { accepts: [ItemTypes.BODY], lastDroppedItem: null },
     { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
     { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
-    { accepts: [ItemTypes.LEG], lastDroppedItem: null },
   ]);
   const [dustbins_row2, setDustbins2] = useState([
     { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+    { accepts: [ItemTypes.LEG], lastDroppedItem: null },
   ]);
   const [dustbins_row3, setDustbins3] = useState([
     { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
@@ -347,13 +347,14 @@ function App() {
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
       { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
-      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
+      
     ]);
     setDustbins2([
       { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
       
     ]);
     setDustbins3([

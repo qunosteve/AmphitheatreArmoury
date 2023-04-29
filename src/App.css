@@ -254,6 +254,7 @@ p {
 
 .small_box_body {
   border: 2px solid #eec07a;
+  padding: 10px;
   border-radius: 5px;
   text-align: center;
   height: 100px;
@@ -266,6 +267,7 @@ p {
   text-align: center;
   height: 100px;
   width: 100px;
+  padding: 10px;
 }
 
 .small_box_item {
