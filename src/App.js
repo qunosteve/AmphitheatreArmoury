@@ -859,7 +859,7 @@ function App() {
               }}
             >
               <p style={{ color: "ivory" }}> Enter Arena </p>
-              <img src="public/amphit.png" style="display: block; margin: 0 auto; width: 75px; height: 75px;"/>
+              <img src="amphit.png" style="display: block; margin: 0 auto; width: 75px; height: 75px;"/>
             </Button>{" "}
             <Modal
               size="lg"
@@ -1053,7 +1053,7 @@ function App() {
           <Row>
             <Col>
               <div class="armour_totals_top">
-                <p style={{ fontWeight: "bold"}}>Armour Totals:</p>{" "}
+                <p style={{ fontWeight: "bold"}}>Totals:</p>{" "}
                 <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
