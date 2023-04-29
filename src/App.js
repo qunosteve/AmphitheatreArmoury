@@ -995,7 +995,7 @@ function App() {
                           img={image}
                         />
                         <div style={{ textAlign: "center" }}>
-                          <p style={{ fontWeight: "bold" }}> [{slot}] </p>
+                         <p style={{ fontWeight: "bold" }}> [{slot}] </p>
                           <p
                             style={{
                               fontSize: "16px",
@@ -1015,6 +1015,7 @@ function App() {
                             {`Quantity: ${amount}`}{" "}
                           </p>
                           
+                          {/*
                           <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}
@@ -1035,6 +1036,7 @@ function App() {
                             {" "}
                             {weight ? `Weight: ${weight}` : ""}{" "}
                           </p>
+                          */}
                           
                         </div>
                       </Col>
