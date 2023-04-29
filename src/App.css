@@ -322,7 +322,7 @@ p {
   border-radius: 5px;
   float: left;
   margin-right: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .buttons_tas {
@@ -340,7 +340,7 @@ p {
   float: left;
   color: wheat;
   margin-right: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .carousel .thumbs-wrapper {
   display: none;
