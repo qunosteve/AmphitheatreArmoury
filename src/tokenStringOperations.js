@@ -1,0 +1,9 @@
+function shortenTokenLength(tokenName) {
+    const tokenWords = tokenName.split(" ");
+    let formattedItemName = "";
+    for (let i = 4; i < tokenWords.length; i++) {
+      formattedItemName +=
+        tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
+    }
+    return formattedItemName;
+  }
