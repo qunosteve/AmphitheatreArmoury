@@ -1055,7 +1055,7 @@ function App() {
         ) : (
           ""
         )}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "left" }}>
         {noLoadout ? (
           <div className="inventory_no_gear">
             <Row>
@@ -1074,7 +1074,7 @@ function App() {
         {isConnected && !noApe ? (
           <Row>
             <Col>
-              <div className="big_box" style={{ position: "fixed", top: 0}}>
+              <div className="big_box" style={{ position: "relative", top: 0}}>
                 <Carousel
                   width="480px"
                   showIndicators={false}
@@ -1099,7 +1099,7 @@ function App() {
         {noApe ? (
           <Row>
             <Col>
-              <div className="big_box_noApe" style={{ position: "fixed", top: 0}}>
+              <div className="big_box_noApe" style={{ position: "relative", top: 0}}>
                 <h2 style={{ marginTop: "240px"}}> No ape found </h2>
               </div>
             </Col>
