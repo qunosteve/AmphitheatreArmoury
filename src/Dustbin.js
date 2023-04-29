@@ -84,7 +84,7 @@ export const Dustbin = memo(function Dustbin({
           />
         )}
       </div>
-      <div
+      {/* <div
         style={{
           textAlign: "center",
           color: "wheat",
@@ -97,7 +97,7 @@ export const Dustbin = memo(function Dustbin({
           : lastDroppedItem
           ? `${shortenTokenLength(lastDroppedItem["name"])}`
           : `${accept}`}
-      </div>
-    </div>
+      </div>*/}
+        </div> 
   );
 });
