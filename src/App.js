@@ -968,7 +968,7 @@ function App() {
             <div style={{float: "right", marginTop: "40px"}}>
                <SearchBar OnInputSubmit={OnInputSubmit} />
                </div>
-            <div className="inventory" style={{float: "right"}}>
+            <div className="inventory" style={{float: "right", clear: "right"}}>
               {searchList.length > 0 &&
                 searchList.map(
                   (
