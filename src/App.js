@@ -1074,7 +1074,7 @@ function App() {
         {isConnected && !noApe ? (
           <Row>
             <Col>
-              <div className="big_box">
+              <div className="big_box" style={{ position: "fixed", top: 0}}>
                 <Carousel
                   width="480px"
                   showIndicators={false}
@@ -1099,7 +1099,7 @@ function App() {
         {noApe ? (
           <Row>
             <Col>
-              <div className="big_box_noApe">
+              <div className="big_box_noApe" style={{ position: "fixed", top: 0}}>
                 <h2 style={{ marginTop: "240px"}}> No ape found </h2>
               </div>
             </Col>
