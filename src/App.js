@@ -1085,7 +1085,7 @@ function App() {
             <Col>
               <div className="big_box">
                 <Carousel
-                  width="426px"
+                  width="480px"
                   showIndicators={false}
                   onChange={apeUpdateInfo}
                   onClickItem={apeUpdateInfo}
