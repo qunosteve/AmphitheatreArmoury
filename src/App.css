@@ -243,25 +243,25 @@ p {
   margin: 0px;
 }
 
-.small_box_loadout {
+.loadout_box_filled {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
-  margin-top: 5px;
+  padding: 10px;
   cursor: move;
 }
 
-.small_box_body {
+.loadout_box_empty {
   border: 2px solid #eec07a;
-  padding: 10px;
   border-radius: 5px;
   text-align: center;
   height: 100px;
   width: 100px;
+  padding: 10px;
 }
 
-.small_box_body_ready {
+.loadout_box_incoming_item {
   border: 2px solid green;
   border-radius: 5px;
   text-align: center;
@@ -276,6 +276,7 @@ p {
   width: 100px;
   height: 100px;
   background-color: orange;
+  padding: 10px;
 }
 
 .small_box_mount {

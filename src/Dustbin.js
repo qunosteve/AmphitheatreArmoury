@@ -69,7 +69,7 @@ export const Dustbin = memo(function Dustbin({
   return (
     <div>
       <div
-        className={isActive ? "small_box_body_ready" : "small_box_body"}
+        className={isActive ? "loadout_box_incoming_item" : "loadout_box_empty"}
         ref={drop}
         style={{
           backgroundColor: "none",

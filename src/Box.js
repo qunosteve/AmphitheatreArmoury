@@ -25,7 +25,7 @@ export const Box = memo(function Box({ name, type, isDropped, img }) {
     [name, type]
   );
   return (
-    <div ref={drag} data-testid="box" className="small_box_loadout">
+    <div ref={drag} data-testid="box" className="loadout_box_filled">
       <img src={img} className="gear_img" />
     </div>
   );
