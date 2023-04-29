@@ -851,7 +851,7 @@ function App() {
                 float: "right",
                 marginRight: "45px",
                 width: "150px",
-                height: "90px",
+                height: "120px",
                 fontSize: "16px",
               }}
               onClick={() => {
@@ -1164,7 +1164,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px", marginTop: "100px",marginLeft: "10px" }}>
+          <Row style={{ width: "480px", marginTop: "100px",marginLeft: "10px" }}>
             {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
