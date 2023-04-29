@@ -231,8 +231,9 @@ p {
 }
 
 .gear_img {
-  width: 120px;
-  height: 120px;
+  width: 116px;
+  height: 116px;
+  margin: 0px;
 }
 
 .small_box_loadout {
