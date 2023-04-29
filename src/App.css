@@ -232,16 +232,16 @@ p {
 }
 
 .gear_img {
-  width: 116px;
-  height: 116px;
+  width: 96px;
+  height: 96px;
   margin: 0px;
 }
 
 .small_box_loadout {
   border: 2px solid #eec07a;
   border-radius: 5px;
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin-top: 5px;
   cursor: move;
 }
@@ -250,23 +250,23 @@ p {
   border: 2px solid #eec07a;
   border-radius: 5px;
   text-align: center;
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
 }
 
 .small_box_body_ready {
   border: 2px solid green;
   border-radius: 5px;
   text-align: center;
-  height: 120px;
-  width: 120px;
+  height: 100px;
+  width: 100px;
 }
 
 .small_box_item {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
-  height: 120px;
+  height: 100px;
   background-color: orange;
 }
 
@@ -274,7 +274,7 @@ p {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
-  height: 120px;
+  height: 100px;
   background-color: #297e9a;
 }
 .carousel {
