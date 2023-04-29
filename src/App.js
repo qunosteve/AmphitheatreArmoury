@@ -346,17 +346,18 @@ function App() {
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
       { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
-    ]);
-    setDustbins2([
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
       { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
     ]);
-    setDustbins3([
+    setDustbins2([
       { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+      
+    ]);
+    setDustbins3([
+      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
       { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
     ]);
   }
@@ -367,6 +368,9 @@ function App() {
   function isDropped(boxName) {
     return droppedLoadoutNames.indexOf(boxName) > -1;
   }
+
+
+  //get loadouttotals function to calculate armour totals
 
   function getLoadoutTotals() {
     let leg_armor = 0;
@@ -1051,7 +1055,7 @@ function App() {
         ) : (
           ""
         )}
-
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         {noLoadout ? (
           <div className="inventory_no_gear">
             <Row>
@@ -1104,7 +1108,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "-383px", marginLeft: "10px" }}>
+          <Row style={{ width: "120px"}}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1126,7 +1130,7 @@ function App() {
         ) : (
           ""
         )}
-
+      </div>
         {isConnected ? (
           <Row style={{ width: "600px", marginTop: "80px", marginLeft: "10px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
