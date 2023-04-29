@@ -851,8 +851,8 @@ function App() {
               variant="success"
               style={{
                 float: "right",
-                marginRight: "30px",
-                width: "180px",
+                marginRight: "45px",
+                width: "150px",
                 height: "90px",
                 fontSize: "16px",
               }}
@@ -1111,7 +1111,7 @@ function App() {
           <Row>
             <Col>
               <div className="big_box_noApe">
-                <h2 style={{ marginTop: "186px" }}> No ape found </h2>
+                <h2 style={{ marginTop: "240px"}}> No ape found </h2>
               </div>
             </Col>
           </Row>
@@ -1119,7 +1119,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "40%", marginTop: "-383px" }}>
+          <Row style={{ width: "120px", marginTop: "-383px", marginLeft: "10px" }}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
