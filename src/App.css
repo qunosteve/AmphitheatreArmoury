@@ -206,6 +206,7 @@ p {
 /* Style the scrollbar */
 .inventory::-webkit-scrollbar {
   width: 10px; /* Set the width of the scrollbar */
+  margin: 5px;
 }
 
 .inventory::-webkit-scrollbar-thumb {
