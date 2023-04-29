@@ -995,7 +995,7 @@ function App() {
                           img={image}
                         />
                         <div style={{ textAlign: "center" }}>
-                         {/* <p style={{ fontWeight: "bold" }}> [{slot}] </p> */}
+                         {/* <p style={{ fontWeight: "bold" }}> [{slot}] </p> 
                           <p
                             style={{
                               fontSize: "16px",
@@ -1010,7 +1010,7 @@ function App() {
                             {" "}
                             {tier ? tier + " " + shortenTokenLength(name) : shortenTokenLength(name)}{" "}
                           </p>
-                          {/*
+                          
                           <p style={{ fontSize: "12.5px", color: "ivory" }}>
                             {" "}
                             {`Quantity: ${amount}`}{" "}
