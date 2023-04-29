@@ -222,6 +222,20 @@ p {
   margin-left: 1px;
 }
 
+/* Style the scrollbar */
+.inventory_no_gear::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+  margin: 5px;
+}
+
+.inventory_no_gear::-webkit-scrollbar-thumb {
+  background-color: #eec07a; /* Set the color of the scrollbar thumb */
+}
+
+.inventory_no_gear::-webkit-scrollbar-track {
+  background-color: #fffff000; /* Set the color of the scrollbar track */
+}
+
 .gear_img {
   width: 96px;
   height: 96px;

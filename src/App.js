@@ -1052,7 +1052,7 @@ function App() {
           <Row>
             <Col>
               <div class="armour_totals_top">
-                <p style={{ fontWeight: bold}}>Armour Totals:</p>{" "}
+                <p style={{ fontWeight: "bold"}}>Armour Totals:</p>{" "}
                 <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
