@@ -852,7 +852,6 @@ function App() {
               style={{
                 float: "right",
                 width: "120px",
-                height: "120px",
                 fontSize: "16px",
               }}
               onClick={() => {

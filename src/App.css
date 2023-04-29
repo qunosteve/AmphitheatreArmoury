@@ -188,8 +188,8 @@ p {
   border: 2px solid #eec07a;
   float: right;
   overflow-y: scroll;
-  height: 590px;
-  width: 190px;
+  height: 480px;
+  width: 240px;
   margin-top: 20px;
   border-radius: 5px;
   margin-left: 1px;
@@ -215,13 +215,27 @@ p {
   border: 2px solid #eec07a;
   float: right;
   overflow: scroll;
-  height: 400px;
-  width: 150px;
+  height: 480px;
+  width: 240px;
   margin-top: 20px;
   border-radius: 5px;
-  margin-right: 10px;
-  color: wheat;
+  margin-left: 1px;
 }
+/* Style the scrollbar */
+.inventory_no_gear::-webkit-scrollbar {
+  width: 10px; /* Set the width of the scrollbar */
+  margin: 5px;
+}
+
+.inventory_no_gear::-webkit-scrollbar-thumb {
+  background-color: #eec07a; /* Set the color of the scrollbar thumb */
+}
+
+.inventory_no_gear::-webkit-scrollbar-track {
+  background-color: #fffff000; /* Set the color of the scrollbar track */
+}
+
+
 
 .gear_img {
   width: 96px;
