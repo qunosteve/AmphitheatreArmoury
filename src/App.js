@@ -1052,7 +1052,8 @@ function App() {
         {isConnected ? (
           <Row>
             <Col>
-              <div class="armor_totals_top">
+              <div class="armour_totals_top">
+                <p style={{ fontWeight: bold}}>Armour Totals:</p>{" "}
                 <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}

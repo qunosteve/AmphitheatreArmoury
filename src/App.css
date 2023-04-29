@@ -125,11 +125,10 @@ audio {
   z-index: 999;
 }
 
-.armor_totals_top {
+.armour_totals_top {
   width: 480px;
   display: flex;
   font-size: 15px;
-  font-size: -30px;
   border: 2px solid #eec07a;
   border-top: none;
   border-right: none;
