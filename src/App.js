@@ -851,15 +851,15 @@ function App() {
               variant="success"
               style={{
                 float: "right",
-                width: "120px",
+                width: "240px",
+                height: "100px",
                 fontSize: "16px",
               }}
               onClick={() => {
                 setLgShow(true);
               }}
             >
-              <p style={{ color: "ivory" }}> Enter Arena </p>
-              <img src="amphit.png" style={{ display: "block", margin: "0 auto", width: "75px", height: "75px" }} />
+              <p style={{ color: "ivory" }}> Enter the Arena </p>
             </Button>{" "}
             <Modal
               size="lg"
