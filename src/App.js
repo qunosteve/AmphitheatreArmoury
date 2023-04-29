@@ -851,7 +851,7 @@ function App() {
               variant="success"
               style={{
                 float: "right",
-                marginRight: "60px",
+                marginRight: "30px",
                 width: "180px",
                 height: "60px",
                 fontSize: "16px",
