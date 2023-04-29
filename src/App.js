@@ -99,19 +99,17 @@ function App() {
     { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
     { accepts: [ItemTypes.BODY], lastDroppedItem: null },
     { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
-  ]);
-
-  const [dustbins_row2, setDustbins2] = useState([
     { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
-    { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-    { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
   ]);
-
-  const [dustbins_row3, setDustbins3] = useState([
+  const [dustbins_row2, setDustbins2] = useState([
     { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+    { accepts: [ItemTypes.LEG], lastDroppedItem: null },
+  ]);
+  const [dustbins_row3, setDustbins3] = useState([
+    { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
   ]);
 
@@ -1143,7 +1141,7 @@ function App() {
         )}
 
         {isConnected ? (
-          <Row style={{ width: "40%", marginTop: "80px" }}>
+          <Row style={{ width: "120px", marginTop: "80px", marginLeft: "10px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1164,7 +1162,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "80%", marginTop: "100px" }}>
+          <Row style={{ width: "120px", marginTop: "100px",marginLeft: "10px" }}>
             {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
