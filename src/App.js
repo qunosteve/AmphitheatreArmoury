@@ -955,7 +955,7 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div style={{float: "right", marginRight: "100px"}}>
+            <div style={{float: "right", marginRight: "100px", marginTop: "20px"}}>
                <SearchBar OnInputSubmit={OnInputSubmit} />
                </div>
             <div className="inventory" style={{float: "right", clear: "right"}}>
