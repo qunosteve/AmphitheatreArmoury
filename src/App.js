@@ -21,7 +21,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-h5-audio-player/lib/styles.css";
 import SearchBar from "./SearchBar.js";
-import shortenTokenLength from "./tokenStringOperations.js"
 import {
   Address,
   BaseAddress,
@@ -73,6 +72,20 @@ import {
   StakeCredential,
 } from "@emurgo/cardano-serialization-lib-asmjs";
 let Buffer = require("buffer/").Buffer;
+
+//build shortenTokenLength function
+
+function shortenTokenLength(tokenName) {
+  const tokenWords = tokenName.split(" ");
+  let formattedItemName = "";
+  for (let i = 4; i < tokenWords.length; i++) {
+    formattedItemName +=
+      tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
+  }
+  return formattedItemName;
+}
+
+
 
 // Establish Loadout GearBox Structure
 
