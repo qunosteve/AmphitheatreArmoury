@@ -213,7 +213,7 @@ p {
 }
 
 .inventory::-webkit-scrollbar-track {
-  background-color: ivory; /* Set the color of the scrollbar track */
+  background-color: #fffff000; /* Set the color of the scrollbar track */
 }
 
 .inventory_no_gear {
