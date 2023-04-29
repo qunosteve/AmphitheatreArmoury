@@ -967,8 +967,8 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
+            <SearchBar OnInputSubmit={OnInputSubmit} />
             <div className="inventory">
-              <SearchBar OnInputSubmit={OnInputSubmit} />
               {searchList.length > 0 &&
                 searchList.map(
                   (
