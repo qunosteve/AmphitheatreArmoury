@@ -314,9 +314,9 @@ p {
   background-size: cover;
   border: 2px solid #eec07a;
   border-radius: 5px;
-  height: 430px;
-  float: right;
-  margin-right: 40px;
+  height: 480px;
+  float: left;
+  margin-right: 20px;
   margin-top: 20px;
 }
 
@@ -335,11 +335,11 @@ p {
   background-size: cover;
   border: 2px solid #eec07a;
   border-radius: 5px;
-  height: 430px;
-  float: right;
-  width: 426px;
+  height: 480px;
+  float: left;
+  width: 480px;
   color: wheat;
-  margin-right: 40px;
+  margin-right: 20px;
   margin-top: 20px;
 }
 .carousel .thumbs-wrapper {
@@ -347,6 +347,6 @@ p {
 }
 .box_text {
   text-align: center;
-  color: white;
+  color: ivory;
   margin-top: 33px;
 }
