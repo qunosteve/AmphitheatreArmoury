@@ -851,8 +851,9 @@ function App() {
               variant="success"
               style={{
                 float: "right",
-                width: "240px",
-                height: "100px",
+                marginRight: "60px",
+                width: "180px",
+                height: "60px",
                 fontSize: "16px",
               }}
               onClick={() => {
