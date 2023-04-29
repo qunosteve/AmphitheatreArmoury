@@ -1057,8 +1057,8 @@ function App() {
                 <p style={{ fontWeight: "bold", textAlign: "right"}}>Totals:</p>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
-                <p> Arm: {getLoadoutTotals()["arm"]} </p>{" "}              
-                <p> Leg: {getLoadoutTotals()["leg"]} </p>{" "}
+                <p> Arms: {getLoadoutTotals()["arm"]} </p>{" "}              
+                <p> Legs: {getLoadoutTotals()["leg"]} </p>{" "}
                 <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
               </div>
             </Col>
