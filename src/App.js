@@ -73,6 +73,8 @@ import {
 } from "@emurgo/cardano-serialization-lib-asmjs";
 let Buffer = require("buffer/").Buffer;
 
+// Establish Loadout GearBox Structure
+
 function App() {
   const [dustbins_row1, setDustbins1] = useState([
     { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
