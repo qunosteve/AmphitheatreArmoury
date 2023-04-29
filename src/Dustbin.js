@@ -17,21 +17,21 @@ const style = {
 
 const ImagePlaceHolders = {
   Head:
-    "/images/helmet_icon.png",
+    "images/helmet_icon.png",
   Shoulders:
-    "/images/pauldrons.png",
+    "images/pauldrons.png",
   Torso:
-    "/images/chest_armor.png",
+    "images/chest_armor.png",
   Arms:
-    "/images/gauntlet.png",
+    "images/gauntlet.png",
   Legs:
-  "/images/boots.png",
-  Item0: "/images/switch_weapons.png",
-  Item1: "/images/switch_weapons.png",
-  Item2: "/images/switch_weapons.png",
-  Item3: "/images/switch_weapons.png",
-  Horse: "/images/horse.png",
-  Saddle: "/images/saddle.png",
+  "images/boots.png",
+  Item0: "images/switch_weapons.png",
+  Item1: "images/switch_weapons.png",
+  Item2: "images/switch_weapons.png",
+  Item3: "images/switch_weapons.png",
+  Horse: "images/horse.png",
+  Saddle: "images/saddle.png",
 };
 export const Dustbin = memo(function Dustbin({
   accept,
