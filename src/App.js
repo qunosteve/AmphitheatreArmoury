@@ -859,6 +859,7 @@ function App() {
               }}
             >
               <p style={{ color: "ivory" }}> Enter Arena </p>
+              <img src="public/amphit.png" style="display: block; margin: 0 auto; width: 75px; height: 75px;"/>
             </Button>{" "}
             <Modal
               size="lg"
