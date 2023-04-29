@@ -120,19 +120,12 @@ audio {
   color: green;
 }
 
-.armor {
-  padding-top: 40px;
-  width: 100%;
-  display: flex;
-  font-size: 16px;
-}
-
 .isLoading {
   background: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
 
-.armor-top {
+.armor_totals_top {
   width: 480px;
   display: flex;
   font-size: 15px;
