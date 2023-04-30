@@ -732,7 +732,7 @@ function App() {
         )}
 
         <Row style={{ paddingTop: "10px" }}>
-          <Col>
+          <Col className="col-1">
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
@@ -772,7 +772,7 @@ function App() {
               ""
             )}
             </Col>
-            <Col class="text-left">
+            <Col className="col-1">
              {isConnected ? (
                   <Button
                     variant="light"
