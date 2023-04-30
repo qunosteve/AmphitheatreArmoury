@@ -772,7 +772,7 @@ function App() {
               ""
             )}
             </Col>
-            <Col style={{textAlign: "left"}}>
+            <Col class="text-left">
              {isConnected ? (
                   <Button
                     variant="light"
@@ -783,7 +783,7 @@ function App() {
                   </Button>           
              ) : "" }
              </Col>
-          <Col class="offset-md-2"
+          <Col class="align-self-center"
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
               width: "auto", 
