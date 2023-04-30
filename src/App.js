@@ -1200,7 +1200,7 @@ function App() {
         {!isConnected && !isLoading ? (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "75vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
-            <br></br>
+            <br>
             <h1
               style={{
                 color: "wheat",
@@ -1209,7 +1209,7 @@ function App() {
               }}
             >
               Connect your wallet to continue
-            </h1>
+            </h1></br>
           </div>
         ) : (
           ""
