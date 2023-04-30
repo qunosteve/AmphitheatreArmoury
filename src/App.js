@@ -773,17 +773,13 @@ function App() {
             )}
             <Col>
              {isConnected ? (
-              <span>
-                  {" "}
                   <Button
                     variant="light"
                     onClick={handleEditWallet}
                     className="buttons_tas"
                   >
                     <p>Disconnect</p>
-                  </Button>{" "}
-                </span> 
-              
+                  </Button>           
              ) : "" }
              </Col>
            </Col>
