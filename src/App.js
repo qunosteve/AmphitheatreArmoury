@@ -1153,8 +1153,9 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ display: "flex", flexDirection: "row", alignItems: "center", width: "600px" }}>
+          <Row style={{ width: "600px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
+              <Col>
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
@@ -1168,6 +1169,7 @@ function App() {
                       : ""
                   }
                 />
+              </Col>
             ))}
           </Row>
         ) : (
