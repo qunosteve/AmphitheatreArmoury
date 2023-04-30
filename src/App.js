@@ -1200,7 +1200,7 @@ function App() {
             flexDirection: "column",
             alignItems: "center"
           }}>
-            <img src="images/armoury_banner.png" alt="Armoury Banner" />
+            <img src="/images/armoury_banner.png" alt="Armoury Banner" />
             <h1
               style={{
                 color: "wheat",
