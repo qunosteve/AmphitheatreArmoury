@@ -783,7 +783,7 @@ function App() {
                   </Button>           
              ) : "" }
              </Col>
-          <Col class="align-self-center"
+          <Col className="col-4" class="align-self-center"
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
               width: "auto", 
