@@ -899,9 +899,26 @@ function App() {
     <Col className="col-4">
     </Col>
     <Col className="col-4">
+    <img src={blankimage}/>
     </Col>
     <Col className="col-4">
-    <img src={blankimage}/>
+    <div className="readyButton" style={{float: "right", clear: "right"}}>
+              <Button
+                disabled={!isConnected}
+                variant="success"
+                style={{
+                float: "right",
+                marginTop: "20px",
+                marginRight: "15px",
+                width: "150px",
+                height: "120px",
+                fontSize: "16px",
+                backgroundColor: "#eec07a" }}
+                onClick={() => {
+                  setLgShow(true); }}  >
+                  <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena! </p>
+              </Button>  
+            </div> 
             <Modal
               size="lg"
               show={lgShow}
@@ -964,24 +981,7 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div className="readyButton" style={{float: "right", clear: "right"}}>
-              <Button
-                disabled={!isConnected}
-                variant="success"
-                style={{
-                float: "right",
-                marginTop: "20px",
-                marginRight: "15px",
-                width: "150px",
-                height: "120px",
-                fontSize: "16px",
-                backgroundColor: "#eec07a" }}
-                onClick={() => {
-                  setLgShow(true); }}  >
-                  <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
-              </Button>  
-            </div> 
-            <div style={{float: "right", marginRight: "25px", clear: "right"}}>
+            <div style={{float: "right", clear: "right"}}>
               <SearchBar OnInputSubmit={OnInputSubmit} />
             </div>
             <div className="inventory" style={{float: "right", clear: "right"}}>
