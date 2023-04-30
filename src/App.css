@@ -39,12 +39,11 @@ h4 {
 .input {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid wheat;
+  border-bottom: 2px solid #eec07a;
   color: wheat;
   box-sizing: border-box;
   font-family: "Cabin", sans-serif;
-  font-size: 13px;
-  padding: 10px 0px;
+  font-size: 15px;
 }
 
 .input:focus + .underline {

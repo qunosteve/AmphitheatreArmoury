@@ -964,11 +964,11 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div style={{float: "right", clear: "right"}}>
-              <img src={onchaingear}/>
-            </div>
             <div style={{float: "right", marginRight: "25px", clear: "right"}}>
-               <SearchBar OnInputSubmit={OnInputSubmit} />
+              <SearchBar OnInputSubmit={OnInputSubmit} />
+            </div>
+            <div style={{float: "right",  clear: "right"}}>
+              <img src={onchaingear}/> 
                </div>
             <div className="inventory" style={{float: "right", clear: "right"}}>
               {searchList.length > 0 &&
@@ -1138,7 +1138,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px", marginTop: "10px",  marginLeft: "10px" }}>
+          <Row style={{ width: "120px", marginTop: "10px",  marginLeft: "0px" }}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
