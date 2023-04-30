@@ -838,7 +838,7 @@ function App() {
           <Col>
             {" "}
             
-            {isConnected ? (
+            { isConnected ? (
             <Button
               disabled={!isConnected}
               variant="success"
@@ -854,8 +854,11 @@ function App() {
               }}
             >
               <p style={{ color: "ivory" }}> Enter the Arena </p>
-            </Button>{" "}
-            )  : ("" ) }
+            </Button>
+            ) : 
+            ("") 
+            }
+            
             <Modal
               size="lg"
               show={lgShow}
