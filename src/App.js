@@ -1133,29 +1133,8 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "80px", marginLeft: "10px" }}>
+          <Row style={{ width: "600px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-              <Col>
-                <Dustbin
-                  accept={accepts}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => handleDrop2(index, item, accepts)}
-                  key={index}
-                  img={
-                    lastDroppedItem
-                      ? transformedLoadout[lastDroppedItem["name"]]
-                      : ""
-                  }
-                />
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          ""
-        )}
-        {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "100px",marginLeft: "10px" }}>
-            {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
                   accept={
@@ -1186,7 +1165,28 @@ function App() {
                       : ""
                   }
                 />
-                {console.log(acceptsItem[0])}
+
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          ""
+        )}
+        {isConnected ? (
+          <Row style={{ width: "240px"}}>
+            {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
+              <Col>
+                <Dustbin
+                  accept={accepts}
+                  lastDroppedItem={lastDroppedItem}
+                  onDrop={(item) => handleDrop2(index, item, accepts)}
+                  key={index}
+                  img={
+                    lastDroppedItem
+                      ? transformedLoadout[lastDroppedItem["name"]]
+                      : ""
+                  }
+                />
               </Col>
             ))}
           </Row>

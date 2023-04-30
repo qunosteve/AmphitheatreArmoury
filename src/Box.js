@@ -1,7 +1,6 @@
 import { memo } from "react";
 import { useDrag } from "react-dnd";
 import { ItemTypes } from "./ItemTypes.js";
-import ra from "./images/ra.png";
 import "./App.css";
 
 const style = {
@@ -25,7 +24,7 @@ export const Box = memo(function Box({ name, type, isDropped, img }) {
     [name, type]
   );
   return (
-    <div ref={drag} data-testid="box" className="loadout_box_filled">
+    <div ref={drag} data-testid="box" className="inventory_box">
       <img src={img} className="gear_img" />
     </div>
   );
