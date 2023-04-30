@@ -837,6 +837,8 @@ function App() {
           </Col>
           <Col>
             {" "}
+            
+            {isConnected ? (
             <Button
               disabled={!isConnected}
               variant="success"
@@ -853,6 +855,7 @@ function App() {
             >
               <p style={{ color: "ivory" }}> Enter the Arena </p>
             </Button>{" "}
+            )  : ("" ) }
             <Modal
               size="lg"
               show={lgShow}
@@ -1200,7 +1203,7 @@ function App() {
         {!isConnected && !isLoading ? (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "75vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
-            <br>
+            
             <h1
               style={{
                 color: "wheat",
@@ -1209,7 +1212,7 @@ function App() {
               }}
             >
               Connect your wallet to continue
-            </h1></br>
+            </h1>
           </div>
         ) : (
           ""
