@@ -838,9 +838,11 @@ function App() {
           </Col>
           <Col>
             {" "}
-            <div style={{alignItems: "right", justifyContent: "right"}}>
+            {isConnected ? (
+            <div style={{textAlign: "right"}}>
               <img src={taslogowheat}/>
             </div>
+             ) : "" }
             <Modal
               size="lg"
               show={lgShowLoad}
