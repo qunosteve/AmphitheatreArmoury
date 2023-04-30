@@ -843,7 +843,6 @@ function App() {
                 float: "right",
                 marginRight: "45px",
                 width: "150px",
-                height: "120px",
                 fontSize: "16px",
               }}
               onClick={() => {
