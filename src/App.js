@@ -1197,17 +1197,19 @@ function App() {
 
         {!isConnected && !isLoading ? (
           <div>
+            <img src={armoury_banner} className="sk-grid-position" alignItems="center"/>
             <h1
               style={{
                 color: "wheat",
                 fontFamily: "Cabin, sans-serif",
-                textAlign: "center"
+                textAlign: "center",
+                marginTop: "100px"
               }}
               className="sk-grid-position"
             >
               Connect your wallet to continue
             </h1>
-            <img src={armoury_banner} className="sk-grid-position" />
+            
           </div>
 
         ) : (
