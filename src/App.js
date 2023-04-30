@@ -14,6 +14,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
+import taslogowheat from "./images/taslogowheat.png"
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -731,6 +732,8 @@ function App() {
           ""
         )}
 
+        {// this is the row that shows the wallet controls 
+        }
         <Row style={{ paddingTop: "10px" }}>
           <Col className="col-4" style={{ display: "flex", justifyContent: "space-between" }}>
             {wallets ? (
@@ -836,26 +839,82 @@ function App() {
           <Col>
             {" "}
             
-            { isConnected ? (
-            <Button
-              disabled={!isConnected}
-              variant="success"
-              style={{
-                float: "right",
-                marginRight: "45px",
-                width: "150px",
-                fontSize: "16px",
-              }}
-              onClick={() => {
-                setLgShow(true);
-              }}
+
+            <Modal
+              size="lg"
+              show={lgShowLoad}
+              onHide={() => setLgShowLoad(false)}
+              aria-labelledby="example-modal-sizes-title-lg"
             >
-              <p style={{ color: "ivory" }}> Enter the Arena </p>
-            </Button>
-            ) : 
-            ("") 
-            }
-            
+              <Modal.Body bsPrefix="modal-bg">
+                <div
+                  className="modal-title"
+                  style={{ fontFamily: "Cabin, sans-serif" }}
+                >
+                  <h2 style={{ paddingBottom: "30px" }}>
+                    {" "}
+                    Your On-Chain Loadouts{" "}
+                  </h2>
+                  {postedTransactions.map((key, index) => {
+                    return (
+                      <a
+                        href={`https://cardanoscan.io/transaction/${key}?tab=metadata`}
+                        target="_blank"
+                      >
+                        <p style={{ fontSize: "16px" }}>{key}</p>
+                        <br />
+                      </a>
+                    );
+                  })}
+                </div>
+                <div className="modal-button" style={{ paddingTop: "0px" }}>
+                  <Button
+                    className="buttons_tas"
+                    style={{
+                      float: "right",
+                      width: "100px",
+                      height: "50px",
+                      fontSize: "18px",
+                      fontFamily: "Cabin, sans-serif",
+                    }}
+                    onClick={() => setLgShowLoad(false)}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </Modal.Body>
+            </Modal>
+          </Col>
+        </Row>
+
+      {//The following row shows logos and the Ready button
+      }
+{isConnected ? (
+  <Row>
+    <Col className="col-4">
+      <div style={{alignItems: "center", justifyContent: "center"}}>
+        <img src={armoury_banner} />
+      </div>
+    </Col>
+    <Col className="col-4">
+      <div style={{alignItems: "center", justifyContent: "center"}}>
+        <img src={taslogowheat} />
+      </div>
+    </Col>
+    <Col className="col-4">
+      <Button
+        disabled={!isConnected}
+        variant="success"
+        style={{
+        float: "right",
+        marginRight: "45px",
+        width: "150px",
+		    height: "90px",
+        fontSize: "16px", }}
+        onClick={() => {
+          setLgShow(true); }}  >
+          <p style={{ color: "ivory" }}> Enter the Arena </p>
+      </Button>        
             <Modal
               size="lg"
               show={lgShow}
@@ -906,54 +965,11 @@ function App() {
                     Confirm
                   </Button>
                 </div>
-              </Modal.Body>
-            </Modal>
-            <Modal
-              size="lg"
-              show={lgShowLoad}
-              onHide={() => setLgShowLoad(false)}
-              aria-labelledby="example-modal-sizes-title-lg"
-            >
-              <Modal.Body bsPrefix="modal-bg">
-                <div
-                  className="modal-title"
-                  style={{ fontFamily: "Cabin, sans-serif" }}
-                >
-                  <h2 style={{ paddingBottom: "30px" }}>
-                    {" "}
-                    Your On-Chain Loadouts{" "}
-                  </h2>
-                  {postedTransactions.map((key, index) => {
-                    return (
-                      <a
-                        href={`https://cardanoscan.io/transaction/${key}?tab=metadata`}
-                        target="_blank"
-                      >
-                        <p style={{ fontSize: "16px" }}>{key}</p>
-                        <br />
-                      </a>
-                    );
-                  })}
-                </div>
-                <div className="modal-button" style={{ paddingTop: "0px" }}>
-                  <Button
-                    className="buttons_tas"
-                    style={{
-                      float: "right",
-                      width: "100px",
-                      height: "50px",
-                      fontSize: "18px",
-                      fontFamily: "Cabin, sans-serif",
-                    }}
-                    onClick={() => setLgShowLoad(false)}
-                  >
-                    Close
-                  </Button>
-                </div>
-              </Modal.Body>
-            </Modal>
-          </Col>
-        </Row>
+      </Modal.Body>
+    </Modal>
+  </Col>
+</Row>
+) : "" }
 
         {/*  <Row style={{ marginTop: "-35px", float: "right" }}>
         
