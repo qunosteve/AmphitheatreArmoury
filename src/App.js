@@ -1197,7 +1197,9 @@ function App() {
 
         {!isConnected && !isLoading ? (
           <div>
-            <img src={armoury_banner} className="sk-grid-position" alignItems="center"/>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <img src={armoury_banner} className="sk-grid-position" alt="Armoury banner" />
+          </div>
             <h1
               style={{
                 color: "wheat",
