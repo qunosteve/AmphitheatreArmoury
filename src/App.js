@@ -735,7 +735,7 @@ function App() {
         {// this is the row that shows the wallet controls 
         }
         <Row style={{ paddingTop: "10px" }}>
-          <Col className="col-4" style={{ display: "flex", justifyContent: "space-between" }}>
+          <Col className="col-4" style={{ display: "flex", alignItems: "center"}}>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
@@ -775,7 +775,7 @@ function App() {
               ""
             )}
              {isConnected ? (
-                  <div style={{textAlign: "left"}}>
+                  <div style={{textAlign: "left", marginLeft: "10px"}}>
                   <Button
                     variant="light"
                     onClick={handleEditWallet}
@@ -892,13 +892,14 @@ function App() {
 {isConnected ? (
   <Row>
     <Col className="col-4">
-      <div style={{alignItems: "center", justifyContent: "center"}}>
-        <img src={armoury_banner} />
+      <div style={{alignItems: "left", justifyContent: "center"}}>
+        <img src={taslogowheat} height="80px"/>
       </div>
     </Col>
     <Col className="col-4">
       <div style={{alignItems: "center", justifyContent: "center"}}>
-        <img src={taslogowheat} />
+        {// <img src={taslogowheat} />
+      }
       </div>
     </Col>
     <Col className="col-4">
@@ -909,11 +910,11 @@ function App() {
         float: "right",
         marginRight: "45px",
         width: "150px",
-		    height: "90px",
+		    height: "120px",
         fontSize: "16px", }}
         onClick={() => {
           setLgShow(true); }}  >
-          <p style={{ color: "ivory" }}> Enter the Arena </p>
+          <p style={{ color: "ivory" }}> Enter the Amphitheatre </p>
       </Button>        
             <Modal
               size="lg"
@@ -1173,7 +1174,7 @@ function App() {
         {isConnected ? (
           <Row style={{ width: "600px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-              <Col>
+               <Col style={{ width: "110px" }}>
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
@@ -1219,7 +1220,7 @@ function App() {
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
             
-            <h1
+           {/* <h1
               style={{
                 color: "wheat",
                 fontFamily: "Sans-Serif",
@@ -1227,7 +1228,8 @@ function App() {
               }}
             >
               Connect your wallet to continue
-            </h1>
+            </h1> */
+          }
           </div>
         ) : (
           ""
