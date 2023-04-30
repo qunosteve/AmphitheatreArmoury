@@ -772,12 +772,14 @@ function App() {
               ""
             )}
              {isConnected ? (
-                  <Button>
+                  <div style={{textAlign: "left"}}>
+                  <Button
                     variant="light"
                     onClick={handleEditWallet}
-                    className="buttons_tas"
+                    className="buttons_tas">
                     <p>Disconnect</p>
                   </Button>           
+                  </div>
              ) : "" }
           </Col>
           <Col className="col-4" class="align-self-center"
