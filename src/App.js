@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
+import armoury_banner from "./images/armoury_banner.png"
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -1196,7 +1197,7 @@ function App() {
 
         {!isConnected && !isLoading ? (
           <div>
-            <img src="./images/armoury_banner.png" />
+            <img src={armoury_banner} />
             <h1
               style={{
                 color: "wheat",
