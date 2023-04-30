@@ -1198,24 +1198,18 @@ function App() {
         )}
 
         {!isConnected && !isLoading ? (
-          <div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
-          </div>
             <h1
               style={{
                 color: "wheat",
                 fontFamily: "Cabin, sans-serif",
                 textAlign: "center",
-                marginTop: "100px"
               }}
-              className="sk-grid-position"
             >
               Connect your wallet to continue
             </h1>
-            
           </div>
-
         ) : (
           ""
         )}
