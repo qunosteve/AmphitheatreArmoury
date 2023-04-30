@@ -1178,7 +1178,7 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "10px" }}>
+          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "15px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
                <Col style={{ width: "112px" }}>
                 <Dustbin
