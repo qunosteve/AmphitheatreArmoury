@@ -1118,7 +1118,7 @@ function App() {
           <Row style={{ width: "120px"}}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
-                              <Dustbin
+                <Dustbin
                   accept={
                     accepts[0] === "Item0" ||
                     accepts[0] === "Item1" ||
@@ -1155,9 +1155,8 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px" }}>
+          <Row style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "600px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-              
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
@@ -1171,7 +1170,6 @@ function App() {
                       : ""
                   }
                 />
-              
             ))}
           </Row>
         ) : (
