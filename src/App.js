@@ -1206,8 +1206,8 @@ function App() {
               className="sk-grid-position"
             >
               Connect your wallet to continue
-              <img src={armoury_banner} />
             </h1>
+            <img src={armoury_banner} />
           </div>
 
         ) : (
