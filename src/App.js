@@ -732,7 +732,7 @@ function App() {
         )}
 
         <Row style={{ paddingTop: "10px" }}>
-          <Col className="col-3">
+          <Col className="col-3" style={{ display: "flex", justifyContent: "space-between" }}>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
