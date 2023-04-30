@@ -1120,10 +1120,26 @@ function App() {
           <Row style={{ width: "120px"}}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
-                <Dustbin
-                  accept={accepts}
+                              <Dustbin
+                  accept={
+                    accepts[0] === "Item0" ||
+                    accepts[0] === "Item1" ||
+                    accepts[0] === "Item2" ||
+                    accepts[0] === "Item3"
+                      ? acceptsItem
+                      : accepts
+                  }
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item) => {
+                    if (
+                      accepts === "Item0" ||
+                      accepts === "Item1" ||
+                      accepts === "Item2" ||
+                      accepts === "Item3"
+                    ) {
+                      accepts = "Item";
+                    }
+
                     handleDrop1(index, item, accepts);
                   }}
                   key={index}
@@ -1145,26 +1161,10 @@ function App() {
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
-                  accept={
-                    accepts[0] === "Item0" ||
-                    accepts[0] === "Item1" ||
-                    accepts[0] === "Item2" ||
-                    accepts[0] === "Item3"
-                      ? acceptsItem
-                      : accepts
-                  }
+                  accept={accepts}
                   lastDroppedItem={lastDroppedItem}
                   onDrop={(item) => {
-                    if (
-                      accepts === "Item0" ||
-                      accepts === "Item1" ||
-                      accepts === "Item2" ||
-                      accepts === "Item3"
-                    ) {
-                      accepts = "Item";
-                    }
-
-                    handleDrop3(index, item, accepts);
+                    handleDrop2(index, item, accepts);
                   }}
                   key={index}
                   img={
@@ -1173,7 +1173,6 @@ function App() {
                       : ""
                   }
                 />
-
               </Col>
             ))}
           </Row>
@@ -1187,7 +1186,7 @@ function App() {
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => handleDrop2(index, item, accepts)}
+                  onDrop={(item) => handleDrop3(index, item, accepts)}
                   key={index}
                   img={
                     lastDroppedItem
