@@ -189,10 +189,9 @@ p {
   float: right;
   overflow-y: scroll;
   height: 360px;
-  width: 240px;
+  width: 150px;
   margin-top: 20px;
   border-radius: 5px;
-  margin-left: 1px;
 }
 
 /* Style the scrollbar */
@@ -215,8 +214,8 @@ p {
   border: 2px solid #eec07a;
   float: right;
   overflow-y: scroll;
-  height: 480px;
-  width: 240px;
+  height: 360px;
+  width: 150px;
   margin-top: 20px;
   border-radius: 5px;
   margin-left: 1px;
