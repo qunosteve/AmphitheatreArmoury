@@ -1159,7 +1159,7 @@ function App() {
         {isConnected ? (
           <Row style={{ width: "600px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-              <Col className="col-2">
+              <Col className="col-2" padding="10px">
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
