@@ -733,7 +733,7 @@ function App() {
         )}
 
         <Row style={{ paddingTop: "10px" }}>
-          <Col>
+          <Col md={6}>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
@@ -784,7 +784,7 @@ function App() {
                 </span> 
              ) : "" }
           </Col>
-          <Col
+          <Col md={6}
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
               width: "auto",
