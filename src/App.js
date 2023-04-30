@@ -343,20 +343,19 @@ function App() {
   }
 
   function ResetDustbins() {
-    setDustbins1([
+    setDustbins2([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
       { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
+      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
       
     ]);
-    setDustbins2([
+    setDustbins1([
       { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
-      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-      
+      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },      
     ]);
     setDustbins3([
       { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
