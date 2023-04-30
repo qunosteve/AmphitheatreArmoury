@@ -732,7 +732,7 @@ function App() {
         )}
 
         <Row style={{ paddingTop: "10px" }}>
-          <Col className="col-2">
+          <Col className="col-3">
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
@@ -772,17 +772,14 @@ function App() {
               ""
             )}
             </Col>
-            <Col className="col-1">
              {isConnected ? (
-                  <Button
+                  <Button alignItems="top"
                     variant="light"
                     onClick={handleEditWallet}
-                    className="buttons_tas align-self-start"
-                  >
+                    className="buttons_tas">
                     <p>Disconnect</p>
                   </Button>           
              ) : "" }
-             </Col>
           <Col className="col-4" class="align-self-center"
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
