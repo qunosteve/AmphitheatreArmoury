@@ -970,7 +970,7 @@ function App() {
                 marginTop: "20px",
                 marginRight: "15px",
                 width: "150px",
-                height: "90px",
+                height: "120px",
                 fontSize: "16px",
                 backgroundColor: "#eec07a" }}
                 onClick={() => {
@@ -978,9 +978,10 @@ function App() {
                   <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena! </p>
               </Button>  
             </div>
+            {/*
             <div style={{float: "right",  clear: "right"}}>
               <img src={onchaingear}/> 
-            </div> 
+            </div>  */}
             <div style={{float: "right", clear: "right"}}>
               <SearchBar OnInputSubmit={OnInputSubmit} />
             </div>
