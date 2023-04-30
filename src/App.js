@@ -771,6 +771,18 @@ function App() {
             ) : (
               ""
             )}
+             {isConnected ? (
+              <span>
+                  {" "}
+                  <Button
+                    variant="light"
+                    onClick={handleEditWallet}
+                    className="buttons_tas"
+                  >
+                    <p>Disconnect</p>
+                  </Button>{" "}
+                </span> 
+             ) : "" }
           </Col>
           <Col
             style={{
@@ -796,16 +808,6 @@ function App() {
                   }}
                 >
                   {truncate(walletAddress, 11)}
-                </span>
-                <span>
-                  {" "}
-                  <Button
-                    variant="light"
-                    onClick={handleEditWallet}
-                    className="buttons_tas"
-                  >
-                    <p>Disconnect</p>
-                  </Button>{" "}
                 </span>
                 <span>
                   <Button
