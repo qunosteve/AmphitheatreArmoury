@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
 import onchaingear from "./images/onchaingear.png"
+import citizen_expbar from "./images/citizen_expbar.png"
 import taslogowheat from "./images/taslogowheat.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
@@ -896,10 +897,8 @@ function App() {
       }
 {isConnected ? (
   <Row>
-    <Col className="col-4">
-    </Col>
-    <Col className="col-4">
-    <img src={blankimage}/>
+    <Col className="col-8">
+    <img src={citizen_expbar}/>
     </Col>
     <Col className="col-4">
     <div className="readyButton" style={{float: "right", clear: "right"}}>
@@ -1178,7 +1177,7 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "15px" }}>
+          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "13px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
                <Col style={{ width: "112px" }}>
                 <Dustbin
