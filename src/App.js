@@ -893,7 +893,7 @@ function App() {
   <Row>
     <Col className="col-4">
       <div style={{alignItems: "left", justifyContent: "center"}}>
-        <img src={taslogowheat} height="80px"/>
+        <img src={taslogowheat}/>
       </div>
     </Col>
     <Col className="col-4">
@@ -914,7 +914,7 @@ function App() {
         fontSize: "16px", }}
         onClick={() => {
           setLgShow(true); }}  >
-          <p style={{ color: "ivory" }}> Enter the Amphitheatre </p>
+          <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> Enter the Amphitheatre </p>
       </Button>        
             <Modal
               size="lg"
@@ -1194,7 +1194,7 @@ function App() {
         ) : (
           ""
         )}
-        {isConnected ? (
+        {isConnected && noApe ?  (
           <Row style={{ width: "240px"}}>
             {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
