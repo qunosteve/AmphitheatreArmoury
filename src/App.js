@@ -1199,7 +1199,7 @@ function App() {
 
         {!isConnected && !isLoading ? (
           <div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
           </div>
             <h1
