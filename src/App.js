@@ -777,7 +777,7 @@ function App() {
                   <Button
                     variant="light"
                     onClick={handleEditWallet}
-                    className="buttons_tas"
+                    className="buttons_tas align-self-start"
                   >
                     <p>Disconnect</p>
                   </Button>           
