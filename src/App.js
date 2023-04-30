@@ -733,7 +733,7 @@ function App() {
         )}
 
         <Row style={{ paddingTop: "10px" }}>
-          <Col md={6}>
+          <Col>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
