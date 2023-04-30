@@ -266,6 +266,7 @@ p {
   margin-right: 10px;
   margin-left: 10px;
   background-image: url("images/switch_weapons.png");
+  background-size: cover;
   background-position: center; /* This property centers the background image inside the box */
 }
 
