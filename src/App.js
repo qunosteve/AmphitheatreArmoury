@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
 import taslogowheat from "./images/taslogowheat.png"
+import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -903,19 +904,7 @@ function App() {
       </div>
     </Col>
     <Col className="col-4">
-      <Button
-        disabled={!isConnected}
-        variant="success"
-        style={{
-        float: "right",
-        marginRight: "45px",
-        width: "150px",
-		    height: "120px",
-        fontSize: "16px", }}
-        onClick={() => {
-          setLgShow(true); }}  >
-          <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
-      </Button>        
+    <img src={taslogowheat}/>
             <Modal
               size="lg"
               show={lgShow}
@@ -978,7 +967,7 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div style={{float: "right", marginRight: "100px", marginTop: "20px"}}>
+            <div style={{float: "right", marginRight: "100px", marginTop: "10px"}}>
                <SearchBar OnInputSubmit={OnInputSubmit} />
                </div>
             <div className="inventory" style={{float: "right", clear: "right"}}>
@@ -1059,6 +1048,21 @@ function App() {
                   )
                 )}
             </div>
+            <div className="readyButton" style={{float: "right", clear: "right"}}>
+              <Button
+                disabled={!isConnected}
+                variant="success"
+                style={{
+                float: "right",
+                marginRight: "45px",
+                width: "150px",
+                height: "120px",
+                fontSize: "16px", }}
+                onClick={() => {
+                  setLgShow(true); }}  >
+                  <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
+              </Button>  
+            </div> 
           </div>
         ) : (
           ""
@@ -1236,6 +1240,7 @@ function App() {
         )}
       </Container>
     </div>
+    
   );
 }
 
