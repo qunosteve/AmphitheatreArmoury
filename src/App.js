@@ -772,7 +772,7 @@ function App() {
               ""
             )}
             </Col>
-            <Col>
+            <Col className="text-left">
              {isConnected ? (
                   <Button
                     variant="light"
