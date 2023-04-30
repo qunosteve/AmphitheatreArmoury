@@ -771,7 +771,7 @@ function App() {
             ) : (
               ""
             )}
-            </Col>
+            
              {isConnected ? (
                   <Button alignItems="top"
                     variant="light"
@@ -780,6 +780,7 @@ function App() {
                     <p>Disconnect</p>
                   </Button>           
              ) : "" }
+          </Col>
           <Col className="col-4" class="align-self-center"
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
