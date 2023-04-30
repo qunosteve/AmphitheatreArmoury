@@ -771,6 +771,7 @@ function App() {
             ) : (
               ""
             )}
+            </Col>
             <Col>
              {isConnected ? (
                   <Button
@@ -782,7 +783,6 @@ function App() {
                   </Button>           
              ) : "" }
              </Col>
-           </Col>
           <Col
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
