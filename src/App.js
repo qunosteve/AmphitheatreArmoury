@@ -838,8 +838,9 @@ function App() {
           </Col>
           <Col>
             {" "}
-            
-
+            <div style={{alignItems: "right", justifyContent: "right"}}>
+              <img src={taslogowheat}/>
+            </div>
             <Modal
               size="lg"
               show={lgShowLoad}
@@ -892,9 +893,6 @@ function App() {
 {isConnected ? (
   <Row>
     <Col className="col-4">
-      <div style={{alignItems: "left", justifyContent: "center"}}>
-        <img src={taslogowheat}/>
-      </div>
     </Col>
     <Col className="col-4">
       <div style={{alignItems: "center", justifyContent: "center"}}>
@@ -914,7 +912,7 @@ function App() {
         fontSize: "16px", }}
         onClick={() => {
           setLgShow(true); }}  >
-          <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> Enter the Amphitheatre </p>
+          <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
       </Button>        
             <Modal
               size="lg"
