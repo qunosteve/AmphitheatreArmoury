@@ -783,10 +783,10 @@ function App() {
                   </Button>           
              ) : "" }
              </Col>
-          <Col
+          <Col class="offset-md-2"
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
-              width: "auto",
+              width: "auto", 
             }}
           >
             {isConnected ? (
