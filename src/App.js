@@ -1195,12 +1195,8 @@ function App() {
         )}
 
         {!isConnected && !isLoading ? (
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}>
-            <img src="/images/armoury_banner.png" alt="Armoury Banner" />
+          <div>
+            <img src="./images/armoury_banner.png" />
             <h1
               style={{
                 color: "wheat",
