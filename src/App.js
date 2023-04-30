@@ -14,7 +14,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
-import onchaingear from "./images/onchaingear.png.png"
+import onchaingear from "./images/onchaingear.png"
 import taslogowheat from "./images/taslogowheat.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
@@ -1138,7 +1138,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px", marginTop: "10px" }}>
+          <Row style={{ width: "120px", marginTop: "10px",  marginLeft: "10px" }}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1178,9 +1178,9 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "10px" }}>
+          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "10px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-               <Col style={{ width: "110px" }}>
+               <Col style={{ width: "111px" }}>
                 <Dustbin
                   accept={accepts}
                   lastDroppedItem={lastDroppedItem}
