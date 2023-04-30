@@ -126,7 +126,7 @@ audio {
 }
 
 .armour_totals_top {
-  width: 600px;
+  width: 560px;
   display: flex;
   font-size: 15px;
   border: 2px solid #eec07a;
@@ -243,15 +243,15 @@ p {
   margin: 0px;
 }
 
-.loadout_box_filled {
+.inventory_box {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
   cursor: move;
 }
 
@@ -279,21 +279,16 @@ p {
   margin-left: 10px;
 }
 
-.small_box_item {
+.loadout_box_filled {
   border: 2px solid #eec07a;
   border-radius: 5px;
   width: 100px;
   height: 100px;
-  background-color: orange;
-  padding: 10px;
-}
-
-.small_box_mount {
-  border: 2px solid #eec07a;
-  border-radius: 5px;
-  width: 100px;
-  height: 100px;
-  background-color: #297e9a;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  cursor: move;
 }
 .carousel {
   width: auto;
