@@ -963,23 +963,10 @@ function App() {
 
         {isConnected && !noLoadout ? (
           <div>
-            <div className="readyButton" style={{float: "right", clear: "right"}}>
-              <Button
-                disabled={!isConnected}
-                variant="success"
-                style={{
-                float: "right",
-                marginTop: "20px",
-                width: "150px",
-                height: "120px",
-                fontSize: "16px",
-                backgroundColor: "#eec07a" }}
-                onClick={() => {
-                  setLgShow(true); }}  >
-                  <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
-              </Button>  
-            </div> 
-            <div style={{float: "right", marginRight: "10px", marginTop: "10px", clear: "right"}}>
+            <div style={{float: "right", clear: "right"}}>
+              <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> On-Chain Gear </p>
+            </div>
+            <div style={{float: "right", marginRight: "25px", clear: "right"}}>
                <SearchBar OnInputSubmit={OnInputSubmit} />
                </div>
             <div className="inventory" style={{float: "right", clear: "right"}}>
@@ -1060,6 +1047,23 @@ function App() {
                   )
                 )}
             </div>
+            <div className="readyButton" style={{float: "right", clear: "right"}}>
+              <Button
+                disabled={!isConnected}
+                variant="success"
+                style={{
+                float: "right",
+                marginTop: "20px",
+                marginRight: "15px",
+                width: "150px",
+                height: "120px",
+                fontSize: "16px",
+                backgroundColor: "#eec07a" }}
+                onClick={() => {
+                  setLgShow(true); }}  >
+                  <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena </p>
+              </Button>  
+            </div> 
           </div>
         ) : (
           ""
@@ -1133,7 +1137,7 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px"}}>
+          <Row style={{ width: "120px", marginTop: "10px" }}>
             {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
               <Col>
                 <Dustbin
@@ -1173,7 +1177,7 @@ function App() {
         )}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px" }}>
+          <Row style={{ width: "600px", marginTop: "10px" }}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
                <Col style={{ width: "110px" }}>
                 <Dustbin
