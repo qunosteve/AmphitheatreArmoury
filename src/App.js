@@ -1197,7 +1197,6 @@ function App() {
 
         {!isConnected && !isLoading ? (
           <div>
-            <img src={armoury_banner} />
             <h1
               style={{
                 color: "wheat",
@@ -1207,6 +1206,7 @@ function App() {
               className="sk-grid-position"
             >
               Connect your wallet to continue
+              <img src={armoury_banner} />
             </h1>
           </div>
 
