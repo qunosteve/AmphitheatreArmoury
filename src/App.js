@@ -773,7 +773,7 @@ function App() {
               ""
             )}
              {isConnected ? (
-              
+              <Col>
               <span>
                   {" "}
                   <Button
@@ -784,6 +784,7 @@ function App() {
                     <p>Disconnect</p>
                   </Button>{" "}
                 </span> 
+              </Col>
              ) : "" }
            </Col>
           <Col
