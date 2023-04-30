@@ -898,13 +898,9 @@ function App() {
     <Col className="col-4">
     </Col>
     <Col className="col-4">
-      <div style={{alignItems: "center", justifyContent: "center"}}>
-        {// <img src={taslogowheat} />
-      }
-      </div>
     </Col>
     <Col className="col-4">
-    <img src={taslogowheat}/>
+    <img src={blankimage}/>
             <Modal
               size="lg"
               show={lgShow}
@@ -1054,6 +1050,7 @@ function App() {
                 variant="success"
                 style={{
                 float: "right",
+                marginTop: "20px",
                 marginRight: "45px",
                 width: "150px",
                 height: "120px",
