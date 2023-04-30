@@ -14,6 +14,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
+import onchaingear from "./images/onchaingear.png.png"
 import taslogowheat from "./images/taslogowheat.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
@@ -964,7 +965,7 @@ function App() {
         {isConnected && !noLoadout ? (
           <div>
             <div style={{float: "right", clear: "right"}}>
-              <p style={{ color: "ivory", whiteSpace: "pre-wrap" }}> On-Chain Gear </p>
+              <img src={onchaingear}/>
             </div>
             <div style={{float: "right", marginRight: "25px", clear: "right"}}>
                <SearchBar OnInputSubmit={OnInputSubmit} />
