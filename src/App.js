@@ -768,10 +768,12 @@ function App() {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+             
             ) : (
               ""
             )}
              {isConnected ? (
+              
               <span>
                   {" "}
                   <Button
@@ -783,8 +785,8 @@ function App() {
                   </Button>{" "}
                 </span> 
              ) : "" }
-          </Col>
-          <Col md={6}
+           </Col>
+          <Col
             style={{
               position: `${!isConnected ? "absolute" : "relative"}`,
               width: "auto",
@@ -1210,7 +1212,7 @@ function App() {
             <h1
               style={{
                 color: "wheat",
-                fontFamily: "fantasy",
+                fontFamily: "Sans-Serif",
                 textAlign: "center",
               }}
             >
