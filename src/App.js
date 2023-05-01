@@ -971,11 +971,10 @@ function App() {
                 marginRight: "15px",
                 width: "150px",
                 height: "120px",
-                fontSize: "16px",
-                backgroundColor: "#eec07a" }}
+                fontSize: "16px"}}
                 onClick={() => {
                   setLgShow(true); }}  >
-                  <p style={{ color: "#25272E", whiteSpace: "pre-wrap" }}> Enter the Arena! </p>
+                  <p style={{ color: "wheat", whiteSpace: "pre-wrap" }}> Enter the Arena! </p>
               </Button>  
             </div>
             {/*
