@@ -983,8 +983,8 @@ function App() {
                   setLgShow(true);
                 }}
               >
-                <img src={enterarena} alt="Enter Arena"/>
-                
+                <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap", fontWeight: "bold" }}>Enter Arena</p>
+
               </Button>
             </div>
             {/*
