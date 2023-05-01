@@ -14,7 +14,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
-import onchaingear from "./images/onchaingear.png"
+import enterarena from "./images/enterarena.png"
 import citizen_expbar from "./images/citizen_expbar.png"
 import taslogowheat from "./images/taslogowheat.png"
 import blankimage from "./images/blankimage.png"
@@ -983,8 +983,8 @@ function App() {
                   setLgShow(true);
                 }}
               >
-                <p style={{ color: "#333333", whiteSpace: "pre-wrap", fontWeight: "bold" }}>Enter the Arena</p>
-
+                <img src={enterarena} alt="Enter Arena"/>
+                
               </Button>
             </div>
             {/*
