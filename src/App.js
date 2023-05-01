@@ -983,7 +983,7 @@ function App() {
                   setLgShow(true);
                 }}
               >
-                <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap", fontWeight: "bold" }}>Enter Arena</p>
+                <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap"}}>Enter Arena</p>
 
               </Button>
             </div>
