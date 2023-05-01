@@ -966,16 +966,25 @@ function App() {
                 disabled={!isConnected}
                 variant="success"
                 style={{
-                float: "right",
-                marginTop: "20px",
-                marginRight: "15px",
-                width: "150px",
-                height: "120px",
-                fontSize: "16px"}}
+                  float: "right",
+                  marginTop: "20px",
+                  marginRight: "15px",
+                  width: "150px",
+                  height: "120px",
+                  fontSize: "16px",
+                  backgroundColor: "#eec07a",
+                  boxShadow: "0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a",
+                  transition: "box-shadow 0.5s ease-in-out",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #eec07a, 0 0 40px #eec07a, 0 0 60px #eec07a, 0 0 80px #eec07a, 0 0 100px #eec07a, 0 0 120px #eec07a"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a"; }}
                 onClick={() => {
-                  setLgShow(true); }}  >
-                  <p style={{ color: "wheat", whiteSpace: "pre-wrap" }}> Enter the Arena! </p>
-              </Button>  
+                  setLgShow(true);
+                }}
+              >
+                <p style={{ color: "#333333", whiteSpace: "pre-wrap", fontWeight: "bold" }}>Enter the Arena</p>
+
+              </Button>
             </div>
             {/*
             <div style={{float: "right",  clear: "right"}}>
