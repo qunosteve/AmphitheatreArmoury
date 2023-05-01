@@ -973,11 +973,12 @@ function App() {
                   height: "120px",
                   fontSize: "16px",
                   backgroundColor: "#eec07a",
-                  boxShadow: "0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a",
+                  boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
                   transition: "box-shadow 0.5s ease-in-out",
+                  border: "none",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #eec07a, 0 0 40px #eec07a, 0 0 60px #eec07a, 0 0 80px #eec07a, 0 0 100px #eec07a, 0 0 120px #eec07a"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #f1dab0, 0 0 40px #f1dab0, 0 0 60px #f1dab0, 0 0 80px #f1dab0, 0 0 100px #f1dab0, 0 0 120px #f1dab0"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0"; }}
                 onClick={() => {
                   setLgShow(true);
                 }}
