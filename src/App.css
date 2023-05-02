@@ -264,13 +264,12 @@ p {
   margin-left: 10px;
   background-size: cover;
   background-position: center;
-  transition: box-shadow 0.5s ease-in-out; /* Add transition effect */
+  transition: box-shadow 0.3s ease-in-out; /* add transition for smooth effect */
 }
 
 .loadout_box_empty:hover {
-  box-shadow: 0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a;
+  box-shadow: inset 0 0 10px #F5DEB3;
 }
-
 
 
 .loadout_box_incoming_item {
