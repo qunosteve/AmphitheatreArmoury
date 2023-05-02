@@ -262,10 +262,15 @@ p {
   margin-bottom: 10px;
   margin-right: 10px;
   margin-left: 10px;
-  /* background-image: url("images/switch_weapons.png"); */
   background-size: cover;
-  background-position: center; /* This property centers the background image inside the box */
+  background-position: center;
+  transition: box-shadow 0.5s ease-in-out; /* Add transition effect */
 }
+
+.loadout_box_empty:hover {
+  box-shadow: 0 0 10px #eec07a, 0 0 20px #eec07a, 0 0 30px #eec07a, 0 0 40px #eec07a, 0 0 50px #eec07a, 0 0 60px #eec07a;
+}
+
 
 
 .loadout_box_incoming_item {
