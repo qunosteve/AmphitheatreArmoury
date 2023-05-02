@@ -962,34 +962,30 @@ function App() {
         {isConnected && !noLoadout ? (
           <div>
             <div className="readyButton" style={{float: "right", clear: "right"}}>
-            <div
-  disabled={!isConnected}
-  style={{
-    float: "right",
-    marginTop: "20px",
-    marginRight: "15px",
-    width: "0",
-    height: "0",
-    borderTop: "60px solid transparent",
-    borderRight: "60px solid #eec07a",
-    borderBottom: "150px solid transparent",
-    borderRadius: "5px",
-    cursor: "pointer",
-    boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
-    transition: "box-shadow 0.5s ease-in-out",
-  }}
-  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #f1dab0, 0 0 40px #f1dab0, 0 0 60px #f1dab0, 0 0 80px #f1dab0, 0 0 100px #f1dab0, 0 0 120px #f1dab0"; }}
-  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0"; }}
-  onClick={() => {
-    setLgShow(true);
-  }}
->
-  <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Enter Arena</p>
-  <span style={{ position: "absolute", width: "100%", height: "100%", borderRadius: "5px", boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0", opacity: 0, transition: "opacity 0.5s ease-in-out"}}>
-  </span>
-</div>
+              <Button
+                disabled={!isConnected}
+                variant="success"
+                style={{
+                  float: "right",
+                  marginTop: "20px",
+                  marginRight: "15px",
+                  width: "150px",
+                  height: "120px",
+                  fontSize: "16px",
+                  backgroundColor: "#eec07a",
+                  boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
+                  transition: "box-shadow 0.5s ease-in-out",
+                  border: "none",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #f1dab0, 0 0 40px #f1dab0, 0 0 60px #f1dab0, 0 0 80px #f1dab0, 0 0 100px #f1dab0, 0 0 120px #f1dab0"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0"; }}
+                onClick={() => {
+                  setLgShow(true);
+                }}
+              >
+                <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap"}}>Enter Arena</p>
 
-
+              </Button>
             </div>
             {/*
             <div style={{float: "right",  clear: "right"}}>
