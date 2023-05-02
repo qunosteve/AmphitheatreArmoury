@@ -970,9 +970,10 @@ function App() {
     marginRight: "15px",
     width: "0",
     height: "0",
-    borderLeft: "60px solid transparent",
-    borderRight: "60px solid transparent",
-    borderBottom: "120px solid #eec07a",
+    borderTop: "60px solid transparent",
+    borderRight: "60px solid #eec07a",
+    borderBottom: "150px solid transparent",
+    borderRadius: "5px",
     cursor: "pointer",
     boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
     transition: "box-shadow 0.5s ease-in-out",
@@ -984,7 +985,10 @@ function App() {
   }}
 >
   <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Enter Arena</p>
+  <span style={{ position: "absolute", width: "100%", height: "100%", borderRadius: "5px", boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0", opacity: 0, transition: "opacity 0.5s ease-in-out"}}>
+  </span>
 </div>
+
 
             </div>
             {/*
