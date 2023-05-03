@@ -256,10 +256,10 @@ p {
   border: 2px solid #eec07a;
   border-radius: 5px;
   text-align: center;
-  margin-right: 1px;
-  margin-top: 1px;
-  margin-left: 1px;
-  margin-bottom: 1px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-bottom: 2px;
   height: 100px;
   width: 100px;
   background-size: cover;
@@ -278,10 +278,10 @@ p {
   text-align: center;
   height: 100px;
   width: 100px;
-  margin-right: 1px;
-  margin-top: 1px;
-  margin-left: 1px;
-  margin-bottom: 1px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-bottom: 2px;
 }
 
 .loadout_box_filled {
@@ -290,10 +290,10 @@ p {
   width: 100px;
   height: 100px;
   cursor: move;
-  margin-right: 1px;
-  margin-top: 1px;
-  margin-left: 1px;
-  margin-bottom: 1px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-bottom: 2px;
 }
 .carousel {
   width: auto;
