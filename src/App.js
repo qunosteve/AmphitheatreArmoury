@@ -1137,7 +1137,7 @@ function App() {
                 accept={accepts}
                 lastDroppedItem={lastDroppedItem}
                 onDrop={(item) => {
-                  handleDrop2(index, item, accepts);
+                  handleDrop1(index, item, accepts);
                 }}
                 key={index}
                 img={
@@ -1152,7 +1152,7 @@ function App() {
         ) : ("")}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginLeft: "-5px", marginTop: "20px"}}>
+          <Row style={{ width: "620px", marginLeft: "-5px", marginTop: "20px"}}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
              <Col style={{ width: "100px" }}>
                <Dustbin
@@ -1175,7 +1175,7 @@ function App() {
                               accepts = "Item";
                             }
         
-                            handleDrop1(index, item, accepts);
+                            handleDrop2(index, item, accepts);
                           }}
                           key={index}
                           img={
