@@ -472,17 +472,7 @@ function App() {
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
       );
-      setDustbins3(
-        update(dustbins_row3, {
-          [index]: {
-            lastDroppedItem: {
-              $set: item,
-            },
-          },
-        })
-      );
     },
-    [droppedLoadoutNames, dustbins_row3]
   );
 
   function apeUpdateInfo(event) {
