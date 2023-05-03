@@ -258,10 +258,6 @@ p {
   text-align: center;
   height: 100px;
   width: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
   background-size: cover;
   background-position: center;
   transition: box-shadow 0.3s ease-in-out; /* add transition for smooth effect */
@@ -278,10 +274,6 @@ p {
   text-align: center;
   height: 100px;
   width: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
 }
 
 .loadout_box_filled {
@@ -289,10 +281,6 @@ p {
   border-radius: 5px;
   width: 100px;
   height: 100px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
   cursor: move;
 }
 .carousel {
