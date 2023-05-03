@@ -95,24 +95,21 @@ function shortenTokenLength(tokenName) {
 // Establish Loadout GearBox Structure
 
 function App() {
-  const [dustbins_row1, setDustbins1] = useState([
-    { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
-    { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
-    { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
-    { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
-  ]);  
-  const [dustbins_row2, setDustbins2] = useState([
+  const [dustbins_row2, setDustbins1] = useState([
     { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
     { accepts: [ItemTypes.BODY], lastDroppedItem: null },
     { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
     { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
     { accepts: [ItemTypes.LEG], lastDroppedItem: null },
   ]);
-  const [dustbins_row3, setDustbins3] = useState([
+  const [dustbins_row1, setDustbins2] = useState([
+    { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
+    { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
+    { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
+    { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
-  ]);
-
+  ]);  
   var truncate = function (fullStr, strLen, separator) {
     if (fullStr.length <= strLen) return fullStr;
 
@@ -347,6 +344,14 @@ function App() {
   }
 
   function ResetDustbins() {
+    setDustbins1([
+      { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
+    ]);
     setDustbins2([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
@@ -354,16 +359,6 @@ function App() {
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
       { accepts: [ItemTypes.LEG], lastDroppedItem: null },
       
-    ]);
-    setDustbins1([
-      { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },      
-    ]);
-    setDustbins3([
-      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
     ]);
   }
 
@@ -1145,90 +1140,67 @@ function App() {
           ""
         )}
         {isConnected ? (
-          <Row style={{ width: "120px", marginTop: "10px",  marginLeft: "0px" }}>
-            {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
-              <Col>
-                <Dustbin
-                  accept={
-                    accepts[0] === "Item0" ||
-                    accepts[0] === "Item1" ||
-                    accepts[0] === "Item2" ||
-                    accepts[0] === "Item3"
-                      ? acceptsItem
-                      : accepts
-                  }
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => {
-                    if (
-                      accepts === "Item0" ||
-                      accepts === "Item1" ||
-                      accepts === "Item2" ||
-                      accepts === "Item3"
-                    ) {
-                      accepts = "Item";
-                    }
-
-                    handleDrop1(index, item, accepts);
-                  }}
-                  key={index}
-                  img={
-                    lastDroppedItem
-                      ? transformedLoadout[lastDroppedItem["name"]]
-                      : ""
-                  }
-                />
-              </Col>
-            ))}
+          <Row style={{ width: "100px", marginTop: "0px", marginLeft: "20px" }}>
+          {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
+            <Col style={{ width: "100px" }}>
+              <Dustbin
+                accept={accepts}
+                lastDroppedItem={lastDroppedItem}
+                onDrop={(item) => {
+                  handleDrop2(index, item, accepts);
+                }}
+                key={index}
+                img={
+                  lastDroppedItem
+                    ? transformedLoadout[lastDroppedItem["name"]]
+                    : ""
+                }
+              />
+            </Col>
+          ))}
           </Row>
-        ) : (
-          ""
-        )}
+        ) : ("")}
       </div>
         {isConnected ? (
-          <Row style={{ width: "600px", marginTop: "10px", marginLeft: "13px" }}>
+          <Row style={{ width: "600px", marginLeft: "0px", marginTop: "20px"}}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-               <Col style={{ width: "112px" }}>
-                <Dustbin
-                  accept={accepts}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => {
-                    handleDrop2(index, item, accepts);
-                  }}
-                  key={index}
-                  img={
-                    lastDroppedItem
-                      ? transformedLoadout[lastDroppedItem["name"]]
-                      : ""
-                  }
-                />
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          ""
-        )}
-        {isConnected && noApe ?  (
-          <Row style={{ width: "240px"}}>
-            {dustbins_row3.map(({ accepts, lastDroppedItem }, index) => (
-              <Col>
-                <Dustbin
-                  accept={accepts}
-                  lastDroppedItem={lastDroppedItem}
-                  onDrop={(item) => handleDrop3(index, item, accepts)}
-                  key={index}
-                  img={
-                    lastDroppedItem
-                      ? transformedLoadout[lastDroppedItem["name"]]
-                      : ""
-                  }
-                />
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          ""
-        )}
+             <Col style={{ width: "100px" }}>
+               <Dustbin
+                          accept={
+                            accepts[0] === "Item0" ||
+                            accepts[0] === "Item1" ||
+                            accepts[0] === "Item2" ||
+                            accepts[0] === "Item3"
+                              ? acceptsItem
+                              : accepts
+                          }
+                          lastDroppedItem={lastDroppedItem}
+                          onDrop={(item) => {
+                            if (
+                              accepts === "Item0" ||
+                              accepts === "Item1" ||
+                              accepts === "Item2" ||
+                              accepts === "Item3"
+                            ) {
+                              accepts = "Item";
+                            }
+        
+                            handleDrop1(index, item, accepts);
+                          }}
+                          key={index}
+                          img={
+                            lastDroppedItem
+                              ? transformedLoadout[lastDroppedItem["name"]]
+                              : ""
+                          }
+                  />
+                </Col>
+              ))}
+            </Row>
 
+        ) : (
+          ""
+        )}
         {!isConnected && !isLoading ? (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
