@@ -972,10 +972,6 @@ function App() {
 
               </Button>
             </div>
-            {/*
-            <div style={{float: "right",  clear: "right"}}>
-              <img src={onchaingear}/> 
-            </div>  */}
             <div style={{float: "right", clear: "right"}}>
               <SearchBar OnInputSubmit={OnInputSubmit} />
             </div>
@@ -1077,21 +1073,6 @@ function App() {
         ) : (
           ""
         )}
-      <div style={{ display: "flex", alignItems: "left" }}>
-        {noLoadout ? (
-          <div className="inventory_no_gear">
-            <Row>
-              <Col>
-                <h2 style={{ textAlign: "center", marginTop: "100px" }}>
-                  {" "}
-                  No Gear Found{" "}
-                </h2>
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          ""
-        )}
 
         {isConnected && !noApe ? (
           <Row>
@@ -1150,8 +1131,7 @@ function App() {
           ))}
           </Row>
         ) : ("")}
-      </div>
-        {isConnected ? (
+        { isConnected ? (
           <Row style={{ width: "622px", marginLeft: "-5px", marginTop: "0px"}}>
             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
              <Col style={{ width: "100px" }}>
