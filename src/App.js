@@ -955,7 +955,7 @@ function App() {
                   marginTop: "20px",
                   marginRight: "15px",
                   width: "150px",
-                  height: "120px",
+                  height: "60px",
                   fontSize: "16px",
                   backgroundColor: "#eec07a",
                   boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
