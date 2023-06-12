@@ -11,10 +11,10 @@ To learn about our bounty structure, read this gitbook page: https://theapesocie
 ## To Do List (Open Bounties) ##
 - [x] Register Amphitheatre metadata label in CIP-0010.
 - [x] Design 2d graphics for prototype gear
-- [x] Acquire source code for dApp connector
+- [x] Acquire source code for Cardano dApp connector
 - [x] Establish foundation for Armoury dApp
 - [x] Establish drag and drop for Armoury dApp
-- [x] Integrating dApp connector to Armoury dApp.
+- [x] Integratie Cardano dApp connector to Armoury dApp.
 - [x] Read metadata of TAS assets in Armoury dApp.
 - [x] Construction of metadata transactions from Armoury dApp
 - [ ] Add Code Comments to App.js https://discord.com/channels/1008361097553776743/1117585433245794326
