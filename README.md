@@ -9,9 +9,9 @@ To help incentivize developers, we offer "bounties" to build out different aspec
 To learn about our bounty structure, read this gitbook page: https://theapesociety.gitbook.io/digest/the-ape-society-digest/community-projects/amphitheatre/bounty-structure
 
 ## To Do List (Open Bounties) ##
-- [x] Acquire source code for dApp connector
 - [x] Register Amphitheatre metadata label in CIP-0010.
-- [x] Establishg foundation for Armoury dApp
+- [x] Acquire source code for dApp connector
+- [x] Establish foundation for Armoury dApp
 - [x] Establish drag and drop for Armoury dApp
 - [x] Integrating dApp connector to Armoury dApp.
 - [x] Read metadata of TAS assets in Armoury dApp.
