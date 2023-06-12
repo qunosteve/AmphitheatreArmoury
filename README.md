@@ -10,6 +10,7 @@ To learn about our bounty structure, read this gitbook page: https://theapesocie
 
 ## To Do List (Open Bounties) ##
 - [x] Register Amphitheatre metadata label in CIP-0010.
+- [x] Design 2d graphics for prototype gear
 - [x] Acquire source code for dApp connector
 - [x] Establish foundation for Armoury dApp
 - [x] Establish drag and drop for Armoury dApp
