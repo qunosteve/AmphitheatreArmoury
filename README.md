@@ -6,6 +6,8 @@ This react app is where Ape Society Amphitheatre users can undergo loadout manag
 ## How to Contribute ##
 To help incentivize developers, we offer "bounties" to build out different aspects of the app. By completing bounties, developers can earn various Cardano native tokens that can be used in the Ape Society ecosystem. The communication and requirements for these bounties are coordinated via discord. Come Join our Discord @ https://discord.gg/pMZJH4nkhF
 
+To learn about our bounty structure, read this gitbook page: https://theapesociety.gitbook.io/digest/the-ape-society-digest/community-projects/amphitheatre/bounty-structure
+
 ## To Do List ##
 - [ ] Add Code Comments to App.js https://discord.com/channels/1008361097553776743/1117585433245794326
 - [ ] Add Code Comments to the other .js Files https://discord.com/channels/1008361097553776743/1117893156554424341
