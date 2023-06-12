@@ -8,7 +8,7 @@ To help incentivize developers, we offer "bounties" to build out different aspec
 
 To learn about our bounty structure, read this gitbook page: https://theapesociety.gitbook.io/digest/the-ape-society-digest/community-projects/amphitheatre/bounty-structure
 
-## To Do List (Open Bounties)##
+## To Do List (Open Bounties) ##
 - [ ] Add Code Comments to App.js https://discord.com/channels/1008361097553776743/1117585433245794326
 - [ ] Add Code Comments to the other .js Files https://discord.com/channels/1008361097553776743/1117893156554424341
 - [ ] Remove the Truncate function in the Token Name https://discord.com/channels/1008361097553776743/1117898436851798137
