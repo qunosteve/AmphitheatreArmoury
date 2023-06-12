@@ -903,7 +903,7 @@ function App() {
                       key={index}
                       style={{
                         paddingTop: "5px",
-                        fontSize: "20px",
+                        fontSize: "18px",
                         fontWeight: "600",
                       }}
                     >
@@ -972,10 +972,6 @@ function App() {
 
               </Button>
             </div>
-            {/*
-            <div style={{float: "right",  clear: "right"}}>
-              <img src={onchaingear}/> 
-            </div>  */}
             <div style={{float: "right", clear: "right"}}>
               <SearchBar OnInputSubmit={OnInputSubmit} />
             </div>
