@@ -22,3 +22,4 @@ To learn about our bounty structure, read this gitbook page: https://theapesocie
 - [ ] Remove the Truncate function in the Token Name https://discord.com/channels/1008361097553776743/1117898436851798137
 - [ ] Add Steam Authenticator to Armoury dApp https://discord.com/channels/1008361097553776743/1099789544326447164
 - [ ] Convert Drag and Drop System to Dropdown System https://discord.com/channels/1008361097553776743/1117997701691363338
+- [ ] Add Foundational Resource Time Grid https://discord.com/channels/1008361097553776743/1118626231324262484
