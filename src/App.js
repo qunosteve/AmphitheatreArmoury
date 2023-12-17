@@ -78,19 +78,6 @@ import {
 } from "@emurgo/cardano-serialization-lib-asmjs";
 let Buffer = require("buffer/").Buffer;
 
-//build shortenTokenLength function
-
-function shortenTokenLength(tokenName) {
-  const tokenWords = tokenName.split(" ");
-  let formattedItemName = "";
-  for (let i = 4; i < tokenWords.length; i++) {
-    formattedItemName +=
-      tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
-  }
-  return formattedItemName;
-}
-
-
 
 // Establish Loadout GearBox Structure
 
@@ -400,7 +387,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: shortenTokenLength(item.name),
+        [accepts[0]]: item.name,
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -430,7 +417,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: shortenTokenLength(item.name),
+        [accepts[0]]: item.name,
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -462,7 +449,7 @@ function App() {
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: shortenTokenLength(item.name),
+        [accepts[0]]: item.name,
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -940,9 +927,7 @@ function App() {
 </Row>
 ) : "" }
 
-        {/*  <Row style={{ marginTop: "-35px", float: "right" }}>
-        
-        </Row> */}
+        {}
 
         {isConnected && !noLoadout ? (
           <div>
@@ -1002,51 +987,7 @@ function App() {
                           key={index}
                           img={image}
                         />
-                        <div style={{ textAlign: "center" }}>
-                         {/* <p style={{ fontWeight: "bold" }}> [{slot}] </p> 
-                          <p
-                            style={{
-                              fontSize: "16px",
-                              width: "120px",
-                              wordWrap: "break-word",
-                              whiteSpace: "normal",
-                              textAlign: "center",
-                              fontWeight: "500",
-                              color: changeTextColor(tier)
-                            }}
-                          >
-                            {" "}
-                            {tier ? tier + " " + shortenTokenLength(name) : shortenTokenLength(name)}{" "}
-                          </p>
-                          
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {`Quantity: ${amount}`}{" "}
-                          </p>
-                          
-                          
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {leg_armor ? `Leg armor: ${leg_armor}` : ""}{" "}
-                          </p>
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {body_armor ? `Body armor: ${body_armor}` : ""}{" "}
-                          </p>
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {head_armor ? `Head armor: ${head_armor}` : ""}{" "}
-                          </p>
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {arm_armor ? `Arm armor: ${arm_armor}` : ""}{" "}
-                          </p>
-                          <p style={{ fontSize: "12.5px", color: "ivory" }}>
-                            {" "}
-                            {weight ? `Weight: ${weight}` : ""}{" "}
-                          </p>
-                          */}
-                          
+                        <div style={{ textAlign: "center" }}>                          
                         </div>
                       </Col>
                     </Row>
