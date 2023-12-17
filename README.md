@@ -17,9 +17,7 @@ To learn about our bounty structure, read this gitbook page: https://theapesocie
 - [x] Integrate Cardano dApp connector to Armoury dApp.
 - [x] Read metadata of TAS assets in Armoury dApp.
 - [x] Construction of metadata transactions from Armoury dApp
-- [ ] Add Code Comments to App.js https://discord.com/channels/1008361097553776743/1117585433245794326
-- [ ] Add Code Comments to the other .js Files https://discord.com/channels/1008361097553776743/1117893156554424341
-- [ ] Remove the Truncate function in the Token Name https://discord.com/channels/1008361097553776743/1117898436851798137
+- [x] Remove the Truncate function in the Token Name https://discord.com/channels/1008361097553776743/1117898436851798137
 - [ ] Add Steam Authenticator to Armoury dApp https://discord.com/channels/1008361097553776743/1099789544326447164
 - [ ] Convert Drag and Drop System to Dropdown System https://discord.com/channels/1008361097553776743/1117997701691363338
 - [ ] Add Foundational Resource Time Grid https://discord.com/channels/1008361097553776743/1118626231324262484
