@@ -611,7 +611,7 @@
 .sk-grid-cube {
   width: 33.33%;
   height: 33.33%;
-  background-color: wheat;
+  background-color: #ead5c2;
   float: left;
   animation: sk-grid 1.3s infinite ease-in-out;
 }

@@ -39,8 +39,8 @@ h4 {
 .input {
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid #eec07a;
-  color: wheat;
+  border-bottom: 2px solid #ead5c2;
+  color: #ead5c2;
   box-sizing: border-box;
   font-family: "Cabin", sans-serif;
   font-size: 15px;
@@ -128,7 +128,7 @@ audio {
   width: 560px;
   display: flex;
   font-size: 15px;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-top: none;
   border-right: none;
   border-left: none;
@@ -147,11 +147,11 @@ u {
   width: 100%;
   padding: 50px;
   text-align: center;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
 }
 
 .modal-title {
-  color: wheat;
+  color: #ead5c2;
   margin-bottom: 30px !important;
 }
 
@@ -173,7 +173,7 @@ body {
 p {
   margin: 0px !important;
   padding: 0px;
-  color: wheat;
+  color: #ead5c2;
   white-space: nowrap;
   width: 100%; /* IE6 needs any width */
   overflow: hidden; /* "overflow" value must be different from  visible"*/
@@ -184,7 +184,7 @@ p {
 .inventory {
   display: grid;
   justify-content: center;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   float: right;
   overflow-y: scroll;
   height: 360px;
@@ -200,7 +200,7 @@ p {
 }
 
 .inventory::-webkit-scrollbar-thumb {
-  background-color: #eec07a; /* Set the color of the scrollbar thumb */
+  background-color: #ead5c2; /* Set the color of the scrollbar thumb */
 }
 
 .inventory::-webkit-scrollbar-track {
@@ -210,7 +210,7 @@ p {
 .inventory_no_gear {
   display: grid;
   justify-content: center;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   float: right;
   overflow-y: scroll;
   height: 360px;
@@ -227,7 +227,7 @@ p {
 }
 
 .inventory_no_gear::-webkit-scrollbar-thumb {
-  background-color: #eec07a; /* Set the color of the scrollbar thumb */
+  background-color: #ead5c2; /* Set the color of the scrollbar thumb */
 }
 
 .inventory_no_gear::-webkit-scrollbar-track {
@@ -241,7 +241,7 @@ p {
 }
 
 .inventory_box {
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-radius: 5px;
   width: 100px;
   height: 100px;
@@ -253,7 +253,7 @@ p {
 }
 
 .loadout_box_empty {
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-radius: 5px;
   text-align: center;
   margin-right: 2px;
@@ -268,7 +268,7 @@ p {
 }
 
 .loadout_box_empty:hover {
-  box-shadow: inset 0 0 15px #eec07a;
+  box-shadow: inset 0 0 15px #ead5c2;
 }
 
 
@@ -285,7 +285,7 @@ p {
 }
 
 .loadout_box_filled {
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-radius: 5px;
   width: 100px;
   height: 100px;
@@ -330,25 +330,25 @@ p {
   display: flex;
   justify-content: center;
   background-size: cover;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-radius: 5px;
   float: left;
 }
 
 .buttons_tas {
   background: none !important;
-  color: wheat !important;
-  border-color: #eec07a !important;
+  color: #ead5c2 !important;
+  border-color: #ead5c2 !important;
 }
 
 .big_box_noApe {
   display: flex;
   justify-content: center;
   background-size: cover;
-  border: 2px solid #eec07a;
+  border: 2px solid #ead5c2;
   border-radius: 5px;
   float: left;
-  color: wheat;
+  color: #ead5c2;
 }
 .carousel .thumbs-wrapper {
   display: none;

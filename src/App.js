@@ -14,7 +14,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import armoury_banner from "./images/armoury_banner.png"
-import enterarena from "./images/enterarena.png"
 import citizen_expbar from "./images/citizen_expbar.png"
 import taslogowheat from "./images/taslogowheat.png"
 import blankimage from "./images/blankimage.png"
@@ -770,14 +769,14 @@ function App() {
               <div style={{ fontSize: "16px", paddingTop: "3px" }}>
                 <img src={society} style={{ width: "35px" }} />
                 <span
-                  style={{ color: "wheat", fontFamily: "Cabin, sans-serif" }}
+                  style={{ color: "#ead5c2", fontFamily: "Cabin, sans-serif" }}
                 >
                   {" "}
                   {societyToken} |{" "}
                 </span>
                 <span
                   style={{
-                    color: "wheat",
+                    color: "#ead5c2",
                     paddingRight: "10px",
                     fontSize: "",
                     fontFamily: "Cabin, sans-serif",
@@ -947,8 +946,8 @@ function App() {
                   transition: "box-shadow 0.5s ease-in-out",
                   border: "none",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #f1dab0, 0 0 40px #f1dab0, 0 0 60px #f1dab0, 0 0 80px #f1dab0, 0 0 100px #f1dab0, 0 0 120px #f1dab0"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #ead5c2, 0 0 40px #ead5c2, 0 0 60px #ead5c2, 0 0 80px #ead5c2, 0 0 100px #ead5c2, 0 0 120px #ead5c2"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #ead5c2, 0 0 20px #ead5c2, 0 0 30px #ead5c2, 0 0 40px #ead5c2, 0 0 50px #ead5c2, 0 0 60px #ead5c2"; }}
                 onClick={() => {
                   setLgShow(true);
                 }}

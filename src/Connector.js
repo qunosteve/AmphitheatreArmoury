@@ -535,7 +535,7 @@ export default class Connector extends React.Component {
                         head_armor: data.onchain_metadata["head armor"] || 0,
                         weight: data.onchain_metadata.weight,
                         amount: this.state.contentQunatity[key],
-                        image: `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
+                        image: `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(
                             7
                         )}`,
                     });
@@ -574,7 +574,7 @@ export default class Connector extends React.Component {
                     const data = await response.json();
                     imageLinks[
                         key
-                    ] = `https://nftstorage.link/ipfs/${data.onchain_metadata.image.slice(
+                    ] = `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(
                         7
                     )}`;
                 }
