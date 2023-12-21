@@ -15,24 +15,6 @@ const style = {
   float: "left",
 };
 
-const ImagePlaceHolders = {
-  Head:
-    "images/helmet_icon.png",
-  Shoulders:
-    "images/pauldrons.png",
-  Torso:
-    "images/chest_armor.png",
-  Arms:
-    "images/gauntlet.png",
-  Legs:
-  "images/boots.png",
-  Item0: "images/switch_weapons.png",
-  Item1: "images/switch_weapons.png",
-  Item2: "images/switch_weapons.png",
-  Item3: "images/switch_weapons.png",
-  Horse: "images/horse.png",
-  Saddle: "images/saddle.png",
-};
 export const Dustbin = memo(function Dustbin({
   accept,
   lastDroppedItem,
@@ -48,16 +30,6 @@ export const Dustbin = memo(function Dustbin({
     }),
   });
   const isActive = isOver && canDrop;
-
-  function shortenTokenLength(tokenName) {
-    const tokenWords = tokenName.split(" ");
-    let formattedItemName = "";
-    for (let i = 4; i < tokenWords.length; i++) {
-      formattedItemName +=
-        tokenWords[i] + (i + 1 < tokenWords.length ? " " : "");
-    }
-    return formattedItemName;
-  }
 
   let backgroundColor = "none";
 

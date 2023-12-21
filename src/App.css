@@ -1,23 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Cabin&display=swap");
 
+
+@font-face {
+  font-family: 'Charlemagne';
+  src: url('/src/fonts/charlemagne.woff') format('woff2'),
+       url('/src/fonts/charlemagne.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+
+}
+
 p {
   font-family: "Cabin", sans-serif;
 }
 
 h1,
 h2,
-h3,
-h4 {
-  font-family: "Cabin", sans-serif;
+h3 {
+  font-family: "Charlemagne";
+  color: #ead5c2; 
 }
-
-@media (min-width: 1400px) {
-  .big_box {
-    margin-right: 10px !important;
-  }
-  .big_box_noApe {
-    margin-right: 10px !important;
-  }
+h4 {
+  font-family: "Charlemagne";
+  color: #ead5c2
 }
 
 .toastBody {
@@ -53,7 +58,6 @@ h4 {
 .underline {
   display: inline-block;
   height: 2px;
-  left: 50px;
   margin-top: -4px;
   position: absolute;
   top: 185px;
@@ -119,13 +123,8 @@ audio {
   color: green;
 }
 
-.isLoading {
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
 .armour_totals_top {
-  width: 560px;
+  width: 100%;
   display: flex;
   font-size: 15px;
   border: 2px solid #ead5c2;
@@ -157,7 +156,8 @@ u {
 
 .modal-button {
   padding-top: 38px;
-  justify-content: center;
+  justify-content: right;
+  color: #ead5c2;
   display: flex;
 }
 
@@ -165,29 +165,16 @@ u {
   background: url(images/cold.png);
 }
 
-/*html,
-body {
-  margin: 0;
-}*/
-
 p {
-  margin: 0px !important;
-  padding: 0px;
   color: #ead5c2;
-  white-space: nowrap;
-  width: 100%; /* IE6 needs any width */
-  overflow: hidden; /* "overflow" value must be different from  visible"*/
-  -o-text-overflow: ellipsis; /* Opera < 11*/
-  text-overflow: ellipsis;
 }
 
 .inventory {
   display: grid;
   justify-content: center;
-  border: 2px solid #ead5c2;
-  float: right;
+  border: 0px solid #ead5c2;
   overflow-y: scroll;
-  height: 360px;
+  height: 480px;
   width: 180px;
   margin-top: 20px;
   border-radius: 5px;
@@ -211,13 +198,11 @@ p {
   display: grid;
   justify-content: center;
   border: 2px solid #ead5c2;
-  float: right;
   overflow-y: scroll;
   height: 360px;
   width: 150px;
   margin-top: 20px;
   border-radius: 5px;
-  margin-left: 1px;
 }
 
 /* Style the scrollbar */
@@ -235,16 +220,15 @@ p {
 }
 
 .gear_img {
-  width: 96px;
-  height: 96px;
+  width: 136px;
   margin: 0px;
 }
 
 .inventory_box {
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   margin-top: 5px;
   margin-bottom: 5px;
   margin-right: 5px;
@@ -255,15 +239,12 @@ p {
 .loadout_box_empty {
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  text-align: center;
   margin-right: 2px;
   margin-top: 2px;
   margin-left: 2px;
   margin-bottom: 2px;
-  height: 100px;
-  width: 100px;
-  background-size: cover;
-  background-position: center;
+  height: 140px;
+  width: 140px;
   transition: box-shadow 0.3s ease-in-out; /* add transition for smooth effect */
 }
 
@@ -275,9 +256,8 @@ p {
 .loadout_box_incoming_item {
   border: 2px solid green;
   border-radius: 5px;
-  text-align: center;
-  height: 100px;
-  width: 100px;
+  height: 140px;
+  width: 140px;
   margin-right: 2px;
   margin-top: 2px;
   margin-left: 2px;
@@ -287,8 +267,8 @@ p {
 .loadout_box_filled {
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   cursor: move;
   margin-right: 2px;
   margin-top: 2px;
@@ -306,14 +286,17 @@ p {
 
 .carousel-inner {
   width: auto !important;
-  float: right;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  margin-left: 541px;
+.carousel-control-prev-icon{
+  margin-left: 95%;
 }
-.carousel-control-prev,
+.carousel-control-next-icon {
+  margin-left: 95%;
+}
+.carousel-control-prev{
+  width: 95% !important; 
+}
 .carousel-control-next {
   width: 95% !important;
 }
@@ -321,35 +304,11 @@ p {
 .carousel-indicators {
   display: none !important;
 }
-
-.blue {
-  background-color: blue !important;
-}
-
 .big_box {
-  display: flex;
-  justify-content: center;
-  background-size: cover;
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  float: left;
 }
 
-.buttons_tas {
-  background: none !important;
-  color: #ead5c2 !important;
-  border-color: #ead5c2 !important;
-}
-
-.big_box_noApe {
-  display: flex;
-  justify-content: center;
-  background-size: cover;
-  border: 2px solid #ead5c2;
-  border-radius: 5px;
-  float: left;
-  color: #ead5c2;
-}
 .carousel .thumbs-wrapper {
   display: none;
 }
@@ -357,4 +316,47 @@ p {
   text-align: center;
   color: ivory;
   margin-top: 33px;
+}
+
+
+.button_tas_1 {
+  background: none !important;
+  color: #ead5c2 !important;
+  border-color: #ead5c2 !important;
+  transition: box-shadow 1s ease-in-out;
+}
+
+.button_tas_1:hover {
+    box-shadow: 0 0 5px #ead5c2, 0 0 5px #ead5c2, 0 0 10px #ead5c2, 0 0 10px #ead5c2, 0 0 15px #ead5c2, 0 0 15px #ead5c2;
+}
+
+.button_tas_2 {
+  background-color: #eec07a !important;
+  color: ivory !important;
+  text-shadow: 2px 2px 5px rgba(39, 39, 39, 1); /* Adjust the values for offset and color */
+  border-color: #eec07a !important;
+  transition: box-shadow 1s ease-in-out;
+  box-shadow: 0 0 5px #ead5c2, 0 0 5px #ead5c2, 0 0 10px #ead5c2, 0 0 10px #ead5c2, 0 0 15px #ead5c2, 0 0 15px #ead5c2;
+}
+
+.button_tas_2:hover {
+  box-shadow: 0 0 10px #ead5c2, 0 0 10px #ead5c2, 0 0 20px #ead5c2, 0 0 20px #ead5c2, 0 0 30px #ead5c2, 0 0 30px #ead5c2;
+}
+
+.button_tas_2:active {
+  color: #ead5c2 !important;
+  background-color: #eec07a00 !important;
+  border-color: #f1dab0 !important;
+}
+
+.button_tas_2:visited {
+  color: #ead5c2 !important;
+  background-color: #eec07a00 !important;
+  border-color: #f1dab0 !important;
+}
+
+.button_tas_2:focus {
+  color: #ead5c2 !important;
+  background-color: #eec07a00 !important;
+  border-color: #f1dab0 !important;
 }

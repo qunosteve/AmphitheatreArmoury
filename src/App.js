@@ -13,9 +13,12 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
-import armoury_banner from "./images/armoury_banner.png"
+import cardanologo from "./images/cardanologo.png";
+import military_amphi from "./images/military_amphi.png";
+import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
-import taslogowheat from "./images/taslogowheat.png"
+import amphitheatre_textlogo from "./images/amphitheatre_textlogo.png"
+import nakedape from "./images/nakedape.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
@@ -25,6 +28,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-h5-audio-player/lib/styles.css";
 import SearchBar from "./SearchBar.js";
+import GearSlot from "./GearSlot.js"
 import {
   Address,
   BaseAddress,
@@ -84,9 +88,10 @@ function App() {
   const [dustbins_row1, setDustbins1] = useState([
     { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
     { accepts: [ItemTypes.BODY], lastDroppedItem: null },
-    { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
+    { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
     { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
     { accepts: [ItemTypes.LEG], lastDroppedItem: null },
+    { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
   ]);
   const [dustbins_row2, setDustbins2] = useState([
     { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
@@ -94,7 +99,8 @@ function App() {
     { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-    { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
+    { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+    
   ]);  
   var truncate = function (fullStr, strLen, separator) {
     if (fullStr.length <= strLen) return fullStr;
@@ -131,6 +137,7 @@ function App() {
   const [filtered, setFiltered] = useState({});
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(0);
+  const [adaToken, setAdaToken] = useState(0);
   const [lgShow, setLgShow] = useState(false);
   const [lgShowLoad, setLgShowLoad] = useState(false);
   const [apeSelected, setApeSelected] = useState(false);
@@ -138,7 +145,7 @@ function App() {
     Ape: "",
     Head: "",
     Body: "",
-    Cape: "",
+    Shoulders: "",
     Gloves: "",
     Leg: "",
     Item0: "",
@@ -147,6 +154,7 @@ function App() {
     Item3: "",
     Horse: "",
     HorseHarness: "",
+    Special: "",
   });
   const [userLoadoutValues, setUserLoadoutValues] = useState({});
   const [searchList, setSearchList] = useState([]);
@@ -186,6 +194,7 @@ function App() {
       simulateNetworkRequest().then(() => {
         setIsConnected(true);
         setIsLoading(false);
+        // calculateAdaToken(balance);
         ResetDustbins();
       });
     }
@@ -231,39 +240,21 @@ function App() {
     if (changeAddress) {
       setWalletAddress(changeAddress);
     }
-    /* if (changeAddress === walletAddress || walletAddress === "") {
-      setWalletAddress(changeAddress);
-    } else if (changeAddress !== walletAddress) {
-      setWalletAddress(changeAddress);
-      ResetDustbins();
-      setUserLoadoutValues({});
-      setUserLoadout({
-        Head: "",
-        Body: "",
-        Cape: "",
-        Gloves: "",
-        Leg: "",
-        Item0: "",
-        Item1: "",
-        Item2: "",
-        Item3: "",
-        Horse: "",
-        HorseHarness: "",
-        Ape: "",
-      });
-    }*/
   }
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
+  function calculateAdaToken(lovelace) {
+    if (lovelace) {
+      setAdaToken(lovelace/1000000);
+    }
+  }
 
   function simulateNetworkRequest() {
-    if (walletContent["SOCIETY"] != undefined)
-      setSocietyToken(
-        numberWithCommas(Math.trunc(walletContent["SOCIETY"] / 1000000))
-      );
-    else {
+    if (walletContent["SOCIETY"] != undefined) {
+      setSocietyToken(numberWithCommas(Math.trunc(walletContent["SOCIETY"] / 1000000)));
+    } else {
       setSocietyToken(0);
     }
     return new Promise((resolve) => setTimeout(resolve, 100));
@@ -306,9 +297,10 @@ function App() {
     setFiltered({});
     setBeenHere(false);
     setUserLoadout({
+      Ape: "",
       Head: "",
       Body: "",
-      Cape: "",
+      Shoulders: "",
       Gloves: "",
       Leg: "",
       Item0: "",
@@ -317,7 +309,6 @@ function App() {
       Item3: "",
       Horse: "",
       HorseHarness: "",
-      Ape: "",
     });
     setUserLoadoutValues({});
   }
@@ -333,9 +324,10 @@ function App() {
     setDustbins1([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
-      { accepts: [ItemTypes.CAPE], lastDroppedItem: null },
+      { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
       { accepts: [ItemTypes.LEG], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
       
     ]);
     setDustbins2([
@@ -344,7 +336,8 @@ function App() {
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
       { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
+      { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+      
     ]);
   }
 
@@ -538,13 +531,6 @@ function App() {
     setLgShow(false);
     //setRefreshToken(true);
   };
-
-  /*  const notifyRefresh = () => {
-    const refreshContent = toast.loading(
-      "We are fetching your latest onchain loadout. Please hold."
-    );
-  }; */
-
   const enableWallet = async () => {
     const walletKey = whichWallet;
     try {
@@ -682,43 +668,18 @@ function App() {
           controls
         />
       */}
-      <ToastContainer
-        position="top-left"
-        bodyClassName="toastBody"
-        progressClassName="toastBody"
-      />
       <Container>
-        {isLoading ? (
-          <div>
-            {" "}
-            <Connector
-              walletContent={onWalletContent}
-              getChange={getChangeAddy}
-              filtered={onWalletContent}
-              whichWalletSet={whichWallet}
-              isError={handleIsError}
-              userLoadoutContentArray={onWalletContent}
-              getTransactions={getTransactionsPosted}
-            />
-            {!refreshToken ? <Loading /> : ""}
-          </div>
-        ) : (
-          ""
-        )}
-
-        {// this is the row that shows the wallet controls 
-        }
-        <Row style={{ paddingTop: "10px" }}>
-          <Col className="col-4" style={{ display: "flex", alignItems: "center"}}>
+      <Row className="d-flex justify-content-center" style={{paddingTop: "20px"}}>
+      <Col xs={2} className="d-flex justify-content-start align-items-start">
+      <div style={{ paddingTop: "10px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "nowrap", width: "100%" }}>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
-                  variant="light"
-                  className="buttons_tas"
+                  className="button_tas_1"
                   id="dropdown-basic"
                   style={{
-                    marginLeft: `${isConnected ? "0" : "95px"}`,
                     fontFamily: "Cabin",
+                    backgroundColor: "#00000000"
                   }}
                 >
                   Wallet: {capitalizeFirstLetter(whichWallet)}
@@ -744,79 +705,57 @@ function App() {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
+              
              
             ) : (
               ""
             )}
-             {isConnected ? (
-                  <div style={{textAlign: "left", marginLeft: "10px"}}>
-                  <Button
-                    variant="light"
-                    onClick={handleEditWallet}
-                    className="buttons_tas">
-                    <p>Disconnect</p>
-                  </Button>           
-                  </div>
-             ) : "" }
-          </Col>
-          <Col className="col-4" class="align-self-center"
-            style={{
-              position: `${!isConnected ? "absolute" : "relative"}`,
-              width: "auto", 
-            }}
-          >
+            
             {isConnected ? (
-              <div style={{ fontSize: "16px", paddingTop: "3px" }}>
+              <div className="d-flex flex-column justify-content-start align-items-start">
+                <Button onClick={handleEditWallet} className="button_tas_1">
+                Disconnect
+                </Button>
+              </div>
+             ):(
+              <div className="d-flex flex-column justify-content-start align-items-start">
+                <Button disabled={!whichWallet} className="button_tas_2"   style={{ width: "100px" }} onClick={onSubmitAddy} >
+                  Connect
+                </Button>
+              </div>
+             )}
+             </div>
+             </Col>
+             <Col xs={8} className="text-center">
+             {isConnected ? (
+              <div style={{color: "#ead5c2"}}>
+              
+              
                 <img src={society} style={{ width: "35px" }} />
-                <span
-                  style={{ color: "#ead5c2", fontFamily: "Cabin, sans-serif" }}
-                >
-                  {" "}
-                  {societyToken} |{" "}
-                </span>
-                <span
-                  style={{
-                    color: "#ead5c2",
-                    paddingRight: "10px",
-                    fontSize: "",
-                    fontFamily: "Cabin, sans-serif",
-                  }}
-                >
-                  {truncate(walletAddress, 11)}
-                </span>
-                <span>
+                {" "}{societyToken} | {truncate(walletAddress, 11)} | {adaToken}{" "}
+                <img src={cardanologo} style={{ width: "35px" }} />
+            </div>
+              /*
                   <Button
                     variant="light"
                     onClick={handleLoadout}
-                    className="buttons_tas"
+                    className="button_tas_1"
                   >
                     <p>Loadouts</p>
                   </Button>
-                </span>
-              </div>
-            ) : (
-              <Button
-                onClick={onSubmitAddy}
-                variant="outline-secondary"
-                id="button-addon1"
-                style={{
-                  color: "white",
-                  background: "#2b802b",
-                  marginLeft: "",
-                }}
-                disabled={!whichWallet}
-              >
-                Connect
-              </Button>
+                */
+            ): (
+              ""
             )}
-          </Col>
-          <Col>
-            {" "}
+            </Col>
+            <Col xs={2} className="d-flex justify-content-end align-items-start">
             {isConnected ? (
-            <div style={{textAlign: "right"}}>
-              <img src={taslogowheat}/>
-            </div>
-             ) : "" }
+              <img width="200%" src={amphitheatre_textlogo} />
+            ): (
+              ""
+            )}
+            </Col>
+          </Row>
             <Modal
               size="lg"
               show={lgShowLoad}
@@ -826,11 +765,12 @@ function App() {
               <Modal.Body bsPrefix="modal-bg">
                 <div
                   className="modal-title"
-                  style={{ fontFamily: "Cabin, sans-serif" }}
-                >
-                  <h2 style={{ paddingBottom: "30px" }}>
-                    {" "}
-                    Your On-Chain Loadouts{" "}
+                  style={{ fontFamily: "Cabin, sans-serif" }}>
+                     <div style={{ display: "flex", justifyContent: "center", paddingBottom: "15px"}}>
+                      <img src={military_amphi} style={{ width: "50px"}} />
+                    </div>
+                    <h2 style={{ paddingBottom: "25px" }}>
+                      {" "}Your On-Chain Loadouts{" "}
                   </h2>
                   {postedTransactions.map((key, index) => {
                     return (
@@ -846,11 +786,10 @@ function App() {
                 </div>
                 <div className="modal-button" style={{ paddingTop: "0px" }}>
                   <Button
-                    className="buttons_tas"
+                    className="button_tas_1"
                     style={{
                       float: "right",
                       width: "100px",
-                      height: "50px",
                       fontSize: "18px",
                       fontFamily: "Cabin, sans-serif",
                     }}
@@ -861,15 +800,13 @@ function App() {
                 </div>
               </Modal.Body>
             </Modal>
-          </Col>
-        </Row>
-
-      {//The following row shows logos and the Ready button
-      }
+          
+        
 {isConnected ? (
   <Row>
     <Col className="col-12">
-    <img src={citizen_expbar}/>
+    {<img src={citizen_expbar}/> 
+    }
             <Modal
               size="lg"
               show={lgShow}
@@ -877,6 +814,9 @@ function App() {
               aria-labelledby="example-modal-sizes-title-lg"
             >
               <Modal.Body bsPrefix="modal-bg">
+		            <div style={{ display: "flex", justifyContent: "center", paddingBottom: "15px"}}>
+                  <img src={military_amphi} style={{ width: "50px"}} />
+                 </div>
                 <div
                   className="modal-title"
                   style={{ fontFamily: "Cabin, sans-serif" }}
@@ -906,17 +846,10 @@ function App() {
                   <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
                 </div>
                 <div className="modal-button ">
-                  <Button
-                    variant="success"
-                    style={{
-                      float: "right",
-                      width: "150px",
-                      height: "75px",
-                      fontSize: "18px",
-                      fontFamily: "Cabin, sans-serif",
-                    }}
-                    onClick={() => buildSendADATransaction()}
-                  >
+                  <Button className="button_tas_1" style={{marginRight: "10px"}} onClick={() => setLgShow(false)}>
+                    Cancel
+                  </Button>
+                  <Button variant="success" className="button_tas_2"onClick={() => buildSendADATransaction()}>
                     Confirm
                   </Button>
                 </div>
@@ -927,35 +860,16 @@ function App() {
 ) : "" }
 
         {}
-
+{/*
         {isConnected && !noLoadout ? (
           <div>
+            
             <div className="readyButton" style={{float: "right", clear: "right"}}>
-              <Button
-                disabled={!isConnected}
-                variant="success"
-                style={{
-                  float: "right",
-                  marginTop: "20px",
-                  marginRight: "15px",
-                  width: "150px",
-                  height: "120px",
-                  fontSize: "16px",
-                  backgroundColor: "#eec07a",
-                  boxShadow: "0 0 10px #f1dab0, 0 0 20px #f1dab0, 0 0 30px #f1dab0, 0 0 40px #f1dab0, 0 0 50px #f1dab0, 0 0 60px #f1dab0",
-                  transition: "box-shadow 0.5s ease-in-out",
-                  border: "none",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 0 20px #ead5c2, 0 0 40px #ead5c2, 0 0 60px #ead5c2, 0 0 80px #ead5c2, 0 0 100px #ead5c2, 0 0 120px #ead5c2"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 0 10px #ead5c2, 0 0 20px #ead5c2, 0 0 30px #ead5c2, 0 0 40px #ead5c2, 0 0 50px #ead5c2, 0 0 60px #ead5c2"; }}
-                onClick={() => {
-                  setLgShow(true);
-                }}
-              >
-                <p style={{ color: "#FFFFFF", whiteSpace: "pre-wrap"}}>Enter Arena</p>
-
+              <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
+                Enter
               </Button>
             </div>
+            
             <div style={{float: "right", clear: "right"}}>
               <SearchBar OnInputSubmit={OnInputSubmit} />
             </div>
@@ -995,13 +909,16 @@ function App() {
             </div>
           </div>
         ) : (
+          
           ""
         )}
+        */}
+        {/*
         {isConnected ? (
           <Row>
             <Col>
               <div class="armour_totals_top">
-                <p style={{ fontWeight: "bold", textAlign: "left"}}>Armour Totals:</p>{" "}
+                <h4 style={{ textAlign: "left", fontSize: '20px'}}>Stats:</h4>{" "}
                 <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
                 <p> Arms: {getLoadoutTotals()["arm"]} </p>{" "}              
@@ -1013,28 +930,32 @@ function App() {
         ) : (
           ""
         )}
-      <div style={{ display: "flex", alignItems: "left" }}>
-        {noLoadout ? (
-          <div className="inventory_no_gear">
-            <Row>
-              <Col>
-                <h2 style={{ textAlign: "center", marginTop: "100px" }}>
-                  {" "}
-                  No Gear Found{" "}
-                </h2>
-              </Col>
-            </Row>
-          </div>
-        ) : (
-          ""
-        )}
-
-        {isConnected && !noApe ? (
-          <Row>
-            <Col>
-              <div className="big_box" style={{ position: "relative", top: 0}}>
+      */}
+        {isConnected ? (
+           <Row className="d-flex justify-content-center">
+            <Col xs={2} className="d-flex justify-content-end align-items-start">
+                  <div className="d-flex flex-column justify-content-end">
+                  {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
+                    <Dustbin
+                      accept={accepts}
+                      lastDroppedItem={lastDroppedItem}
+                      onDrop={(item) => {
+                      handleDrop1(index, item, accepts);
+                        }}
+                      key={index}
+                      img={
+                    lastDroppedItem
+                    ? transformedLoadout[lastDroppedItem["name"]]
+                    : ""
+                }
+              />
+              ))}
+              </div>
+            </Col>
+            <Col xs={6} className="text-center">
+              <div className="big_box">
                 <Carousel
-                  width="480px"
+                  width="100%"
                   showIndicators={false}
                   onChange={apeUpdateInfo}
                   onClickItem={apeUpdateInfo}
@@ -1042,55 +963,14 @@ function App() {
                   {filtered
                     ? Object.keys(filtered) &&
                       Object.keys(filtered).map((val, index) => {
-                        //console.log(val);
                         return <img src={filtered[val]} key={index} />;
                       })
                     : ""}
                 </Carousel>
               </div>
             </Col>
-          </Row>
-        ) : (
-          ""
-        )}
-
-        {noApe ? (
-          <Row>
-            <Col>
-              <div className="big_box_noApe" style={{ position: "relative", top: 0}}>
-                <h2 style={{ marginTop: "240px"}}> No ape found </h2>
-              </div>
-            </Col>
-          </Row>
-        ) : (
-          ""
-        )}
-        {isConnected ? (
-          <Row style={{ width: "100px", marginTop: "10px", marginLeft: "20px" }}>
-          {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
-            <Col style={{ width: "100px" }}>
-              <Dustbin
-                accept={accepts}
-                lastDroppedItem={lastDroppedItem}
-                onDrop={(item) => {
-                  handleDrop1(index, item, accepts);
-                }}
-                key={index}
-                img={
-                  lastDroppedItem
-                    ? transformedLoadout[lastDroppedItem["name"]]
-                    : ""
-                }
-              />
-            </Col>
-          ))}
-          </Row>
-        ) : ("")}
-      </div>
-        {isConnected ? (
-          <Row style={{ width: "622px", marginLeft: "-5px", marginTop: "0px"}}>
-            {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-             <Col style={{ width: "100px" }}>
+            <Col xs={2} className="d-flex flex-column justify-content-start">
+             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
                <Dustbin
                           accept={
                             accepts[0] === "Item0" ||
@@ -1120,34 +1000,40 @@ function App() {
                               : ""
                           }
                   />
-                </Col>
-              ))}
-            </Row>
-
+                  ))}
+            </Col>      
+          </Row>
         ) : (
           ""
-        )}
+        )}        
+             
         {!isConnected && !isLoading ? (
+          /* this might where we want to integrate steam and xbox and epic */
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
             <img src={armoury_banner} alt="Armoury banner" />
-            
-           {/* <h1
-              style={{
-                color: "wheat",
-                fontFamily: "Sans-Serif",
-                textAlign: "center",
-              }}
-            >
-              Connect your wallet to continue
-            </h1> */
-          }
           </div>
         ) : (
           ""
         )}
       </Container>
+      {isLoading ? (
+          <div>
+            {" "}
+            <Connector
+              walletContent={onWalletContent}
+              getChange={getChangeAddy}
+              filtered={onWalletContent}
+              whichWalletSet={whichWallet}
+              isError={handleIsError}
+              userLoadoutContentArray={onWalletContent}
+              getTransactions={getTransactionsPosted}
+            />
+            {!refreshToken ? <Loading /> : ""}
+          </div>
+        ) : (
+          ""
+        )}
     </div>
-    
   );
 }
 

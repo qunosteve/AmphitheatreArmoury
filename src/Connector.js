@@ -91,7 +91,6 @@ export default class Connector extends React.Component {
             contentQunatity: undefined,
             isEntered: false,
             postedTransactions: [],
-
             networkId: undefined,
             Utxos: undefined,
             CollatUtxos: undefined,
@@ -99,12 +98,10 @@ export default class Connector extends React.Component {
             changeAddress: undefined,
             rewardAddress: undefined,
             usedAddress: undefined,
-
             txBody: undefined,
             txBodyCborHex_unsigned: "",
             txBodyCborHex_signed: "",
             submittedTxHash: "",
-
             addressBech32SendADA:
                 "addr_test1qrt7j04dtk4hfjq036r2nfewt59q8zpa69ax88utyr6es2ar72l7vd6evxct69wcje5cs25ze4qeshejy828h30zkydsu4yrmm",
             lovelaceToSend: 1000000,
@@ -508,7 +505,7 @@ export default class Connector extends React.Component {
     };
 
     getUserLoadoutContent = async () => {
-        if (this.state.userLoadoutContent.length != 0) {
+        if (this.state.userLoadoutContent.length !== 0) {
             let userLoadout = [];
 
             try {
@@ -745,12 +742,11 @@ export default class Connector extends React.Component {
                     await this.setState({
                         Utxos: null,
                         CollatUtxos: null,
-                        balance: null,
+                        Balance: null,
                         changeAddress: null,
                         rewardAddress: null,
                         usedAddress: null,
                         walletContent: null,
-
                         txBody: null,
                         txBodyCborHex_unsigned: "",
                         txBodyCborHex_signed: "",
@@ -760,15 +756,13 @@ export default class Connector extends React.Component {
             } else {
                 await this.setState({
                     walletIsEnabled: false,
-
                     Utxos: null,
                     CollatUtxos: null,
-                    balance: null,
+                    Balance: null,
                     changeAddress: null,
                     rewardAddress: null,
                     usedAddress: null,
                     walletContent: null,
-
                     txBody: null,
                     txBodyCborHex_unsigned: "",
                     txBodyCborHex_signed: "",

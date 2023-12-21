@@ -564,23 +564,9 @@
   }
 }
 
-/*  Grid
-    <div class="sk-grid">
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-      <div class="sk-grid-cube"></div>
-    </div>
- */
 .sk-grid {
   width: var(--sk-size);
   height: var(--sk-size);
-  z-index: 99;
   /* Cube positions
    * 1 2 3
    * 4 5 6
@@ -592,7 +578,7 @@
   display: flex;
   justify-content: center;
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 0;
   right: 0;
   bottom: 0;
@@ -653,15 +639,6 @@
     transform: scale3D(0, 0, 1);
   }
 }
-
-/*  Fold
-      <div class="sk-fold">
-        <div class="sk-fold-cube"></div>
-        <div class="sk-fold-cube"></div>
-        <div class="sk-fold-cube"></div>
-        <div class="sk-fold-cube"></div>
-      </div>
- */
 .sk-fold {
   width: var(--sk-size);
   height: var(--sk-size);
