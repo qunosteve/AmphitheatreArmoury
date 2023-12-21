@@ -82,31 +82,6 @@ input:focus {
   overflow: hidden;
   text-align: center;
 }
-
-.round-button {
-  box-sizing: border-box;
-  display: block;
-  width: 80px;
-  height: 80px;
-  padding-top: 14px;
-  padding-left: 8px;
-  line-height: 20px;
-  border: 6px solid #fff;
-  border-radius: 50%;
-  color: #f5f5f5;
-  text-align: center;
-  text-decoration: none;
-  background-color: rgba(0, 0, 0, 0.5);
-  font-size: 20px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-.round-button:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 0px 10px rgba(255, 255, 100, 1);
-  text-shadow: 0px 0px 10px rgba(255, 255, 100, 1);
-}
-
 .homepage {
   background: url(images/cold.png);
   background-size: cover;
@@ -132,7 +107,8 @@ audio {
   border-right: none;
   border-left: none;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  margin-top: 50px;
 }
 
 a,
@@ -174,54 +150,24 @@ p {
   justify-content: center;
   border: 0px solid #ead5c2;
   overflow-y: scroll;
-  height: 480px;
-  width: 180px;
-  margin-top: 20px;
-  border-radius: 5px;
+  height: 60vh;
 }
 
 /* Style the scrollbar */
 .inventory::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
-  margin: 5px;
+  width: 0px; /* Set the width of the scrollbar */
+  margin: 0px;
 }
 
-.inventory::-webkit-scrollbar-thumb {
-  background-color: #ead5c2; /* Set the color of the scrollbar thumb */
-}
 
 .inventory::-webkit-scrollbar-track {
   background-color: #fffff000; /* Set the color of the scrollbar track */
 }
 
-.inventory_no_gear {
-  display: grid;
-  justify-content: center;
-  border: 2px solid #ead5c2;
-  overflow-y: scroll;
-  height: 360px;
-  width: 150px;
-  margin-top: 20px;
-  border-radius: 5px;
-}
-
-/* Style the scrollbar */
-.inventory_no_gear::-webkit-scrollbar {
-  width: 10px; /* Set the width of the scrollbar */
-  margin: 5px;
-}
-
-.inventory_no_gear::-webkit-scrollbar-thumb {
-  background-color: #ead5c2; /* Set the color of the scrollbar thumb */
-}
-
-.inventory_no_gear::-webkit-scrollbar-track {
-  background-color: #fffff000; /* Set the color of the scrollbar track */
-}
 
 .gear_img {
   width: 136px;
-  margin: 0px;
+  margin: 1px;
 }
 
 .inventory_box {
@@ -231,8 +177,6 @@ p {
   height: 140px;
   margin-top: 5px;
   margin-bottom: 5px;
-  margin-right: 5px;
-  margin-left: 5px;
   cursor: move;
 }
 
@@ -360,3 +304,5 @@ p {
   background-color: #eec07a00 !important;
   border-color: #f1dab0 !important;
 }
+
+

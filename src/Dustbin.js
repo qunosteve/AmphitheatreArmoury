@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { useDrop } from "react-dnd";
+import React, { useState } from 'react';
 import "./App.css";
 
 const style = {
@@ -19,6 +20,7 @@ export const Dustbin = memo(function Dustbin({
   accept,
   lastDroppedItem,
   onDrop,
+  onClick,
   img,
 }) {
   const [{ isOver, canDrop }, drop] = useDrop({
@@ -27,6 +29,7 @@ export const Dustbin = memo(function Dustbin({
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
+      
     }),
   });
   const isActive = isOver && canDrop;
@@ -39,13 +42,13 @@ export const Dustbin = memo(function Dustbin({
   //   backgroundColor = "darkkhaki";
   // }
   return (
-    <div>
       <div
         className={isActive ? "loadout_box_incoming_item" : "loadout_box_empty"}
         ref={drop}
         style={{
           backgroundColor: "none",
         }}
+        onClick={onClick}
         data-testid="dustbin"
       >
         {lastDroppedItem && (
@@ -56,20 +59,5 @@ export const Dustbin = memo(function Dustbin({
           />
         )}
       </div>
-      {/* <div
-        style={{
-          textAlign: "center",
-          color: "wheat",
-          fontFamily: "Cabin, sans-serif",
-          fontSize: "16px",
-        }}
-      >
-        {isActive
-          ? "Release to drop"
-          : lastDroppedItem
-          ? `${shortenTokenLength(lastDroppedItem["name"])}`
-          : `${accept}`}
-      </div>*/}
-        </div> 
   );
 });

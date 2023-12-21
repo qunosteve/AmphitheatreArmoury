@@ -13,7 +13,9 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
+import amphisvg from "./images/rawamphisvg.png";
 import cardanologo from "./images/cardanologo.png";
+import armoricon from "./images/chest-armor.png";
 import military_amphi from "./images/military_amphi.png";
 import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
@@ -118,6 +120,27 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
+  const [showLeftInventory, setShowLeftInventory] = useState(false);
+  const [showRightInventory, setShowRightInventory] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState("");
+  function handleLeftDustbinClick (slot) {
+    if (slot == "Item0" || slot == "Item1" || slot == "Item2" || slot == "Item3") {
+      slot = "Item";
+    }
+      setShowLeftInventory(true);
+      setShowRightInventory(false);
+      setSelectedSlot(slot);
+      console.log(`Dustbin clicked! Slot: ${slot}`);
+  }
+  function handleRightDustbinClick(slot) {
+    if (slot == "Item0" || slot == "Item1" || slot == "Item2" || slot == "Item3") {
+      slot = "Item";
+    }
+      setShowLeftInventory(false);
+      setShowRightInventory(true);
+      setSelectedSlot(slot);
+      console.log(`Dustbin clicked! Slot: ${slot}`);
+  }
   const [beenHere, setBeenHere] = useState(false);
   const [refreshToken, setRefreshToken] = useState(false);
   const [postedTransactions, setPostedTransactions] = useState([]);
@@ -352,14 +375,14 @@ function App() {
   //get loadouttotals function to calculate armour totals
 
   function getLoadoutTotals() {
-    let leg_armor = 0;
+    let armor = 0;
     let arm_armor = 0;
     let head_armor = 0;
     let body_armor = 0;
     let weight = 0;
     if (userLoadoutValues != {}) {
       Object.keys(userLoadoutValues).map((key, index) => {
-        leg_armor += parseInt(userLoadoutValues[key]?.leg_armor || 0);
+        armor += parseInt(userLoadoutValues[key]?.armor || 0);
         arm_armor += parseInt(userLoadoutValues[key]?.arm_armor || 0);
         head_armor += parseInt(userLoadoutValues[key]?.head_armor || 0);
         body_armor += parseInt(userLoadoutValues[key]?.body_armor || 0);
@@ -367,7 +390,7 @@ function App() {
       });
     }
     return {
-      leg: leg_armor,
+      armor: armor,
       arm: arm_armor,
       head: head_armor,
       body: body_armor,
@@ -704,19 +727,17 @@ function App() {
                     );
                   })}
                 </Dropdown.Menu>
-              </Dropdown>
-              
-             
+              </Dropdown> 
             ) : (
               ""
             )}
             
             {isConnected ? (
               <div className="d-flex flex-column justify-content-start align-items-start">
-                <Button onClick={handleEditWallet} className="button_tas_1">
-                Disconnect
-                </Button>
-              </div>
+                    <Button onClick={handleEditWallet} className="button_tas_1">
+                    Disconnect
+                    </Button>
+                </div>
              ):(
               <div className="d-flex flex-column justify-content-start align-items-start">
                 <Button disabled={!whichWallet} className="button_tas_2"   style={{ width: "100px" }} onClick={onSubmitAddy} >
@@ -805,8 +826,8 @@ function App() {
 {isConnected ? (
   <Row>
     <Col className="col-12">
-    {<img src={citizen_expbar}/> 
-    }
+    {/*<img src={citizen_expbar}/> 
+    */}
             <Modal
               size="lg"
               show={lgShow}
@@ -839,7 +860,7 @@ function App() {
                   );
                 })}{" "}
                 <div class="armor">
-                  <p> Arm Armor: {getLoadoutTotals()["arm"]} </p>{" "}
+                  <p> <img src={armoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["armor"]} </p>{" "}
                   <p> Head Armor: {getLoadoutTotals()["head"]} </p>{" "}
                   <p> Body Armor: {getLoadoutTotals()["body"]} </p>{" "}
                   <p> Leg Armor: {getLoadoutTotals()["leg"]} </p>{" "}
@@ -859,100 +880,106 @@ function App() {
 </Row>
 ) : "" }
 
-        {}
-{/*
-        {isConnected && !noLoadout ? (
-          <div>
-            
-            <div className="readyButton" style={{float: "right", clear: "right"}}>
-              <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
-                Enter
-              </Button>
-            </div>
-            
-            <div style={{float: "right", clear: "right"}}>
-              <SearchBar OnInputSubmit={OnInputSubmit} />
-            </div>
-            <div className="inventory" style={{float: "right", clear: "right"}}>
-              {searchList.length > 0 &&
-                searchList.map(
-                  (
-                    {
-                      name,
-                      slot,
-                      amount,
-                      image,
-                      weight,
-                      leg_armor,
-                      body_armor,
-                      head_armor,
-                      arm_armor,
-                      tier
-                    },
-                    index
-                  ) => (
-                    <Row style={{ justifyContent: "center", display: "grid" }}>
-                      <Col>
-                        <Box
-                          name={name}
-                          type={slot}
-                          isDropped={isDropped(name)}
-                          key={index}
-                          img={image}
-                        />
-                        <div style={{ textAlign: "center" }}>                          
-                        </div>
-                      </Col>
-                    </Row>
-                  )
-                )}
-            </div>
-          </div>
-        ) : (
-          
-          ""
-        )}
-        */}
-        {/*
+
+       
+
+        
         {isConnected ? (
           <Row>
             <Col>
-              <div class="armour_totals_top">
-                <h4 style={{ textAlign: "left", fontSize: '20px'}}>Stats:</h4>{" "}
-                <p> Head: {getLoadoutTotals()["head"]} </p>{" "}
+              <div class="armour_totals_top" d-flex>
+                <p><img src={armoricon} style={{ width: "30px" }}/>  {getLoadoutTotals()["armor"]}{"  "} </p>
                 <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
                 <p> Arms: {getLoadoutTotals()["arm"]} </p>{" "}              
                 <p> Legs: {getLoadoutTotals()["leg"]} </p>{" "}
                 <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
-              </div>
+                </div>
+              {/*
+                {!noLoadout ? (
+                  <div className="readyButton text-center">
+                    <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
+                    Enter Arena
+                    </Button>
+                  </div> 
+             
+        ) : (
+          ""
+        )}
+        */}      
             </Col>
           </Row>
         ) : (
           ""
         )}
-      */}
+      
         {isConnected ? (
-           <Row className="d-flex justify-content-center">
-            <Col xs={2} className="d-flex justify-content-end align-items-start">
-                  <div className="d-flex flex-column justify-content-end">
-                  {dustbins_row1.map(({ accepts, lastDroppedItem }, index) => (
-                    <Dustbin
+           <Row className="d-flex justify-content-center">           
+            <Col xs={3} className="d-flex justify-content-end align-items-start">
+              <Row className="d-flex">
+              < Col xs={6} className="d-flex justify-content-start align-items-start">
+              {showLeftInventory && (
+                <div className="inventory">
+                  {searchList
+                    .filter(item => item.slot == selectedSlot)
+                    .map(
+                      (
+                        {
+                          name,
+                          slot,
+                          amount,
+                          armor,
+                          image,
+                          weight,
+                          leg_armor,
+                          body_armor,
+                          head_armor,
+                          arm_armor,
+                          tier
+                        },
+                        index
+                      ) => (
+                        <Row style={{ justifyContent: "center", display: "grid" }}>
+                          <Col>
+                            <Box
+                              name={name}
+                              type={slot}
+                              isDropped={isDropped(name)}
+                              key={index}
+                              img={image}
+                              armor={armor}
+                            />
+                            <div style={{ textAlign: "center" }}>                          
+                            </div>
+                          </Col>
+                        </Row>
+                      )
+                    )}
+                  </div>
+                  )}
+            </Col>
+              <Col xs={6} className="d-flex justify-content-end">
+                  <div className="d-flex flex-column justify-content-start align-items-start">
+                  {dustbins_row1.map(({ accepts, lastDroppedItem}, index) => (
+                    <Dustbin 
                       accept={accepts}
                       lastDroppedItem={lastDroppedItem}
                       onDrop={(item) => {
                       handleDrop1(index, item, accepts);
                         }}
+                      onClick={() => handleLeftDustbinClick(accepts)} 
                       key={index}
                       img={
                     lastDroppedItem
                     ? transformedLoadout[lastDroppedItem["name"]]
                     : ""
-                }
-              />
-              ))}
-              </div>
+                      }
+                    />
+                    ))}
+                    </div>
+                </Col>
+            </Row>
             </Col>
-            <Col xs={6} className="text-center">
+            <Col xs={5} className="text-center">
               <div className="big_box">
                 <Carousel
                   width="100%"
@@ -969,44 +996,89 @@ function App() {
                 </Carousel>
               </div>
             </Col>
-            <Col xs={2} className="d-flex flex-column justify-content-start">
-             {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
-               <Dustbin
-                          accept={
-                            accepts[0] === "Item0" ||
-                            accepts[0] === "Item1" ||
-                            accepts[0] === "Item2" ||
-                            accepts[0] === "Item3"
-                              ? acceptsItem
-                              : accepts
-                          }
-                          lastDroppedItem={lastDroppedItem}
-                          onDrop={(item) => {
-                            if (
-                              accepts === "Item0" ||
-                              accepts === "Item1" ||
-                              accepts === "Item2" ||
-                              accepts === "Item3"
-                            ) {
-                              accepts = "Item";
-                            }
-        
-                            handleDrop2(index, item, accepts);
-                          }}
-                          key={index}
-                          img={
-                            lastDroppedItem
-                              ? transformedLoadout[lastDroppedItem["name"]]
-                              : ""
-                          }
-                  />
-                  ))}
-            </Col>      
+            <Col xs={3} className="d-flex flex-column justify-content-start">
+            <Row className="d-flex">
+              < Col xs={6} className="d-flex justify-content-start align-items-start">
+              <div className="d-flex flex-column justify-content-start align-items-start">
+                {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
+                  <Dustbin
+                              accept={
+                                accepts[0] === "Item0" ||
+                                accepts[0] === "Item1" ||
+                                accepts[0] === "Item2" ||
+                                accepts[0] === "Item3"
+                                  ? acceptsItem
+                                  : accepts
+                              }
+                              lastDroppedItem={lastDroppedItem}
+                              onClick={() => handleRightDustbinClick(accepts)} 
+                              onDrop={(item) => {
+                                if (
+                                  accepts === "Item0" ||
+                                  accepts === "Item1" ||
+                                  accepts === "Item2" ||
+                                  accepts === "Item3"
+                                ) {
+                                  accepts = "Item";
+                                }
+                                handleRightDustbinClick(accepts);
+                                handleDrop2(index, item, accepts);
+                              }}
+                              key={index}
+                              img={
+                                lastDroppedItem
+                                  ? transformedLoadout[lastDroppedItem["name"]]
+                                  : ""
+                              }
+                      />
+                      ))}
+                </div>
+              </Col>
+              < Col xs={6} className="d-flex justify-content-start align-items-start">
+              {showRightInventory && (
+                  <div className="inventory">
+                  {searchList
+                    .filter(item => item.slot == selectedSlot)
+                    .map(
+                      (
+                        {
+                          name,
+                          slot,
+                          amount,
+                          image,
+                          weight,
+                          leg_armor,
+                          body_armor,
+                          head_armor,
+                          arm_armor,
+                          tier
+                        },
+                        index
+                      ) => (
+                        <Row style={{ justifyContent: "center", display: "grid" }}>
+                          <Col>
+                            <Box
+                              name={name}
+                              type={slot}
+                              isDropped={isDropped(name)}
+                              key={index}
+                              img={image}
+                            />
+                            <div style={{ textAlign: "center" }}>                          
+                            </div>
+                          </Col>
+                        </Row>
+                      )
+                    )}
+                  </div>
+                  )}
+                </Col>
+              </Row>
+            </Col>   
           </Row>
         ) : (
           ""
-        )}        
-             
+        )}              
         {!isConnected && !isLoading ? (
           /* this might where we want to integrate steam and xbox and epic */
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
