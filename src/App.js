@@ -13,9 +13,22 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
-import amphisvg from "./images/rawamphisvg.png";
 import cardanologo from "./images/cardanologo.png";
 import armoricon from "./images/chest-armor.png";
+import weighticon from "./images/weight.png";
+import intelligenceicon from "./images/brain.png";
+import strengthicon from "./images/biceps.png";
+import precisionicon from "./images/bullseye.png";
+import defenseicon from "./images/axe-sword.png";
+import leadershipicon from "./images/sergeant.png";
+import strategyicon from "./images/chess-pawn.png";
+import craftingicon from "./images/anvil-impact.png";
+import healthicon from "./images/health.png";
+import speedicon from "./images/running-shoe.png";
+import horsemanshipicon from "./images/horse-head.png";
+import onehandshieldicon from "./images/battle-gear.png";
+import twohandedicon from "./images/war-axe.png";
+import polearmicon from "./images/glaive.png";
 import military_amphi from "./images/military_amphi.png";
 import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
@@ -123,25 +136,74 @@ function App() {
   const [showLeftInventory, setShowLeftInventory] = useState(false);
   const [showRightInventory, setShowRightInventory] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState("");
+  const [inventoryTopPadding, setInventoryTopPadding] = useState("");
+  const [inventoryBottomPadding, setInventoryBottomPadding] = useState("");
   function handleLeftDustbinClick (slot) {
-    if (slot == "Item0" || slot == "Item1" || slot == "Item2" || slot == "Item3") {
-      slot = "Item";
+    if (slot =="Head") {
+      setInventoryTopPadding('0px')
+      setInventoryBottomPadding('725px')
     }
+    if (slot =="Body") {
+      setInventoryTopPadding('145px')
+      setInventoryBottomPadding('580px')
+    }
+    if (slot =="Shoulders") {
+      setInventoryTopPadding('290px')
+      setInventoryBottomPadding('435px')
+    }
+    if (slot =="Gloves") {
+      setInventoryTopPadding('435px')
+      setInventoryBottomPadding('290px')
+    } 
+    if (slot =="Leg") {
+      setInventoryTopPadding('580px')
+      setInventoryBottomPadding('145px')
+    } 
+    if (slot =="HorseHarness") {
+      setInventoryTopPadding('725px')
+      setInventoryBottomPadding('0px')
+    } 
       setShowLeftInventory(true);
       setShowRightInventory(false);
       setSelectedSlot(slot);
-      console.log(`Dustbin clicked! Slot: ${slot}`);
   }
   function handleRightDustbinClick(slot) {
-    if (slot == "Item0" || slot == "Item1" || slot == "Item2" || slot == "Item3") {
-      slot = "Item";
-    }
+    
+      if (slot =="Item0") {
+        setInventoryTopPadding('0px')
+        setInventoryBottomPadding('725px')
+        slot = "Item";
+      }
+      if (slot =="Item1") {
+        setInventoryTopPadding('145px')
+        setInventoryBottomPadding('580px')
+        slot = "Item";
+      }
+      if (slot =="Item2") {
+        setInventoryTopPadding('290px')
+        setInventoryBottomPadding('435px')
+        slot = "Item";
+      }
+      if (slot =="Item3") {
+        setInventoryTopPadding('435px')
+        setInventoryBottomPadding('290px')
+        slot = "Item";
+      } 
+      if (slot =="Horse") {
+        setInventoryTopPadding('580px')
+        setInventoryBottomPadding('145px')
+      } 
+      if (slot =="Special") {
+        setInventoryTopPadding('725px')
+        setInventoryBottomPadding('0px')
+      } 
+    
       setShowLeftInventory(false);
       setShowRightInventory(true);
       setSelectedSlot(slot);
-      console.log(`Dustbin clicked! Slot: ${slot}`);
   }
   const [beenHere, setBeenHere] = useState(false);
+  const [inventoryPosition, setInventoryPosition] = useState(0);
   const [refreshToken, setRefreshToken] = useState(false);
   const [postedTransactions, setPostedTransactions] = useState([]);
   const [lookup, setLookup] = useState({});
@@ -181,7 +243,10 @@ function App() {
   });
   const [userLoadoutValues, setUserLoadoutValues] = useState({});
   const [searchList, setSearchList] = useState([]);
-
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  
   let protocolParams = {
     linearFee: {
       minFeeA: "44",
@@ -376,25 +441,57 @@ function App() {
 
   function getLoadoutTotals() {
     let armor = 0;
-    let arm_armor = 0;
-    let head_armor = 0;
-    let body_armor = 0;
     let weight = 0;
+    let intelligence = 0
+    let conditioning = 0;
+    let defense = 0
+    let precision = 0
+    let leadership = 0
+    let strategy = 0
+    let crafting = 0
+    let health = 0;
+    let horsemanship = 0
+    let speed = 0
+    let onehandshield = 0;
+    let twohanded = 0
+    let polearm = 0
+    
+    
     if (userLoadoutValues != {}) {
       Object.keys(userLoadoutValues).map((key, index) => {
         armor += parseInt(userLoadoutValues[key]?.armor || 0);
-        arm_armor += parseInt(userLoadoutValues[key]?.arm_armor || 0);
-        head_armor += parseInt(userLoadoutValues[key]?.head_armor || 0);
-        body_armor += parseInt(userLoadoutValues[key]?.body_armor || 0);
         weight += parseInt(userLoadoutValues[key]?.weight || 0);
+        intelligence += parseInt(userLoadoutValues[key]?.intelligence || 0);
+        conditioning += parseInt(userLoadoutValues[key]?.conditioning || 0);
+        defense += parseInt(userLoadoutValues[key]?.defense || 0);
+        precision += parseInt(userLoadoutValues[key]?.precision || 0);
+        leadership += parseInt(userLoadoutValues[key]?.leadership || 0);
+        strategy += parseInt(userLoadoutValues[key]?.strategy || 0);
+        crafting += parseInt(userLoadoutValues[key]?.crafting || 0);
+        health += parseInt(userLoadoutValues[key]?.health || 0);
+        horsemanship += parseInt(userLoadoutValues[key]?.horsemanship || 0);
+        speed += parseInt(userLoadoutValues[key]?.cavalry || 0);
+        onehandshield += parseInt(userLoadoutValues[key]?.onehandshield || 0);
+        twohanded += parseInt(userLoadoutValues[key]?.twohanded || 0);
+        polearm += parseInt(userLoadoutValues[key]?.polearm || 0);
       });
     }
     return {
       armor: armor,
-      arm: arm_armor,
-      head: head_armor,
-      body: body_armor,
       weight: weight,
+      intelligence: intelligence,
+      conditioning: conditioning,
+      defense: defense,
+      precision: precision,
+      leadership: leadership,
+      strategy: strategy,
+      crafting: crafting,
+      health: health,
+      horsemanship: horsemanship,
+      speed: speed,
+      onehandshield: onehandshield,
+      twohanded: twohanded,
+      polearm: polearm,
     };
   }
 
@@ -859,12 +956,22 @@ function App() {
                     </p>
                   );
                 })}{" "}
-                <div class="armor">
+                <div class="characterstats">
                   <p> <img src={armoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["armor"]} </p>{" "}
-                  <p> Head Armor: {getLoadoutTotals()["head"]} </p>{" "}
-                  <p> Body Armor: {getLoadoutTotals()["body"]} </p>{" "}
-                  <p> Leg Armor: {getLoadoutTotals()["leg"]} </p>{" "}
-                  <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
+                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                  
+                  <p> <img src={intelligenceicon} style={{ width: "30px" }} /> {getLoadoutTotals()["intelligence"]} </p>{" "}
+                  <p> <img src={strengthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["conditioning"]} </p>{" "}
+                  <p> <img src={defenseicon} style={{ width: "30px" }} /> {getLoadoutTotals()["defense"]} </p>{" "}                  
+                  <p> <img src={precisionicon} style={{ width: "30px" }} /> {getLoadoutTotals()["precision"]} </p>{" "}            
+                  <p> <img src={leadershipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["leadership"]} </p>{" "}
+                  <p> <img src={strategyicon} style={{ width: "30px" }} /> {getLoadoutTotals()["strategy"]} </p>{" "}
+                  <p> <img src={craftingicon} style={{ width: "30px" }} /> {getLoadoutTotals()["crafting"]} </p>{" "}
+                  <p> <img src={healthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["health"]} </p>{" "}
+                  <p> <img src={speedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["speed"]} </p>{" "}
+                  <p> <img src={horsemanshipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsemanship"]} </p>{" "}            
+                  <p> <img src={onehandshieldicon} style={{ width: "30px" }} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
+                  <p> <img src={twohandedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
+                  <p> <img src={polearmicon} style={{ width: "30px" }} /> {getLoadoutTotals()["polearm"]} </p>{" "}            
                 </div>
                 <div className="modal-button ">
                   <Button className="button_tas_1" style={{marginRight: "10px"}} onClick={() => setLgShow(false)}>
@@ -885,14 +992,24 @@ function App() {
 
         
         {isConnected ? (
-          <Row>
-            <Col>
+          <Row className="justify-content-center">
+              <Col className="text-center">
               <div class="armour_totals_top" d-flex>
-                <p><img src={armoricon} style={{ width: "30px" }}/>  {getLoadoutTotals()["armor"]}{"  "} </p>
-                <p> Body: {getLoadoutTotals()["body"]} </p>{" "}
-                <p> Arms: {getLoadoutTotals()["arm"]} </p>{" "}              
-                <p> Legs: {getLoadoutTotals()["leg"]} </p>{" "}
-                <p> Weight: {getLoadoutTotals()["weight"]} </p>{" "}
+                <p><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
+                <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
+                <p style={{paddingLeft: "30px"}}><img src={intelligenceicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["intelligence"]} </p>{" "}
+                <p><img src={strengthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
+                <p><img src={defenseicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["defense"]} </p>{" "}
+                <p><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={leadershipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["leadership"]} </p>{" "}
+                <p><img src={strategyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["strategy"]} </p>{" "}
+                <p><img src={craftingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crafting"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
+                <p><img src={speedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["speed"]} </p>{" "}
+                <p><img src={horsemanshipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsemanship"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
+                <p><img src={twohandedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["twohanded"]} </p>{" "}
+                <p><img src={polearmicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["polearm"]} </p>{" "}
                 </div>
               {/*
                 {!noLoadout ? (
@@ -918,7 +1035,7 @@ function App() {
               <Row className="d-flex">
               < Col xs={6} className="d-flex justify-content-start align-items-start">
               {showLeftInventory && (
-                <div className="inventory">
+                <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}` }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -930,10 +1047,6 @@ function App() {
                           armor,
                           image,
                           weight,
-                          leg_armor,
-                          body_armor,
-                          head_armor,
-                          arm_armor,
                           tier
                         },
                         index
@@ -1036,7 +1149,7 @@ function App() {
               </Col>
               < Col xs={6} className="d-flex justify-content-start align-items-start">
               {showRightInventory && (
-                  <div className="inventory">
+                  <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}` }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1047,10 +1160,7 @@ function App() {
                           amount,
                           image,
                           weight,
-                          leg_armor,
-                          body_armor,
-                          head_armor,
-                          arm_armor,
+                          armor,
                           tier
                         },
                         index
@@ -1108,5 +1218,4 @@ function App() {
     </div>
   );
 }
-
-export default App;
+ export default App;

@@ -526,10 +526,7 @@ export default class Connector extends React.Component {
                         slot: this.capitalizeFirstLetter(
                             data.onchain_metadata.slot
                         ),
-                        arm_armor: data.onchain_metadata["arm armor"] || 0,
-                        leg_armor: data.onchain_metadata["leg armor"] || 0,
-                        body_armor: data.onchain_metadata["body armor"] || 0,
-                        head_armor: data.onchain_metadata["head armor"] || 0,
+                        armor: data.onchain_metadata["armor"] || 0,
                         weight: data.onchain_metadata.weight,
                         amount: this.state.contentQunatity[key],
                         image: `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(
