@@ -1192,7 +1192,7 @@ function App() {
         {!isConnected && !isLoading ? (
           /* this might where we want to integrate steam and xbox and epic */
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
-            <img src={armoury_banner} alt="Armoury banner" />
+            <img src={armoury_banner} alt="Armoury banner" width="75%" />
           </div>
         ) : (
           ""
