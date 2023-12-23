@@ -14,10 +14,16 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import society from "./images/Society.png";
 import cardanologo from "./images/cardanologo.png";
+import amphilogo from "./images/rawamphi_small.png";
+import switchicon from "./images/open-folder.png";
+import saveicon from "./images/save.png";
+import whitesaveicon from "./images/whitesave.png";
+import erasericon from "./images/eraser.png";
 import armoricon from "./images/chest-armor.png";
 import weighticon from "./images/weight.png";
 import levelupicon from "./images/levelup.png";
 import levelupactive from "./images/levelup_active.png";
+import reseticon from "./images/reset.png";
 import cognitionicon from "./images/cognition.png";
 import cognitionactive from "./images/cognition_active.png";
 import conditioningicon from "./images/conditioning.png";
@@ -448,6 +454,10 @@ function App() {
       { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
       
     ]);
+    setLeftLoadoutColumnWidth(2);
+    setRightLoadoutColumnWidth(2);
+    setShowLeftInventory(false);
+    setShowRightInventory(false);
   }
 
   let loadoutValues = {};
@@ -485,6 +495,7 @@ function App() {
     let horsespeed = 0;
     let horsemaneuver = 0
     let horsecharge = 0
+    let horseweight = 0
     
     
     if (userLoadoutValues != {}) {
@@ -513,6 +524,7 @@ function App() {
         horsespeed += parseInt(userLoadoutValues[key]?.horsespeed || 0);
         horsemaneuver += parseInt(userLoadoutValues[key]?.horsemaneuver || 0);
         horsecharge += parseInt(userLoadoutValues[key]?.horsecharge || 0);
+        horseweight += parseInt(userLoadoutValues[key]?.horseweight || 0);
       });
     }
     return {
@@ -540,6 +552,7 @@ function App() {
       horsespeed: horsespeed,
       horsemaneuver: horsemaneuver,
       horsecharge: horsecharge,
+      horseweight: horseweight,
     };
   }
 
@@ -901,15 +914,6 @@ function App() {
                 {" "}{societyToken} | {truncate(walletAddress, 11)} | {adaToken}{" "}
                 <img src={cardanologo} style={{ width: "35px" }} />
             </div>
-              /*
-                  <Button
-                    variant="light"
-                    onClick={handleLoadout}
-                    className="button_tas_1"
-                  >
-                    <p>Loadouts</p>
-                  </Button>
-                */
             ): (
               ""
             )}
@@ -1026,6 +1030,7 @@ function App() {
                   <p> <img src={horsespeedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsespeed"]} </p>{" "}
                   <p> <img src={horsemaneuvericon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsemaneuver"]} </p>{" "}
                   <p> <img src={horsechargeicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}            
+                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["horseweight"]} </p>{" "}            
                 </div>
                 <div className="modal-button ">
                   <Button className="button_tas_1" style={{marginRight: "10px"}} onClick={() => setLgShow(false)}>
@@ -1043,52 +1048,97 @@ function App() {
         {isConnected ? (
           <Row className="justify-content-center">
               <Col className="text-center">
+              <Row className="d-flex">
+              < Col xs={2} className="d-flex justify-content-start align-items-center">
+                <div className="readyButton text-center">
+                  <Button
+                    variant="light"
+                    onClick={handleLoadout}
+                    className="button_tas_1">
+                    <img src={switchicon} style={{ width: "25px"}}/>
+                  </Button>
+                  <Button variant="light" onClick={ResetDustbins} className="button_tas_1">
+                    <img src={reseticon} style={{ width: "25px"}}/>
+                  </Button>
+                  <Button variant="light" className="button_tas_1">
+                          <img src={erasericon} style={{ width: "25px"}}/>
+                  </Button>
+                 </div>             
+                </Col>
+                < Col xs={8} className="d-flex justify-content-start align-items-start">
               <div class="armour_totals_top" d-flex>
-                <p><img src={cognitionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["cognition"]} </p>{" "}
+
                 <p><img src={leadershipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["leadership"]} </p>{" "}
                 <p><img src={strategyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["strategy"]} </p>{" "}
                 <p><img src={craftingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crafting"]} </p>{" "}
 
-                <p style={{paddingLeft: "30px"}}><img src={conditioningicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
-                <p><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
                 <p><img src={speedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["speed"]} </p>{" "}
                 <p><img src={horsemanshipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsemanship"]} </p>{" "}
 
-                <p style={{paddingLeft: "30px"}}><img src={proficiencyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["proficiency"]} </p>{" "}
-                <p><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
                 <p><img src={twohandedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["twohanded"]} </p>{" "}
                 <p><img src={polearmicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["polearm"]} </p>{" "}
 
-                <p style={{paddingLeft: "30px"}}><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
-                <p><img src={bowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["bow"]} </p>{" "}
+                <p style={{paddingLeft: "30px"}}><img src={bowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["bow"]} </p>{" "}
                 <p><img src={throwingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["throwing"]} </p>{" "}
                 <p><img src={crossbowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crossbow"]} </p>{" "}
+                
               </div>
-              <div class="armour_totals_bottom" d-flex>
-                      <p><img src={levelupicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["points"]} </p>{"  "}
-                      <p><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
-                      <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
-                      <p style={{paddingLeft: "30px"}}><img src={horseicon} style={{ width: "35px", paddingLeft: "10px"}}/></p>{"  "}
-                      <p><img src={horsehealthicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
-                      <p><img src={horsearmoricon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
-                      <p><img src={horsespeedicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
-                      <p><img src={horsemaneuvericon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
-                      <p><img src={horsechargeicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsecharge"]} </p>{" "}
-{/*
+              </Col>
+              < Col xs={2} className="d-flex justify-content-end align-items-center">
                     {!noLoadout ? (
                       <div className="readyButton text-center">
                         <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
-                        Enter Arena
+                          <img src={whitesaveicon} style={{ width: "25px"}}/>
                         </Button>
                       </div> 
                 
                     ) : (
                     ""
                     )}
-                    */}
+                </Col>
+              </Row>
+              <Row className="d-flex">
+              <div class="armour_totals_line" d-flex>
               </div>
-        
-          
+              </Row>
+              <Row className="d-flex">
+              < Col xs={1} className="d-flex justify-content-start align-items-center">
+                <div className="readyButton text-center">
+                 </div>             
+                </Col>
+                < Col xs={10} className="d-flex justify-content-start align-items-start">
+                  <div class="armour_totals_bottom" d-flex>
+
+                  <p><img src={levelupicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["points"]} </p>{"  "}
+                  <p style={{paddingLeft: "30px"}}><img src={cognitionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["cognition"]} </p>{" "}
+                  <p><img src={conditioningicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
+                  <p><img src={proficiencyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["proficiency"]} </p>{" "}
+                  <p><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
+                
+
+                <div style={{ display: 'none' }}>
+                    <p style={{paddingLeft: "30px"}}><img src={horseicon} style={{ width: "35px", paddingLeft: "10px"}}/></p>{"  "}
+                    <p><img src={horsehealthicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
+                    <p><img src={horsearmoricon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
+                    <p><img src={horsespeedicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
+                    <p><img src={horsemaneuvericon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
+                    <p><img src={horsechargeicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsecharge"]} </p>{" "}
+                    <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horseweight"]} </p>{" "}
+                </div>
+
+                <p style={{paddingLeft: "30px"}}><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
+                <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
+
+                  </div>
+                </Col>
+                < Col xs={1} className="d-flex justify-content-end align-items-center">
+                <div className="readyButton text-center">
+                 </div>             
+                </Col>
+                
+              </Row>
             </Col>
           </Row>
           
@@ -1259,7 +1309,7 @@ function App() {
         {!isConnected && !isLoading ? (
           /* this might where we want to integrate steam and xbox and epic */
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
-            <img src={armoury_banner} alt="Armoury banner" width="75%" />
+            <img src={armoury_banner} alt="Armoury banner" width="75%" style={{maxWidth: "600px"}}/>
           </div>
         ) : (
           ""

@@ -6,7 +6,7 @@ const Loading = (props) => {
 	return (
 		<div className="sk-grid-position" style={{ position: 'relative', backgroundColor: 'transparent' }}>
 		  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
-			<img src={Logo} alt="Logo" style={{ width: "163%" }} />
+			<img src={Logo} alt="Logo" style={{ width: "163%", maxWidth: "600px"}} />
 		  </div>
 		  <div className="sk-grid" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '50px', height: '50px'}}>
 			<div className="sk-grid-cube"></div>
