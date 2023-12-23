@@ -16,19 +16,34 @@ import society from "./images/Society.png";
 import cardanologo from "./images/cardanologo.png";
 import armoricon from "./images/chest-armor.png";
 import weighticon from "./images/weight.png";
-import intelligenceicon from "./images/brain.png";
-import strengthicon from "./images/biceps.png";
-import precisionicon from "./images/bullseye.png";
-import defenseicon from "./images/axe-sword.png";
-import leadershipicon from "./images/sergeant.png";
+import levelupicon from "./images/levelup.png";
+import levelupactive from "./images/levelup_active.png";
+import cognitionicon from "./images/cognition.png";
+import cognitionactive from "./images/cognition_active.png";
+import conditioningicon from "./images/conditioning.png";
+import conditioningactive from "./images/conditioning_active.png";
+import precisionicon from "./images/precision.png";
+import precisionactive from "./images/precision_active.png";
+import proficiencyicon from "./images/proficiency.png";
+import proficiencyactive from "./images/proficiency_active.png";
+import leadershipicon from "./images/leadership.png";
 import strategyicon from "./images/chess-pawn.png";
 import craftingicon from "./images/anvil-impact.png";
 import healthicon from "./images/health.png";
 import speedicon from "./images/running-shoe.png";
-import horsemanshipicon from "./images/horse-head.png";
+import horsemanshipicon from "./images/cavalry.png";
 import onehandshieldicon from "./images/battle-gear.png";
 import twohandedicon from "./images/war-axe.png";
 import polearmicon from "./images/glaive.png";
+import bowicon from "./images/high-shot.png";
+import throwingicon from "./images/thrown-spear.png";
+import crossbowicon from "./images/crossbow.png";
+import horseicon from "./images/horse-head.png";
+import horsehealthicon from "./images/horsehealth.png";
+import horsearmoricon from "./images/horsearmor.png";
+import horsespeedicon from "./images/horsespeed.png";
+import horsemaneuvericon from "./images/horsemaneuver.png";
+import horsechargeicon from "./images/horsecharge.png";
 import military_amphi from "./images/military_amphi.png";
 import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
@@ -133,6 +148,8 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
+  const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(2);
+  const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(2);
   const [showLeftInventory, setShowLeftInventory] = useState(false);
   const [showRightInventory, setShowRightInventory] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState("");
@@ -166,6 +183,8 @@ function App() {
       setShowLeftInventory(true);
       setShowRightInventory(false);
       setSelectedSlot(slot);
+      setLeftLoadoutColumnWidth(3);
+      setRightLoadoutColumnWidth(1);
   }
   function handleRightDustbinClick(slot) {
     
@@ -201,6 +220,8 @@ function App() {
       setShowLeftInventory(false);
       setShowRightInventory(true);
       setSelectedSlot(slot);
+      setRightLoadoutColumnWidth(3);
+      setLeftLoadoutColumnWidth(1);
   }
   const [beenHere, setBeenHere] = useState(false);
   const [inventoryPosition, setInventoryPosition] = useState(0);
@@ -440,11 +461,12 @@ function App() {
   //get loadouttotals function to calculate armour totals
 
   function getLoadoutTotals() {
+    let points = 0
     let armor = 0;
     let weight = 0;
-    let intelligence = 0
+    let cognition = 0
     let conditioning = 0;
-    let defense = 0
+    let proficiency = 0
     let precision = 0
     let leadership = 0
     let strategy = 0
@@ -455,15 +477,24 @@ function App() {
     let onehandshield = 0;
     let twohanded = 0
     let polearm = 0
+    let bow = 0;
+    let throwing = 0
+    let crossbow = 0
+    let horsehealth = 0
+    let horsearmor = 0
+    let horsespeed = 0;
+    let horsemaneuver = 0
+    let horsecharge = 0
     
     
     if (userLoadoutValues != {}) {
       Object.keys(userLoadoutValues).map((key, index) => {
+        points += parseInt(userLoadoutValues[key]?.points || 0);
         armor += parseInt(userLoadoutValues[key]?.armor || 0);
         weight += parseInt(userLoadoutValues[key]?.weight || 0);
-        intelligence += parseInt(userLoadoutValues[key]?.intelligence || 0);
+        cognition += parseInt(userLoadoutValues[key]?.cognition || 0);
         conditioning += parseInt(userLoadoutValues[key]?.conditioning || 0);
-        defense += parseInt(userLoadoutValues[key]?.defense || 0);
+        proficiency += parseInt(userLoadoutValues[key]?.proficiency || 0);
         precision += parseInt(userLoadoutValues[key]?.precision || 0);
         leadership += parseInt(userLoadoutValues[key]?.leadership || 0);
         strategy += parseInt(userLoadoutValues[key]?.strategy || 0);
@@ -474,14 +505,23 @@ function App() {
         onehandshield += parseInt(userLoadoutValues[key]?.onehandshield || 0);
         twohanded += parseInt(userLoadoutValues[key]?.twohanded || 0);
         polearm += parseInt(userLoadoutValues[key]?.polearm || 0);
+        bow += parseInt(userLoadoutValues[key]?.bow || 0);
+        throwing += parseInt(userLoadoutValues[key]?.throwing || 0);
+        crossbow += parseInt(userLoadoutValues[key]?.crossbow || 0);
+        horsehealth += parseInt(userLoadoutValues[key]?.horsehealth || 0);
+        horsearmor += parseInt(userLoadoutValues[key]?.horsearmor || 0);
+        horsespeed += parseInt(userLoadoutValues[key]?.horsespeed || 0);
+        horsemaneuver += parseInt(userLoadoutValues[key]?.horsemaneuver || 0);
+        horsecharge += parseInt(userLoadoutValues[key]?.horsecharge || 0);
       });
     }
     return {
+      points: points,
       armor: armor,
       weight: weight,
-      intelligence: intelligence,
+      cognition: cognition,
       conditioning: conditioning,
-      defense: defense,
+      proficiency: proficiency,
       precision: precision,
       leadership: leadership,
       strategy: strategy,
@@ -492,6 +532,14 @@ function App() {
       onehandshield: onehandshield,
       twohanded: twohanded,
       polearm: polearm,
+      bow: bow,
+      throwing: throwing,
+      crossbow: crossbow,
+      horsehealth: horsehealth,
+      horsearmor: horsearmor,
+      horsespeed: horsespeed,
+      horsemaneuver: horsemaneuver,
+      horsecharge: horsecharge,
     };
   }
 
@@ -957,12 +1005,10 @@ function App() {
                   );
                 })}{" "}
                 <div class="characterstats">
+                  {//need to include something that warns the user when they haven't use their attribute points 
+                  }
                   <p> <img src={armoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["armor"]} </p>{" "}
-                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                  
-                  <p> <img src={intelligenceicon} style={{ width: "30px" }} /> {getLoadoutTotals()["intelligence"]} </p>{" "}
-                  <p> <img src={strengthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["conditioning"]} </p>{" "}
-                  <p> <img src={defenseicon} style={{ width: "30px" }} /> {getLoadoutTotals()["defense"]} </p>{" "}                  
-                  <p> <img src={precisionicon} style={{ width: "30px" }} /> {getLoadoutTotals()["precision"]} </p>{" "}            
+                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                            
                   <p> <img src={leadershipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["leadership"]} </p>{" "}
                   <p> <img src={strategyicon} style={{ width: "30px" }} /> {getLoadoutTotals()["strategy"]} </p>{" "}
                   <p> <img src={craftingicon} style={{ width: "30px" }} /> {getLoadoutTotals()["crafting"]} </p>{" "}
@@ -972,6 +1018,14 @@ function App() {
                   <p> <img src={onehandshieldicon} style={{ width: "30px" }} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
                   <p> <img src={twohandedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
                   <p> <img src={polearmicon} style={{ width: "30px" }} /> {getLoadoutTotals()["polearm"]} </p>{" "}            
+                  <p> <img src={bowicon} style={{ width: "30px" }} /> {getLoadoutTotals()["bow"]} </p>{" "}
+                  <p> <img src={throwingicon} style={{ width: "30px" }} /> {getLoadoutTotals()["throwing"]} </p>{" "}
+                  <p> <img src={crossbowicon} style={{ width: "30px" }} /> {getLoadoutTotals()["crossbow"]} </p>{" "}            
+                  <p> <img src={horsehealthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsehealth"]} </p>{" "}
+                  <p> <img src={horsearmoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}            
+                  <p> <img src={horsespeedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsespeed"]} </p>{" "}
+                  <p> <img src={horsemaneuvericon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsemaneuver"]} </p>{" "}
+                  <p> <img src={horsechargeicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}            
                 </div>
                 <div className="modal-button ">
                   <Button className="button_tas_1" style={{marginRight: "10px"}} onClick={() => setLgShow(false)}>
@@ -985,53 +1039,66 @@ function App() {
     </Modal>
   </Col>
 </Row>
-) : "" }
-
-
-       
-
-        
+) : "" }        
         {isConnected ? (
           <Row className="justify-content-center">
               <Col className="text-center">
               <div class="armour_totals_top" d-flex>
-                <p><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
-                <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
-                <p style={{paddingLeft: "30px"}}><img src={intelligenceicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["intelligence"]} </p>{" "}
-                <p><img src={strengthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
-                <p><img src={defenseicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["defense"]} </p>{" "}
-                <p><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
-                <p style={{paddingLeft: "30px"}}><img src={leadershipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["leadership"]} </p>{" "}
+                <p><img src={cognitionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["cognition"]} </p>{" "}
+                <p><img src={leadershipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["leadership"]} </p>{" "}
                 <p><img src={strategyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["strategy"]} </p>{" "}
                 <p><img src={craftingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crafting"]} </p>{" "}
-                <p style={{paddingLeft: "30px"}}><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
+
+                <p style={{paddingLeft: "30px"}}><img src={conditioningicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
+                <p><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
                 <p><img src={speedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["speed"]} </p>{" "}
                 <p><img src={horsemanshipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsemanship"]} </p>{" "}
-                <p style={{paddingLeft: "30px"}}><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
+
+                <p style={{paddingLeft: "30px"}}><img src={proficiencyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["proficiency"]} </p>{" "}
+                <p><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
                 <p><img src={twohandedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["twohanded"]} </p>{" "}
                 <p><img src={polearmicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["polearm"]} </p>{" "}
-                </div>
-              {/*
-                {!noLoadout ? (
-                  <div className="readyButton text-center">
-                    <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
-                    Enter Arena
-                    </Button>
-                  </div> 
-             
-        ) : (
-          ""
-        )}
-        */}      
+
+                <p style={{paddingLeft: "30px"}}><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
+                <p><img src={bowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["bow"]} </p>{" "}
+                <p><img src={throwingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["throwing"]} </p>{" "}
+                <p><img src={crossbowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crossbow"]} </p>{" "}
+              </div>
+              <div class="armour_totals_bottom" d-flex>
+                      <p><img src={levelupicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["points"]} </p>{"  "}
+                      <p><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
+                      <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
+                      <p style={{paddingLeft: "30px"}}><img src={horseicon} style={{ width: "35px", paddingLeft: "10px"}}/></p>{"  "}
+                      <p><img src={horsehealthicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
+                      <p><img src={horsearmoricon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
+                      <p><img src={horsespeedicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
+                      <p><img src={horsemaneuvericon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
+                      <p><img src={horsechargeicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsecharge"]} </p>{" "}
+{/*
+                    {!noLoadout ? (
+                      <div className="readyButton text-center">
+                        <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
+                        Enter Arena
+                        </Button>
+                      </div> 
+                
+                    ) : (
+                    ""
+                    )}
+                    */}
+              </div>
+        
+          
             </Col>
           </Row>
+          
         ) : (
           ""
         )}
       
         {isConnected ? (
            <Row className="d-flex justify-content-center">           
-            <Col xs={3} className="d-flex justify-content-end align-items-start">
+            <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end align-items-start">
               <Row className="d-flex">
               < Col xs={6} className="d-flex justify-content-start align-items-start">
               {showLeftInventory && (
@@ -1092,7 +1159,7 @@ function App() {
                 </Col>
             </Row>
             </Col>
-            <Col xs={5} className="text-center">
+            <Col xs={8} className="text-center">
               <div className="big_box">
                 <Carousel
                   width="100%"
@@ -1109,7 +1176,7 @@ function App() {
                 </Carousel>
               </div>
             </Col>
-            <Col xs={3} className="d-flex flex-column justify-content-start">
+            <Col xs={(rightLoadoutColumnWidth)} className="d-flex flex-column justify-content-start">
             <Row className="d-flex">
               < Col xs={6} className="d-flex justify-content-start align-items-start">
               <div className="d-flex flex-column justify-content-start align-items-start">
