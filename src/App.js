@@ -1,3 +1,4 @@
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import "./App.css";
 import "./SpinKit.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -12,26 +13,32 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import wooduisound from "./audio/wooden_ui_3.wav";
+import recenteruisound from "./audio/wooden_ui_2.wav";
+import chainuisound from "./audio/chain_ui_2.wav";
+import armoruisound from "./audio/armor_ui_1.wav";
+import armoruiequipsound from "./audio/armor_ui_2.wav";
+import weaponuisound from "./audio/weapon_ui_2.wav";
+import weaponuiequipsound from "./audio/weapon_ui_3.wav";
+import horseuisound from "./audio/horse_ui_2.wav";
+import potionuisound from "./audio/potion_ui_1.wav";
 import society from "./images/Society.png";
 import cardanologo from "./images/cardanologo.png";
 import amphilogo from "./images/rawamphi_small.png";
 import switchicon from "./images/open-folder.png";
+import soundicon from "./images/speaker.png";
+import recentericon from "./images/recenter.png";
 import saveicon from "./images/save.png";
 import whitesaveicon from "./images/whitesave.png";
 import erasericon from "./images/eraser.png";
 import armoricon from "./images/chest-armor.png";
 import weighticon from "./images/weight.png";
 import levelupicon from "./images/levelup.png";
-import levelupactive from "./images/levelup_active.png";
 import reseticon from "./images/reset.png";
 import cognitionicon from "./images/cognition.png";
-import cognitionactive from "./images/cognition_active.png";
 import conditioningicon from "./images/conditioning.png";
-import conditioningactive from "./images/conditioning_active.png";
 import precisionicon from "./images/precision.png";
-import precisionactive from "./images/precision_active.png";
 import proficiencyicon from "./images/proficiency.png";
-import proficiencyactive from "./images/proficiency_active.png";
 import leadershipicon from "./images/leadership.png";
 import strategyicon from "./images/chess-pawn.png";
 import craftingicon from "./images/anvil-impact.png";
@@ -154,10 +161,11 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
-  const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(3);
-  const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(3);
-  const [leftLoadoutBoxWidth, setLeftLoadoutBoxWidth] = useState("66%");
-  const [rightLoadoutBoxWidth, setRightLoadoutBoxWidth] = useState("66%");
+  const [centerLoadoutColumnWidth, setCenterLoadoutColumnWidth] = useState(8);
+  const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(2);
+  const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(2);
+  const [leftLoadoutBoxWidth, setLeftLoadoutBoxWidth] = useState("100%");
+  const [rightLoadoutBoxWidth, setRightLoadoutBoxWidth] = useState("100%");
   const [leftInventoryBoxWidth, setLeftInventoryBoxWidth] = useState("0%");
   const [rightInventoryBoxWidth, setRightInventoryBoxWidth] = useState("0%");
   const [showLeftInventory, setShowLeftInventory] = useState(false);
@@ -165,6 +173,63 @@ function App() {
   const [selectedSlot, setSelectedSlot] = useState("");
   const [inventoryTopPadding, setInventoryTopPadding] = useState("");
   const [inventoryBottomPadding, setInventoryBottomPadding] = useState("");
+  const [horseStatDisplay, setHorseStatDisplay] = useState("none");
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const settingAudio = new Audio(wooduisound);
+  const recenterAudio = new Audio(recenteruisound);
+  const resetLoadoutAudio = new Audio(chainuisound);
+  const armorAudio = new Audio(armoruisound);
+  const armorEquipAudio = new Audio(armoruiequipsound);
+  const weaponAudio = new Audio(weaponuisound);
+  const weaponEquipAudio = new Audio(weaponuiequipsound);
+  const horseAudio = new Audio(horseuisound);
+  const potionAudio = new Audio(potionuisound);
+
+
+function recenterDustbins () {
+  setCenterLoadoutColumnWidth(8);
+  setLeftLoadoutColumnWidth(2);
+  setRightLoadoutColumnWidth(2);
+  setLeftLoadoutBoxWidth("100%");
+  setRightLoadoutBoxWidth("100%");
+  setLeftInventoryBoxWidth("0%");
+  setRightInventoryBoxWidth("0%");
+  setShowLeftInventory(false);
+  setShowRightInventory(false);
+      if (soundEnabled) {
+        recenterAudio.volume = .5;
+        recenterAudio.play();
+      }
+}
+
+function toggleSoundEnabled () {
+  if (soundEnabled) {
+    setSoundEnabled(false);
+  } else {
+    settingAudio.volume = .5;
+    settingAudio.play();
+    setSoundEnabled(true);
+  }
+}
+
+  function toggleHorseStatDisplay () {
+    
+    if (horseStatDisplay == "none") {
+      setHorseStatDisplay('flex')
+      if (soundEnabled) {
+        settingAudio.volume = .5;
+        settingAudio.play();
+      }
+      
+    } else {
+      setHorseStatDisplay('none')
+      if (soundEnabled) {
+        settingAudio.volume = .5;
+        settingAudio.play();
+      }
+
+    }
+  }
 
   function handleLeftDustbinClick (slot) {
     if (slot =="Head") {
@@ -200,6 +265,12 @@ function App() {
       setRightLoadoutBoxWidth("100%");
       setLeftInventoryBoxWidth("47%");
       setRightInventoryBoxWidth("0%");
+      setCenterLoadoutColumnWidth(6);
+      if (soundEnabled) {
+        armorAudio.volume = .3;
+        armorAudio.play();
+      }
+      
   }
   function handleRightDustbinClick(slot) {
     
@@ -226,11 +297,27 @@ function App() {
       if (slot =="Horse") {
         setInventoryTopPadding('580px')
         setInventoryBottomPadding('145px')
+        if (soundEnabled) {
+          potionAudio.volume = .3;
+          potionAudio.play();
+        }
+        
       } 
       if (slot =="Special") {
         setInventoryTopPadding('725px')
         setInventoryBottomPadding('0px')
+        if (soundEnabled) {
+        horseAudio.volume = .3;
+        horseAudio.play();
+        }
       } 
+
+      if (slot =="Item")  {
+        if (soundEnabled) {
+        weaponAudio.volume = .3;
+        weaponAudio.play();
+        }
+      }
     
       setShowLeftInventory(false);
       setShowRightInventory(true);
@@ -241,6 +328,7 @@ function App() {
       setRightLoadoutBoxWidth("47%");
       setLeftInventoryBoxWidth("0%");
       setRightInventoryBoxWidth("47%");
+      setCenterLoadoutColumnWidth(6);
   }
   const [beenHere, setBeenHere] = useState(false);
   const [inventoryPosition, setInventoryPosition] = useState(0);
@@ -467,14 +555,11 @@ function App() {
       { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
       
     ]);
-    setLeftLoadoutColumnWidth(3);
-    setRightLoadoutColumnWidth(3);
-    setLeftLoadoutBoxWidth("66%");
-    setRightLoadoutBoxWidth("66%");
-    setLeftInventoryBoxWidth("0%");
-    setRightInventoryBoxWidth("0%");
-    setShowLeftInventory(false);
-    setShowRightInventory(false);
+    recenterDustbins();
+    if (soundEnabled) {
+    resetLoadoutAudio.volume = .5;
+    resetLoadoutAudio.play();
+    }
   }
 
   let loadoutValues = {};
@@ -907,8 +992,7 @@ function App() {
             ) : (
               ""
             )}
-            
-                          {isConnected ? (
+            {isConnected ? (
                 <div className="d-flex flex-column justify-content-start align-items-start">
                   <Button onClick={handleEditWallet} className="button_tas_1">
                     Disconnect
@@ -1073,23 +1157,45 @@ function App() {
           <Row className="justify-content-center">
               <Col className="text-center">
               <Row className="d-flex">
-              < Col xs={6} className="d-flex justify-content-start align-items-end" style={{paddingBottom: "10px"}}>
+              < Col xs={4} className="d-flex justify-content-start align-items-end" style={{paddingBottom: "10px"}}>
                 <div className="readyButton text-center">
-                  <Button
-                    variant="light"
-                    onClick={handleLoadout}
-                    className="button_tas_1">
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip" >Open Saved Loadouts</Tooltip>}>
+                  <Button variant="light" onClick={handleLoadout} className="button_tas_1">
                     <img src={switchicon} style={{ width: "25px"}}/>
                   </Button>
+                </OverlayTrigger>
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Loadout</Tooltip>}>
                   <Button variant="light" onClick={ResetDustbins} className="button_tas_1">
                     <img src={reseticon} style={{ width: "25px"}}/>
                   </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Erase Skillpoint Allocations</Tooltip>}>
                   <Button variant="light" className="button_tas_1">
-                          <img src={erasericon} style={{ width: "25px"}}/>
+                          <img src={erasericon} class="toolbaricon1"/>
                   </Button>
+                  </OverlayTrigger>
+                  </div>
+              </Col>
+              < Col xs={4} className="d-flex justify-content-center align-items-end" style={{paddingBottom: "10px"}}>
+                  <div className="readyButton text-center">
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Center Loadout</Tooltip>}>
+                  <Button variant="light" className="button_tas_1" onClick={recenterDustbins}>
+                          <img src={recentericon} style={{ width: "25px"}}/>
+                  </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Show/Hide Horse Stats</Tooltip>}>
+                  <Button variant="light" className={`button_tas_1 ${horseStatDisplay !== "none" && "button_tas_toolbar_2"}`} onClick={toggleHorseStatDisplay}>
+                          <img class={`toolbaricon1 ${horseStatDisplay !== "none" && "toolbaricon2"}`} src={horseicon} />
+                  </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Toggle Audio</Tooltip>}>
+                  <Button variant="light" className={`button_tas_1 ${soundEnabled && "button_tas_toolbar_2"}`} onClick={toggleSoundEnabled}>
+                          <img class={`toolbaricon1 ${soundEnabled && "toolbaricon2"}`} src={soundicon} />
+                  </Button>
+                  </OverlayTrigger>
                  </div>             
-                </Col>
-              < Col xs={6} className="d-flex justify-content-end align-items-end" style={{paddingBottom: "10px"}}>
+              </Col>
+              < Col xs={4} className="d-flex justify-content-end align-items-end" style={{paddingBottom: "10px"}}>
                     {!noLoadout ? (
                       <div className="readyButton text-center">
                         <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
@@ -1160,6 +1266,10 @@ function App() {
                       accept={accepts}
                       lastDroppedItem={lastDroppedItem}
                       onDrop={(item) => {
+                        if (soundEnabled) {
+                          armorEquipAudio.volume = .3;
+                          armorEquipAudio.play();
+                        }
                       handleDrop1(index, item, accepts);
                         }}
                       onClick={() => handleLeftDustbinClick(accepts)} 
@@ -1174,22 +1284,8 @@ function App() {
                     </div>
                 </Col>
             </Col>
-            <Col xs={6} className="text-center">
+            <Col xs={(centerLoadoutColumnWidth)} className="text-center">
             <Row style={{padding: "5px"}}>
-                <div className="big_box">
-                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
-                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
-}
-                    {filtered
-                      ? Object.keys(filtered) &&
-                        Object.keys(filtered).map((val, index) => {
-                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
-                        })
-                      : ""}
-                  </Carousel>
-                </div>
-              </Row>
-              <Row style={{padding: "5px"}}>
               <div class="skills_bar">
               <div class="skills_group">
                   <p><img src={levelupicon} />  {getLoadoutTotals()["points"]} </p>{"  "}
@@ -1220,7 +1316,7 @@ function App() {
                   <p><img src={throwingicon} /> {getLoadoutTotals()["throwing"]} </p>{" "}
                   <p><img src={crossbowicon} /> {getLoadoutTotals()["crossbow"]} </p>{" "}
                 </div>
-                <div class="skills_group">
+                <div class="skills_group" style={{ display: horseStatDisplay }}>
                     <p><img src={horseicon} /></p>{"  "}
                      <p><img src={horsehealthicon} />  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
                      <p><img src={horsearmoricon} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
@@ -1231,6 +1327,21 @@ function App() {
                 </div>
               </div>
               </Row>
+            <Row style={{padding: "5px"}}>
+                <div className="big_box">
+                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
+                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
+}
+                    {filtered
+                      ? Object.keys(filtered) &&
+                        Object.keys(filtered).map((val, index) => {
+                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
+                        })
+                      : ""}
+                  </Carousel>
+                </div>
+              </Row>
+ 
               <Row style={{padding: "5px"}}>
                <div className="big_box" style={{width: "100%", paddingTop: "50%"}}>
                </div>
@@ -1259,8 +1370,12 @@ function App() {
                                   accepts === "Item3"
                                 ) {
                                   accepts = "Item";
+
                                 }
-                                handleRightDustbinClick(accepts);
+                                if (soundEnabled) {
+                                  weaponEquipAudio.volume = .1;
+                                  weaponEquipAudio.play();
+                                }
                                 handleDrop2(index, item, accepts);
                               }}
                               key={index}
