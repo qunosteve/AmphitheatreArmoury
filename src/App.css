@@ -99,15 +99,35 @@ audio {
   color: green;
 }
 
-.armour_totals_top {
-  width: 100%;
+.skills_bar {
+  border: 2px solid #ead5c2;
+  border-radius: 10px;
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
   font-size: 15px;
-  text-align: center;
-  margin-top: 30px;
+  justify-content: center;
+  padding-top: 10px;
 }
-.armour_totals_line {
+
+.skills_group {
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.skills_group > * {
+  padding: 5px;
+  width: "35px";
+}
+
+.skills_group p img {
+  width: 25px;
+}
+
+
+.skills_bar_line {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -118,14 +138,6 @@ audio {
   border-bottom: none;
   border-right: none;
   border-left: none;
-}
-.armour_totals_bottom {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  font-size: 15px;
-  text-align: center;
-  margin-bottom: 15px;
 }
 
 u {
@@ -165,13 +177,11 @@ p {
 .inventory {
   display: grid;
   justify-content: center;
-  border: 0px solid #ead5c2;
   overflow-x: hidden;
   overflow-y: scroll;
   position: relative;
-  padding-top: 0px;
-  padding-bottom: 725px;
-  height: 870px;
+  width: 100%;
+  height:80%
 }
 
 
@@ -188,32 +198,28 @@ p {
 
 
 .gear_img {
-  width: 136px;
-  margin: 1px;
+  width: 100%;
 }
 
 .inventory_box {
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  width: 140px;
-  height: 140px;
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-bottom: 2px;  
+  margin: 2px;
   cursor: move;
+  width: 95%;
 }
 
 .loadout_box_empty {
+  position: relative;
   border: 2px solid #ead5c2;
+  width: 95%;
+  padding-bottom: 95%;
   border-radius: 5px;
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-bottom: 2px;
-  height: 140px;
-  width: 140px;
+  margin: 2px;
   transition: box-shadow 0.3s ease-in-out; /* add transition for smooth effect */
+}
+.loadout_box_empty:not(:empty) {
+  padding-bottom: 0;
 }
 
 .loadout_box_empty:hover {
@@ -223,26 +229,23 @@ p {
 
 .loadout_box_incoming_item {
   border: 2px solid #ead5c2;
+  width: 95%;
+  padding-top: 95%;
   border-radius: 5px;
-  height: 140px;
-  width: 140px;
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-bottom: 2px;
+  margin: 2px;
   box-shadow: 0 0 75px #ead5c2;
 }
 
 .loadout_box_filled {
   border: 2px solid #ead5c2;
   border-radius: 5px;
-  width: 140px;
-  height: 140px;
   cursor: move;
   margin-right: 2px;
   margin-top: 2px;
   margin-left: 2px;
   margin-bottom: 2px;
+  width: 95%;
+  padding-top: 0%;
 }
 .carousel {
   width: auto;
@@ -271,16 +274,18 @@ p {
 }
 
 .carousel-indicators {
-  display: none !important;
+  color: #ead5c2;
 }
-.big_box {
-  border: 2px solid #ead5c2;
-  border-radius: 5px;
-}
-
 .carousel .thumbs-wrapper {
   display: none;
 }
+
+.big_box {
+  border: 2px solid #ead5c2;
+  border-radius: 10px;
+}
+
+
 .box_text {
   text-align: center;
   color: ivory;

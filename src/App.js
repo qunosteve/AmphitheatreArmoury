@@ -154,13 +154,18 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
-  const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(2);
-  const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(2);
+  const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(3);
+  const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(3);
+  const [leftLoadoutBoxWidth, setLeftLoadoutBoxWidth] = useState("66%");
+  const [rightLoadoutBoxWidth, setRightLoadoutBoxWidth] = useState("66%");
+  const [leftInventoryBoxWidth, setLeftInventoryBoxWidth] = useState("0%");
+  const [rightInventoryBoxWidth, setRightInventoryBoxWidth] = useState("0%");
   const [showLeftInventory, setShowLeftInventory] = useState(false);
   const [showRightInventory, setShowRightInventory] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState("");
   const [inventoryTopPadding, setInventoryTopPadding] = useState("");
   const [inventoryBottomPadding, setInventoryBottomPadding] = useState("");
+
   function handleLeftDustbinClick (slot) {
     if (slot =="Head") {
       setInventoryTopPadding('0px')
@@ -185,12 +190,16 @@ function App() {
     if (slot =="HorseHarness") {
       setInventoryTopPadding('725px')
       setInventoryBottomPadding('0px')
-    } 
+    }
       setShowLeftInventory(true);
       setShowRightInventory(false);
       setSelectedSlot(slot);
-      setLeftLoadoutColumnWidth(3);
-      setRightLoadoutColumnWidth(1);
+      setLeftLoadoutColumnWidth(4);
+      setRightLoadoutColumnWidth(2);
+      setLeftLoadoutBoxWidth("47%");
+      setRightLoadoutBoxWidth("100%");
+      setLeftInventoryBoxWidth("47%");
+      setRightInventoryBoxWidth("0%");
   }
   function handleRightDustbinClick(slot) {
     
@@ -226,8 +235,12 @@ function App() {
       setShowLeftInventory(false);
       setShowRightInventory(true);
       setSelectedSlot(slot);
-      setRightLoadoutColumnWidth(3);
-      setLeftLoadoutColumnWidth(1);
+      setRightLoadoutColumnWidth(4);
+      setLeftLoadoutColumnWidth(2);
+      setLeftLoadoutBoxWidth("100%");
+      setRightLoadoutBoxWidth("47%");
+      setLeftInventoryBoxWidth("0%");
+      setRightInventoryBoxWidth("47%");
   }
   const [beenHere, setBeenHere] = useState(false);
   const [inventoryPosition, setInventoryPosition] = useState(0);
@@ -454,8 +467,12 @@ function App() {
       { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
       
     ]);
-    setLeftLoadoutColumnWidth(2);
-    setRightLoadoutColumnWidth(2);
+    setLeftLoadoutColumnWidth(3);
+    setRightLoadoutColumnWidth(3);
+    setLeftLoadoutBoxWidth("66%");
+    setRightLoadoutBoxWidth("66%");
+    setLeftInventoryBoxWidth("0%");
+    setRightInventoryBoxWidth("0%");
     setShowLeftInventory(false);
     setShowRightInventory(false);
   }
@@ -860,20 +877,21 @@ function App() {
                   id="dropdown-basic"
                   style={{
                     fontFamily: "Cabin",
-                    backgroundColor: "#00000000"
+                    backgroundColor: "#ead5c2"
                   }}
                 >
                   Wallet: {capitalizeFirstLetter(whichWallet)}
                 </Dropdown.Toggle>
-                <Dropdown.Menu>
+                <Dropdown.Menu style={{background: 'linear-gradient(to bottom, #ffffff, #ead5c2)'}}>
                   {wallets.map((val) => {
-                    console.log();
+                    // console.log();
                     return (
                       <Dropdown.Item
                         key={val}
                         onClick={(val) => {
                           handleWalletSelect(val);
-                        }}
+                        }}  
+                        style={{ ':hover': { backgroundColor: '#eec07a' } }}
                       >
                         <img
                           src={window.cardano[val].icon}
@@ -890,19 +908,25 @@ function App() {
               ""
             )}
             
-            {isConnected ? (
-              <div className="d-flex flex-column justify-content-start align-items-start">
-                    <Button onClick={handleEditWallet} className="button_tas_1">
+                          {isConnected ? (
+                <div className="d-flex flex-column justify-content-start align-items-start">
+                  <Button onClick={handleEditWallet} className="button_tas_1">
                     Disconnect
-                    </Button>
+                  </Button>
                 </div>
-             ):(
-              <div className="d-flex flex-column justify-content-start align-items-start">
-                <Button disabled={!whichWallet} className="button_tas_2"   style={{ width: "100px" }} onClick={onSubmitAddy} >
-                  Connect
-                </Button>
-              </div>
-             )}
+              ) : (
+                <div className="d-flex flex-column justify-content-start align-items-start">
+                  <Button
+                    disabled={!whichWallet}
+                    className="button_tas_2"
+                    style={{ width: "100px" }}
+                    onClick={onSubmitAddy}
+                  >
+                    Connect
+                  </Button>
+                </div>
+              )}
+
              </div>
              </Col>
              <Col xs={8} className="text-center">
@@ -1049,7 +1073,7 @@ function App() {
           <Row className="justify-content-center">
               <Col className="text-center">
               <Row className="d-flex">
-              < Col xs={2} className="d-flex justify-content-start align-items-center">
+              < Col xs={6} className="d-flex justify-content-start align-items-end" style={{paddingBottom: "10px"}}>
                 <div className="readyButton text-center">
                   <Button
                     variant="light"
@@ -1065,28 +1089,7 @@ function App() {
                   </Button>
                  </div>             
                 </Col>
-                < Col xs={8} className="d-flex justify-content-start align-items-start">
-              <div class="armour_totals_top" d-flex>
-
-                <p><img src={leadershipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["leadership"]} </p>{" "}
-                <p><img src={strategyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["strategy"]} </p>{" "}
-                <p><img src={craftingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crafting"]} </p>{" "}
-
-                <p style={{paddingLeft: "30px"}}><img src={healthicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["health"]} </p>{" "}
-                <p><img src={speedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["speed"]} </p>{" "}
-                <p><img src={horsemanshipicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsemanship"]} </p>{" "}
-
-                <p style={{paddingLeft: "30px"}}><img src={onehandshieldicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["onehandshield"]} </p>{" "}
-                <p><img src={twohandedicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["twohanded"]} </p>{" "}
-                <p><img src={polearmicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["polearm"]} </p>{" "}
-
-                <p style={{paddingLeft: "30px"}}><img src={bowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["bow"]} </p>{" "}
-                <p><img src={throwingicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["throwing"]} </p>{" "}
-                <p><img src={crossbowicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["crossbow"]} </p>{" "}
-                
-              </div>
-              </Col>
-              < Col xs={2} className="d-flex justify-content-end align-items-center">
+              < Col xs={6} className="d-flex justify-content-end align-items-end" style={{paddingBottom: "10px"}}>
                     {!noLoadout ? (
                       <div className="readyButton text-center">
                         <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
@@ -1100,44 +1103,8 @@ function App() {
                 </Col>
               </Row>
               <Row className="d-flex">
-              <div class="armour_totals_line" d-flex>
+              <div class="skills_bar_line" d-flex>
               </div>
-              </Row>
-              <Row className="d-flex">
-              < Col xs={1} className="d-flex justify-content-start align-items-center">
-                <div className="readyButton text-center">
-                 </div>             
-                </Col>
-                < Col xs={10} className="d-flex justify-content-start align-items-start">
-                  <div class="armour_totals_bottom" d-flex>
-
-                  <p><img src={levelupicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["points"]} </p>{"  "}
-                  <p style={{paddingLeft: "30px"}}><img src={cognitionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["cognition"]} </p>{" "}
-                  <p><img src={conditioningicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
-                  <p><img src={proficiencyicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["proficiency"]} </p>{" "}
-                  <p><img src={precisionicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["precision"]} </p>{" "}
-                
-
-                <div style={{ display: 'none' }}>
-                    <p style={{paddingLeft: "30px"}}><img src={horseicon} style={{ width: "35px", paddingLeft: "10px"}}/></p>{"  "}
-                    <p><img src={horsehealthicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
-                    <p><img src={horsearmoricon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
-                    <p><img src={horsespeedicon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
-                    <p><img src={horsemaneuvericon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
-                    <p><img src={horsechargeicon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horsecharge"]} </p>{" "}
-                    <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["horseweight"]} </p>{" "}
-                </div>
-
-                <p style={{paddingLeft: "30px"}}><img src={armoricon} style={{ width: "35px", paddingLeft: "10px"}}/>  {getLoadoutTotals()["armor"]} </p>{"  "}
-                <p><img src={weighticon} style={{ width: "35px", paddingLeft: "10px"}}/> {getLoadoutTotals()["weight"]} </p>{" "}                
-
-                  </div>
-                </Col>
-                < Col xs={1} className="d-flex justify-content-end align-items-center">
-                <div className="readyButton text-center">
-                 </div>             
-                </Col>
-                
               </Row>
             </Col>
           </Row>
@@ -1148,11 +1115,10 @@ function App() {
       
         {isConnected ? (
            <Row className="d-flex justify-content-center">           
-            <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end align-items-start">
-              <Row className="d-flex">
-              < Col xs={6} className="d-flex justify-content-start align-items-start">
+            <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end align-items-start" >
+              < Col xs={6} className="d-flex flex-column justify-content-start align-items-start" style={{width: leftInventoryBoxWidth }}>
               {showLeftInventory && (
-                <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}` }}>
+                <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}`, width: "95%"}}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1187,8 +1153,8 @@ function App() {
                   </div>
                   )}
             </Col>
-              <Col xs={6} className="d-flex justify-content-end">
-                  <div className="d-flex flex-column justify-content-start align-items-start">
+              <Col xs={6} className="d-flex justify-content-end" style={{width: leftLoadoutBoxWidth}}>
+                  <div className="d-flex flex-column justify-content-end align-items-start" style={{width: "95%"}}>
                   {dustbins_row1.map(({ accepts, lastDroppedItem}, index) => (
                     <Dustbin 
                       accept={accepts}
@@ -1207,29 +1173,72 @@ function App() {
                     ))}
                     </div>
                 </Col>
-            </Row>
             </Col>
-            <Col xs={8} className="text-center">
-              <div className="big_box">
-                <Carousel
-                  width="100%"
-                  showIndicators={false}
-                  onChange={apeUpdateInfo}
-                  onClickItem={apeUpdateInfo}
-                >
-                  {filtered
-                    ? Object.keys(filtered) &&
-                      Object.keys(filtered).map((val, index) => {
-                        return <img src={filtered[val]} key={index} />;
-                      })
-                    : ""}
-                </Carousel>
+            <Col xs={6} className="text-center">
+            <Row style={{padding: "5px"}}>
+                <div className="big_box">
+                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
+                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
+}
+                    {filtered
+                      ? Object.keys(filtered) &&
+                        Object.keys(filtered).map((val, index) => {
+                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
+                        })
+                      : ""}
+                  </Carousel>
+                </div>
+              </Row>
+              <Row style={{padding: "5px"}}>
+              <div class="skills_bar">
+              <div class="skills_group">
+                  <p><img src={levelupicon} />  {getLoadoutTotals()["points"]} </p>{"  "}
+                  <p><img src={armoricon} />  {getLoadoutTotals()["armor"]} </p>{"  "}
+                  <p><img src={weighticon} /> {getLoadoutTotals()["weight"]} </p>{" "}                
+                </div>
+                <div class="skills_group">
+                  <p><img src={cognitionicon}/> {getLoadoutTotals()["cognition"]} </p>{" "}
+                  <p><img src={leadershipicon}/> {getLoadoutTotals()["leadership"]} </p>{" "}
+                  <p><img src={strategyicon}/> {getLoadoutTotals()["strategy"]} </p>{" "}
+                  <p><img src={craftingicon}/> {getLoadoutTotals()["crafting"]} </p>{" "}
+                </div>
+                <div class="skills_group">
+                  <p><img src={conditioningicon}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
+                  <p><img src={healthicon} /> {getLoadoutTotals()["health"]} </p>{" "}
+                  <p><img src={speedicon} /> {getLoadoutTotals()["speed"]} </p>{" "}
+                  <p><img src={horsemanshipicon} /> {getLoadoutTotals()["horsemanship"]} </p>{" "}
+                </div>
+                <div class="skills_group">
+                  <p><img src={proficiencyicon} /> {getLoadoutTotals()["proficiency"]} </p>{" "}
+                  <p><img src={onehandshieldicon} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
+                  <p><img src={twohandedicon} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
+                  <p><img src={polearmicon} /> {getLoadoutTotals()["polearm"]} </p>{" "}
+                </div>
+                <div class="skills_group">
+                  <p><img src={precisionicon} /> {getLoadoutTotals()["precision"]} </p>{" "}
+                  <p><img src={bowicon} /> {getLoadoutTotals()["bow"]} </p>{" "}
+                  <p><img src={throwingicon} /> {getLoadoutTotals()["throwing"]} </p>{" "}
+                  <p><img src={crossbowicon} /> {getLoadoutTotals()["crossbow"]} </p>{" "}
+                </div>
+                <div class="skills_group">
+                    <p><img src={horseicon} /></p>{"  "}
+                     <p><img src={horsehealthicon} />  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
+                     <p><img src={horsearmoricon} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
+                     <p><img src={horsespeedicon} />  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
+                     <p><img src={horsemaneuvericon} />  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
+                     <p><img src={horsechargeicon} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}
+                     <p><img src={weighticon} /> {getLoadoutTotals()["horseweight"]} </p>{" "}
+                </div>
               </div>
+              </Row>
+              <Row style={{padding: "5px"}}>
+               <div className="big_box" style={{width: "100%", paddingTop: "50%"}}>
+               </div>
+              </Row>
             </Col>
-            <Col xs={(rightLoadoutColumnWidth)} className="d-flex flex-column justify-content-start">
-            <Row className="d-flex">
-              < Col xs={6} className="d-flex justify-content-start align-items-start">
-              <div className="d-flex flex-column justify-content-start align-items-start">
+            <Col xs={(rightLoadoutColumnWidth)} className="d-flex justify-content-start">
+              < Col xs={6} className="d-flex justify-content-start align-items-start" style={{width: rightLoadoutBoxWidth}}> 
+              <div className="d-flex flex-column justify-content-start" style={{width: "95%"}}>
                 {dustbins_row2.map(({ accepts, lastDroppedItem }, index) => (
                   <Dustbin
                               accept={
@@ -1264,9 +1273,9 @@ function App() {
                       ))}
                 </div>
               </Col>
-              < Col xs={6} className="d-flex justify-content-start align-items-start">
+              < Col xs={6} className="d-flex justify-content-end align-items-start" style={{width: rightInventoryBoxWidth}}>
               {showRightInventory && (
-                  <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}` }}>
+                  <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}`, width: "95%" }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1300,7 +1309,6 @@ function App() {
                   </div>
                   )}
                 </Col>
-              </Row>
             </Col>   
           </Row>
         ) : (
