@@ -13,13 +13,18 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import wooduisound from "./audio/wooden_ui_3.wav";
+import openloadoutsound from "./audio/book_ui_1.wav";
+import pageuisound from "./audio/book_ui_3.wav";
+import eraseruisound from "./audio/book_ui_4.wav";
+import wooduisound from "./audio/wooden_ui_5.wav";
+import audiouisound from "./audio/wooden_ui_4.wav";
 import recenteruisound from "./audio/wooden_ui_2.wav";
 import chainuisound from "./audio/chain_ui_2.wav";
 import armoruisound from "./audio/armor_ui_1.wav";
 import armoruiequipsound from "./audio/armor_ui_2.wav";
 import weaponuisound from "./audio/weapon_ui_2.wav";
 import weaponuiequipsound from "./audio/weapon_ui_3.wav";
+import saveloadoutbuttonsound from "./audio/weapon_ui_4.wav";
 import horseuisound from "./audio/horse_ui_2.wav";
 import potionuisound from "./audio/potion_ui_1.wav";
 import society from "./images/Society.png";
@@ -161,6 +166,7 @@ function App() {
       fullStr.substr(fullStr.length - backChars)
     );
   };
+  const [isLoadoutCentered, setIsLoadoutCentered] = useState(true);
   const [centerLoadoutColumnWidth, setCenterLoadoutColumnWidth] = useState(8);
   const [leftLoadoutColumnWidth, setLeftLoadoutColumnWidth] = useState(2);
   const [rightLoadoutColumnWidth, setRightLoadoutColumnWidth] = useState(2);
@@ -176,6 +182,7 @@ function App() {
   const [horseStatDisplay, setHorseStatDisplay] = useState("none");
   const [soundEnabled, setSoundEnabled] = useState(true);
   const settingAudio = new Audio(wooduisound);
+  const soundAudio = new Audio(audiouisound);
   const recenterAudio = new Audio(recenteruisound);
   const resetLoadoutAudio = new Audio(chainuisound);
   const armorAudio = new Audio(armoruisound);
@@ -184,7 +191,25 @@ function App() {
   const weaponEquipAudio = new Audio(weaponuiequipsound);
   const horseAudio = new Audio(horseuisound);
   const potionAudio = new Audio(potionuisound);
+  const pageAudio = new Audio(pageuisound);
+  const eraserAudio = new Audio(eraseruisound);
+  const saveLoadoutButtonAudio = new Audio(saveloadoutbuttonsound);
+  const openLoadoutAudio = new Audio(openloadoutsound);
 
+function resetSkillpoints () {
+  if (soundEnabled) {
+    eraserAudio.volume = .5;
+    eraserAudio.play();
+  }
+}
+
+function saveLoadoutPrompt () {
+  if (soundEnabled) {
+    saveLoadoutButtonAudio.volume = .5;
+    saveLoadoutButtonAudio.play();
+  }
+  setLgShow(true);
+}
 
 function recenterDustbins () {
   setCenterLoadoutColumnWidth(8);
@@ -196,6 +221,7 @@ function recenterDustbins () {
   setRightInventoryBoxWidth("0%");
   setShowLeftInventory(false);
   setShowRightInventory(false);
+  setIsLoadoutCentered(true);
       if (soundEnabled) {
         recenterAudio.volume = .5;
         recenterAudio.play();
@@ -206,8 +232,8 @@ function toggleSoundEnabled () {
   if (soundEnabled) {
     setSoundEnabled(false);
   } else {
-    settingAudio.volume = .5;
-    settingAudio.play();
+    soundAudio.volume = .5;
+    soundAudio.play();
     setSoundEnabled(true);
   }
 }
@@ -233,29 +259,30 @@ function toggleSoundEnabled () {
 
   function handleLeftDustbinClick (slot) {
     if (slot =="Head") {
-      setInventoryTopPadding('0px')
-      setInventoryBottomPadding('725px')
+      setInventoryTopPadding('0%')
+      setInventoryBottomPadding('1020%')
     }
     if (slot =="Body") {
-      setInventoryTopPadding('145px')
-      setInventoryBottomPadding('580px')
+      setInventoryTopPadding('92%')
+      setInventoryBottomPadding('1020%')
     }
     if (slot =="Shoulders") {
-      setInventoryTopPadding('290px')
-      setInventoryBottomPadding('435px')
+      setInventoryTopPadding('184%')
+      setInventoryBottomPadding('1020%')
     }
     if (slot =="Gloves") {
-      setInventoryTopPadding('435px')
-      setInventoryBottomPadding('290px')
+      setInventoryTopPadding('276%')
+      setInventoryBottomPadding('1020%')
     } 
     if (slot =="Leg") {
-      setInventoryTopPadding('580px')
-      setInventoryBottomPadding('145px')
+      setInventoryTopPadding('368%')
+      setInventoryBottomPadding('1020%')
     } 
     if (slot =="HorseHarness") {
-      setInventoryTopPadding('725px')
-      setInventoryBottomPadding('0px')
+      setInventoryTopPadding('460%')
+      setInventoryBottomPadding('1020%')
     }
+      setIsLoadoutCentered(false);
       setShowLeftInventory(true);
       setShowRightInventory(false);
       setSelectedSlot(slot);
@@ -273,30 +300,29 @@ function toggleSoundEnabled () {
       
   }
   function handleRightDustbinClick(slot) {
-    
       if (slot =="Item0") {
-        setInventoryTopPadding('0px')
-        setInventoryBottomPadding('725px')
+        setInventoryTopPadding('0%')
+        setInventoryBottomPadding('1020%')
         slot = "Item";
       }
       if (slot =="Item1") {
-        setInventoryTopPadding('145px')
-        setInventoryBottomPadding('580px')
+        setInventoryTopPadding('92%')
+        setInventoryBottomPadding('1020%')
         slot = "Item";
       }
       if (slot =="Item2") {
-        setInventoryTopPadding('290px')
-        setInventoryBottomPadding('435px')
+        setInventoryTopPadding('184%')
+        setInventoryBottomPadding('1020%')
         slot = "Item";
       }
       if (slot =="Item3") {
-        setInventoryTopPadding('435px')
-        setInventoryBottomPadding('290px')
+        setInventoryTopPadding('276%')
+        setInventoryBottomPadding('1020%')
         slot = "Item";
       } 
       if (slot =="Horse") {
-        setInventoryTopPadding('580px')
-        setInventoryBottomPadding('145px')
+        setInventoryTopPadding('368%')
+        setInventoryBottomPadding('1020%')
         if (soundEnabled) {
           potionAudio.volume = .3;
           potionAudio.play();
@@ -304,8 +330,8 @@ function toggleSoundEnabled () {
         
       } 
       if (slot =="Special") {
-        setInventoryTopPadding('725px')
-        setInventoryBottomPadding('0px')
+        setInventoryTopPadding('460%')
+        setInventoryBottomPadding('1020%')
         if (soundEnabled) {
         horseAudio.volume = .3;
         horseAudio.play();
@@ -318,7 +344,7 @@ function toggleSoundEnabled () {
         weaponAudio.play();
         }
       }
-    
+      setIsLoadoutCentered(false);
       setShowLeftInventory(false);
       setShowRightInventory(true);
       setSelectedSlot(slot);
@@ -481,6 +507,10 @@ function toggleSoundEnabled () {
   }
 
   function handleLoadout() {
+    if (soundEnabled) {
+      openLoadoutAudio.volume = .5;
+      openLoadoutAudio.play();
+    }
     setLgShowLoad(true);
   }
 
@@ -738,6 +768,10 @@ function toggleSoundEnabled () {
   );
 
   function apeUpdateInfo(event) {
+    if (soundEnabled) {
+    pageAudio.volume = .5;
+    pageAudio.play();
+    }
     setApeSelected(true);
     setUserLoadout((prevUserLoadout) => ({
       ...prevUserLoadout,
@@ -1159,18 +1193,18 @@ function toggleSoundEnabled () {
               <Row className="d-flex">
               < Col xs={4} className="d-flex justify-content-start align-items-end" style={{paddingBottom: "10px"}}>
                 <div className="readyButton text-center">
-                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip" >Open Saved Loadouts</Tooltip>}>
-                  <Button variant="light" onClick={handleLoadout} className="button_tas_1">
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip" >Open Loadouts</Tooltip>}>
+                  <Button variant="light" onClick={handleLoadout} className="button_tas_toolbar_1">
                     <img src={switchicon} style={{ width: "25px"}}/>
                   </Button>
                 </OverlayTrigger>
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Loadout</Tooltip>}>
-                  <Button variant="light" onClick={ResetDustbins} className="button_tas_1">
+                  <Button variant="light" onClick={ResetDustbins} className="button_tas_toolbar_1">
                     <img src={reseticon} style={{ width: "25px"}}/>
                   </Button>
                   </OverlayTrigger>
-                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Erase Skillpoint Allocations</Tooltip>}>
-                  <Button variant="light" className="button_tas_1">
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Skillpoints</Tooltip>}>
+                  <Button variant="light" className="button_tas_toolbar_1" onClick={resetSkillpoints}>
                           <img src={erasericon} class="toolbaricon1"/>
                   </Button>
                   </OverlayTrigger>
@@ -1178,18 +1212,18 @@ function toggleSoundEnabled () {
               </Col>
               < Col xs={4} className="d-flex justify-content-center align-items-end" style={{paddingBottom: "10px"}}>
                   <div className="readyButton text-center">
-                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Center Loadout</Tooltip>}>
-                  <Button variant="light" className="button_tas_1" onClick={recenterDustbins}>
-                          <img src={recentericon} style={{ width: "25px"}}/>
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Re-Center</Tooltip>}>
+                  <Button variant="light" className={`button_tas_toolbar_1 ${isLoadoutCentered && "button_tas_toolbar_2"}`} onClick={recenterDustbins}>
+                          <img src={recentericon} class={`toolbaricon1 ${isLoadoutCentered && "toolbaricon2"}`}/>
                   </Button>
                   </OverlayTrigger>
-                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Show/Hide Horse Stats</Tooltip>}>
-                  <Button variant="light" className={`button_tas_1 ${horseStatDisplay !== "none" && "button_tas_toolbar_2"}`} onClick={toggleHorseStatDisplay}>
+                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Toggle Horse Stats</Tooltip>}>
+                  <Button variant="light" className={`button_tas_toolbar_1 ${horseStatDisplay !== "none" && "button_tas_toolbar_2"}`} onClick={toggleHorseStatDisplay}>
                           <img class={`toolbaricon1 ${horseStatDisplay !== "none" && "toolbaricon2"}`} src={horseicon} />
                   </Button>
                   </OverlayTrigger>
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Toggle Audio</Tooltip>}>
-                  <Button variant="light" className={`button_tas_1 ${soundEnabled && "button_tas_toolbar_2"}`} onClick={toggleSoundEnabled}>
+                  <Button variant="light" className={`button_tas_toolbar_1 ${soundEnabled && "button_tas_toolbar_2"}`} onClick={toggleSoundEnabled}>
                           <img class={`toolbaricon1 ${soundEnabled && "toolbaricon2"}`} src={soundicon} />
                   </Button>
                   </OverlayTrigger>
@@ -1198,9 +1232,11 @@ function toggleSoundEnabled () {
               < Col xs={4} className="d-flex justify-content-end align-items-end" style={{paddingBottom: "10px"}}>
                     {!noLoadout ? (
                       <div className="readyButton text-center">
-                        <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={() => {setLgShow(true);}}>
+                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Save Loadout</Tooltip>}>
+                        <Button disabled={!isConnected} variant="success" className="button_tas_2" onClick={saveLoadoutPrompt}>
                           <img src={whitesaveicon} style={{ width: "25px"}}/>
                         </Button>
+                        </OverlayTrigger>
                       </div> 
                 
                     ) : (
@@ -1224,7 +1260,7 @@ function toggleSoundEnabled () {
             <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end align-items-start" >
               < Col xs={6} className="d-flex flex-column justify-content-start align-items-start" style={{width: leftInventoryBoxWidth }}>
               {showLeftInventory && (
-                <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}`, width: "95%"}}>
+                <div class="inventory" style={{"margin-top": "3%", "padding-top": `${inventoryTopPadding}`, "margin-bottom": `-${inventoryBottomPadding}`,width: "95%" }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1285,7 +1321,22 @@ function toggleSoundEnabled () {
                 </Col>
             </Col>
             <Col xs={(centerLoadoutColumnWidth)} className="text-center">
+ 
             <Row style={{padding: "5px"}}>
+                <div className="big_box">
+                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
+                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
+}
+                    {filtered
+                      ? Object.keys(filtered) &&
+                        Object.keys(filtered).map((val, index) => {
+                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
+                        })
+                      : ""}
+                  </Carousel>
+                </div>
+              </Row>
+              <Row style={{padding: "5px"}}>
               <div class="skills_bar">
               <div class="skills_group">
                   <p><img src={levelupicon} />  {getLoadoutTotals()["points"]} </p>{"  "}
@@ -1317,7 +1368,6 @@ function toggleSoundEnabled () {
                   <p><img src={crossbowicon} /> {getLoadoutTotals()["crossbow"]} </p>{" "}
                 </div>
                 <div class="skills_group" style={{ display: horseStatDisplay }}>
-                    <p><img src={horseicon} /></p>{"  "}
                      <p><img src={horsehealthicon} />  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
                      <p><img src={horsearmoricon} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
                      <p><img src={horsespeedicon} />  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
@@ -1327,23 +1377,9 @@ function toggleSoundEnabled () {
                 </div>
               </div>
               </Row>
-            <Row style={{padding: "5px"}}>
-                <div className="big_box">
-                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
-                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
-}
-                    {filtered
-                      ? Object.keys(filtered) &&
-                        Object.keys(filtered).map((val, index) => {
-                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
-                        })
-                      : ""}
-                  </Carousel>
-                </div>
-              </Row>
  
               <Row style={{padding: "5px"}}>
-               <div className="big_box" style={{width: "100%", paddingTop: "50%"}}>
+               <div className="big_box" style={{width: "100%", paddingTop: "15%"}}>
                </div>
               </Row>
             </Col>
@@ -1390,7 +1426,7 @@ function toggleSoundEnabled () {
               </Col>
               < Col xs={6} className="d-flex justify-content-end align-items-start" style={{width: rightInventoryBoxWidth}}>
               {showRightInventory && (
-                  <div class="inventory" style={{ "padding-top": `${inventoryTopPadding}`, "padding-bottom": `${inventoryBottomPadding}`, width: "95%" }}>
+                  <div class="inventory" style={{"margin-top": "3%", "padding-top": `${inventoryTopPadding}`, "margin-bottom": `-${inventoryBottomPadding}`,width: "95%" }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
