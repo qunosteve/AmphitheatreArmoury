@@ -88,7 +88,7 @@ export default class Connector extends React.Component {
             userLoadoutContent: undefined,
             userLoadoutContentArray: [],
             userLoadoutMetadata: undefined,
-            contentQunatity: undefined,
+            contentQuantity: undefined,
             isEntered: false,
             postedTransactions: [],
             networkId: undefined,
@@ -362,7 +362,7 @@ export default class Connector extends React.Component {
         let walletContent = {};
         let imageContent = {};
         let userLoadoutContent = {};
-        let contentQunatity = {};
+        let contentQuantity = {};
         let societyCounter = 0;
         let prevContentQuantity = {};
         let prevAmount = 0;
@@ -370,11 +370,11 @@ export default class Connector extends React.Component {
 
         try {
             const rawUtxos = await this.API.getUtxos();
-
             for (const rawUtxo of rawUtxos) {
-                const utxo = TransactionUnspentOutput.from_bytes(
-                    Buffer.from(rawUtxo, "hex")
-                );
+                // console.log(rawUtxo);
+                // console.log(Buffer.from(rawUtxo, "hex"));
+                const utxo = TransactionUnspentOutput.from_bytes(Buffer.from(rawUtxo, "hex")); 
+                // const utxo = TransactionUnspentOutput.from_bytes(rawUtxo); 
                 const input = utxo.input();
                 const txid = Buffer.from(
                     input.transaction_id().to_bytes(),
@@ -453,11 +453,11 @@ export default class Connector extends React.Component {
                                     policyIdHex.toString() + assetNameHex
                                 }`;
 
-                                if (contentQunatity[assetNameString]) {
-                                    amount = contentQunatity[assetNameString];
+                                if (contentQuantity[assetNameString]) {
+                                    amount = contentQuantity[assetNameString];
                                 }
 
-                                contentQunatity[assetNameString] =
+                                contentQuantity[assetNameString] =
                                     parseInt(multiassetAmt.to_str()) + amount;
                             }
 
@@ -490,7 +490,7 @@ export default class Connector extends React.Component {
             this.setState({ userLoadoutContent }, () => {
                 this.setOnChainLoadout();
             });
-            this.setState({ contentQunatity });
+            this.setState({ contentQuantity });
             this.setState({ postedTransactions: txID }, () => {
                 console.log(`from Connect ${this.state.postedTransactions}`);
             });
@@ -504,7 +504,7 @@ export default class Connector extends React.Component {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-    getUserLoadoutContent = async () => {
+    getUserAmphiGear = async () => {
         if (this.state.userLoadoutContent.length !== 0) {
             let userLoadout = [];
 
@@ -521,19 +521,26 @@ export default class Connector extends React.Component {
                     const data = await response.json();
 
                     userLoadout.push({
+                        id: key,
                         name: data.onchain_metadata.name,
-                        tier: data.onchain_metadata.tier,
                         slot: this.capitalizeFirstLetter(
                             data.onchain_metadata.slot
                         ),
+                        tier: data.onchain_metadata.tier,
+                        cognition: data.onchain_metadata["cognition"] || 0,
+                        conditioning: data.onchain_metadata["conditioning"] || 0,
+                        proficiency: data.onchain_metadata["proficiency"] || 0,
+                        precision: data.onchain_metadata["precision"] || 0,
+                        length: data.onchain_metadata["length"] || 0,
+                        damage: data.onchain_metadata["damage"] || 0,
                         armor: data.onchain_metadata["armor"] || 0,
-                        weight: data.onchain_metadata.weight,
-                        amount: this.state.contentQunatity[key],
-                        image: `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(
-                            7
-                        )}`,
+                        weight: data.onchain_metadata["weight"] || 0,
+                        amount: this.state.contentQuantity[key],
+                        // image: `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(7)}`,
+                        image: `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`,
                     });
                 }
+                // console.log(userLoadout);
                 return userLoadout;
             } catch (err) {
                 console.log(err);
@@ -543,7 +550,8 @@ export default class Connector extends React.Component {
     };
 
     setOnChainLoadout = async () => {
-        const loadout = await this.getUserLoadoutContent();
+        const loadout = await this.getUserAmphiGear();
+        console.log(loadout);
         this.setState({
             userLoadoutContentArray: loadout,
         });
@@ -568,9 +576,8 @@ export default class Connector extends React.Component {
                     const data = await response.json();
                     imageLinks[
                         key
-                    ] = `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(
-                        7
-                    )}`;
+                    ] = // `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(7)}`;
+                        `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`;
                 }
             } catch (err) {
                 console.log(err);

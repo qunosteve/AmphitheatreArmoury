@@ -237,15 +237,12 @@ p {
 }
 
 .loadout_box_filled {
+  position: relative;
   border: 2px solid #ead5c2;
-  border-radius: 5px;
-  cursor: move;
-  margin-right: 2px;
-  margin-top: 2px;
-  margin-left: 2px;
-  margin-bottom: 2px;
   width: 95%;
-  padding-top: 0%;
+  padding-bottom: 95%;
+  border-radius: 5px;
+  margin: 2px;
 }
 .carousel {
   width: auto;

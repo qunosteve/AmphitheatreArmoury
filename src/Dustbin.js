@@ -35,12 +35,6 @@ export const Dustbin = memo(function Dustbin({
   const isActive = isOver && canDrop;
 
   let backgroundColor = "none";
-
-  // if (isActive) {
-  //   backgroundColor = "darkgreen";
-  // } else if (canDrop) {
-  //   backgroundColor = "darkkhaki";
-  // }
   return (
       <div
         className={isActive ? "loadout_box_incoming_item" : "loadout_box_empty"}
@@ -51,12 +45,13 @@ export const Dustbin = memo(function Dustbin({
         onClick={onClick}
         data-testid="dustbin"
       >
+        
         {lastDroppedItem && (
           <img
             src={img}
             className="gear_img"
-            style={{ background: "none !important" }}
           />
+          
         )}
       </div>
   );

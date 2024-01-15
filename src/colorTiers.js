@@ -1,6 +1,6 @@
 const colorOptions = {
-  "Common": "ivory",
-  "Honoured": '#ead5c2',
+  "Base": "ead5c2",
+  "Honoured": '#ivory',
   "Exalted": '#7ed321',
   "Majestic": '#48baff',
   "Supreme": '#b86cf8',
@@ -26,7 +26,7 @@ function changeTextColor(value) {
     case "Mythical":
       return colorOptions.Mythical;
     default:
-      return colorOptions.Common;
+      return colorOptions.Base;
   }
 }
 

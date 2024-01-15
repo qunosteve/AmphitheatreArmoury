@@ -127,6 +127,7 @@ import {
   NativeScript,
   StakeCredential,
 } from "@emurgo/cardano-serialization-lib-asmjs";
+import changeTextColor from './colorTiers.js';
 let Buffer = require("buffer/").Buffer;
 
 
@@ -258,6 +259,7 @@ function toggleSoundEnabled () {
   }
 
   function handleLeftDustbinClick (slot) {
+    // console.log(slot);
     if (slot =="Head") {
       setInventoryTopPadding('0%')
       setInventoryBottomPadding('1020%')
@@ -300,6 +302,7 @@ function toggleSoundEnabled () {
       
   }
   function handleRightDustbinClick(slot) {
+      // console.log(slot);
       if (slot =="Item0") {
         setInventoryTopPadding('0%')
         setInventoryBottomPadding('1020%')
@@ -372,7 +375,7 @@ function toggleSoundEnabled () {
   const [noLoadout, setNoLoadout] = useState(false);
   const [walletAddress, setWalletAddress] = useState("No address set");
   const [walletContent, setWalletContent] = useState({});
-  /* const [imageContent, setImageContent] = useState({}); */
+  const [imageContent, setImageContent] = useState({});
   const [filtered, setFiltered] = useState({});
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(0);
@@ -398,7 +401,15 @@ function toggleSoundEnabled () {
   const [userLoadoutValues, setUserLoadoutValues] = useState({});
   const [searchList, setSearchList] = useState([]);
   function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    if (typeof string === 'string' && string.length > 0) {
+      // Check if the first character is a letter
+      const firstChar = string.charAt(0);
+      if (/[a-zA-Z]/.test(firstChar)) {
+          return firstChar.toUpperCase() + string.slice(1);
+      }
+  }
+  // Return the string as is if it doesn't meet the conditions
+  return string;
   }
   
   let protocolParams = {
@@ -466,10 +477,13 @@ function toggleSoundEnabled () {
         setOnChainLoadout(userLoadoutContentArray);
         setSearchList(userLoadoutContentArray);
         transformOnchainLoadout();
+        setGotContent(true);
       }
-      setGotContent(true);
+      // setGotContent(true);
     }
   }
+
+  
 
   function getTransactionsPosted(postedTransactions) {
     if (postedTransactions && !beenHere) {
@@ -501,11 +515,6 @@ function toggleSoundEnabled () {
     }
     return new Promise((resolve) => setTimeout(resolve, 100));
   }
-
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   function handleLoadout() {
     if (soundEnabled) {
       openLoadoutAudio.volume = .5;
@@ -700,9 +709,10 @@ function toggleSoundEnabled () {
       }));
 
       const { name } = item;
+      const { amount } = item;
 
       setDroppedLoadoutNames(
-        update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
+        update(droppedLoadoutNames, name ? { $push: [name], $push: [amount] } : { $push: [] })
       );
 
       setDustbins1(
@@ -728,14 +738,14 @@ function toggleSoundEnabled () {
         ...prevUserLoadout,
         [lookup[item.name]?.slot]: lookup[item.name],
       }));
+
       const { name } = item;
       const { amount } = item;
+
       setDroppedLoadoutNames(
-        update(
-          droppedLoadoutNames,
-          name && amount ? { $push: [name], $push: [amount] } : { $push: [] }
-        )
+        update(droppedLoadoutNames, name ? { $push: [name], $push: [amount] } : { $push: [] })
       );
+
       setDustbins2(
         update(dustbins_row2, {
           [index]: {
@@ -749,23 +759,6 @@ function toggleSoundEnabled () {
     [droppedLoadoutNames, dustbins_row2]
   );
 
-  const handleDrop3 = useCallback(
-    /* camel */
-    (index, item, accepts) => {
-      setUserLoadout((prevUserLoadout) => ({
-        ...prevUserLoadout,
-        [accepts[0]]: item.name,
-      }));
-      setUserLoadoutValues((prevUserLoadout) => ({
-        ...prevUserLoadout,
-        [lookup[item.name]?.slot]: lookup[item.name],
-      }));
-      const { name } = item;
-      setDroppedLoadoutNames(
-        update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
-      );
-    },
-  );
 
   function apeUpdateInfo(event) {
     if (soundEnabled) {
@@ -1129,20 +1122,18 @@ function toggleSoundEnabled () {
 		            <div style={{ display: "flex", justifyContent: "center", paddingBottom: "15px"}}>
                   <img src={military_amphi} style={{ width: "50px"}} />
                  </div>
-                <div
-                  className="modal-title"
-                  style={{ fontFamily: "Cabin, sans-serif" }}
-                >
+                <div className="modal-title" style={{ fontFamily: "Cabin, sans-serif" }}>
                   <h2> Confirm your selection </h2>
                 </div>
                 {Object.keys(userLoadout).map((key, index) => {
+
                   return (
                     <p
                       key={index}
                       style={{
                         paddingTop: "5px",
                         fontSize: "18px",
-                        fontWeight: "600",
+                        fontWeight: "500",
                       }}
                     >
                       {" "}
@@ -1150,10 +1141,10 @@ function toggleSoundEnabled () {
                     </p>
                   );
                 })}{" "}
-                <div class="characterstats">
+                <div className="characterstats">
                   {//need to include something that warns the user when they haven't use their attribute points 
                   }
-                  <p> <img src={armoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["armor"]} </p>{" "}
+                  <p> <img src={armoricon} style={{ width: "30px" }} />Armor: {getLoadoutTotals()["armor"]} </p>{" "}
                   <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                            
                   <p> <img src={leadershipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["leadership"]} </p>{" "}
                   <p> <img src={strategyicon} style={{ width: "30px" }} /> {getLoadoutTotals()["strategy"]} </p>{" "}
@@ -1205,7 +1196,7 @@ function toggleSoundEnabled () {
                   </OverlayTrigger>
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Skillpoints</Tooltip>}>
                   <Button variant="light" className="button_tas_toolbar_1" onClick={resetSkillpoints}>
-                          <img src={erasericon} class="toolbaricon1"/>
+                          <img src={erasericon} className="toolbaricon1"/>
                   </Button>
                   </OverlayTrigger>
                   </div>
@@ -1214,17 +1205,17 @@ function toggleSoundEnabled () {
                   <div className="readyButton text-center">
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Re-Center</Tooltip>}>
                   <Button variant="light" className={`button_tas_toolbar_1 ${isLoadoutCentered && "button_tas_toolbar_2"}`} onClick={recenterDustbins}>
-                          <img src={recentericon} class={`toolbaricon1 ${isLoadoutCentered && "toolbaricon2"}`}/>
+                          <img src={recentericon} className={`toolbaricon1 ${isLoadoutCentered && "toolbaricon2"}`}/>
                   </Button>
                   </OverlayTrigger>
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Toggle Horse Stats</Tooltip>}>
                   <Button variant="light" className={`button_tas_toolbar_1 ${horseStatDisplay !== "none" && "button_tas_toolbar_2"}`} onClick={toggleHorseStatDisplay}>
-                          <img class={`toolbaricon1 ${horseStatDisplay !== "none" && "toolbaricon2"}`} src={horseicon} />
+                          <img className={`toolbaricon1 ${horseStatDisplay !== "none" && "toolbaricon2"}`} src={horseicon} />
                   </Button>
                   </OverlayTrigger>
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Toggle Audio</Tooltip>}>
                   <Button variant="light" className={`button_tas_toolbar_1 ${soundEnabled && "button_tas_toolbar_2"}`} onClick={toggleSoundEnabled}>
-                          <img class={`toolbaricon1 ${soundEnabled && "toolbaricon2"}`} src={soundicon} />
+                          <img className={`toolbaricon1 ${soundEnabled && "toolbaricon2"}`} src={soundicon} />
                   </Button>
                   </OverlayTrigger>
                  </div>             
@@ -1245,7 +1236,7 @@ function toggleSoundEnabled () {
                 </Col>
               </Row>
               <Row className="d-flex">
-              <div class="skills_bar_line" d-flex>
+              <div className="skills_bar_line">
               </div>
               </Row>
             </Col>
@@ -1257,12 +1248,13 @@ function toggleSoundEnabled () {
       
         {isConnected ? (
            <Row className="d-flex justify-content-center">           
-            <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end align-items-start" >
+            <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end" >
               < Col xs={6} className="d-flex flex-column justify-content-start align-items-start" style={{width: leftInventoryBoxWidth }}>
               {showLeftInventory && (
-                <div class="inventory" style={{"margin-top": "3%", "padding-top": `${inventoryTopPadding}`, "margin-bottom": `-${inventoryBottomPadding}`,width: "95%" }}>
+                <div className="inventory" style={{"marginTop": "3%", "paddingTop": `${inventoryTopPadding}`, "marginBottom": `-${inventoryBottomPadding}`,width: "95%" }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
+                    // .filter(item => item.slot == selectedSlot)
                     .map(
                       (
                         {
@@ -1284,10 +1276,10 @@ function toggleSoundEnabled () {
                               isDropped={isDropped(name)}
                               key={index}
                               img={image}
+                              tier={tier}
                               armor={armor}
+                              amount={amount}
                             />
-                            <div style={{ textAlign: "center" }}>                          
-                            </div>
                           </Col>
                         </Row>
                       )
@@ -1301,20 +1293,17 @@ function toggleSoundEnabled () {
                     <Dustbin 
                       accept={accepts}
                       lastDroppedItem={lastDroppedItem}
+                      
                       onDrop={(item) => {
                         if (soundEnabled) {
                           armorEquipAudio.volume = .3;
                           armorEquipAudio.play();
                         }
-                      handleDrop1(index, item, accepts);
+                        handleDrop1(index, item, accepts);
                         }}
                       onClick={() => handleLeftDustbinClick(accepts)} 
                       key={index}
-                      img={
-                    lastDroppedItem
-                    ? transformedLoadout[lastDroppedItem["name"]]
-                    : ""
-                      }
+                      img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""}
                     />
                     ))}
                     </div>
@@ -1337,37 +1326,37 @@ function toggleSoundEnabled () {
                 </div>
               </Row>
               <Row style={{padding: "5px"}}>
-              <div class="skills_bar">
-              <div class="skills_group">
+              <div className="skills_bar">
+              <div className="skills_group">
                   <p><img src={levelupicon} />  {getLoadoutTotals()["points"]} </p>{"  "}
                   <p><img src={armoricon} />  {getLoadoutTotals()["armor"]} </p>{"  "}
                   <p><img src={weighticon} /> {getLoadoutTotals()["weight"]} </p>{" "}                
                 </div>
-                <div class="skills_group">
+                <div className="skills_group">
                   <p><img src={cognitionicon}/> {getLoadoutTotals()["cognition"]} </p>{" "}
                   <p><img src={leadershipicon}/> {getLoadoutTotals()["leadership"]} </p>{" "}
                   <p><img src={strategyicon}/> {getLoadoutTotals()["strategy"]} </p>{" "}
                   <p><img src={craftingicon}/> {getLoadoutTotals()["crafting"]} </p>{" "}
                 </div>
-                <div class="skills_group">
+                <div className="skills_group">
                   <p><img src={conditioningicon}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
                   <p><img src={healthicon} /> {getLoadoutTotals()["health"]} </p>{" "}
                   <p><img src={speedicon} /> {getLoadoutTotals()["speed"]} </p>{" "}
                   <p><img src={horsemanshipicon} /> {getLoadoutTotals()["horsemanship"]} </p>{" "}
                 </div>
-                <div class="skills_group">
+                <div className="skills_group">
                   <p><img src={proficiencyicon} /> {getLoadoutTotals()["proficiency"]} </p>{" "}
                   <p><img src={onehandshieldicon} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
                   <p><img src={twohandedicon} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
                   <p><img src={polearmicon} /> {getLoadoutTotals()["polearm"]} </p>{" "}
                 </div>
-                <div class="skills_group">
+                <div className="skills_group">
                   <p><img src={precisionicon} /> {getLoadoutTotals()["precision"]} </p>{" "}
                   <p><img src={bowicon} /> {getLoadoutTotals()["bow"]} </p>{" "}
                   <p><img src={throwingicon} /> {getLoadoutTotals()["throwing"]} </p>{" "}
                   <p><img src={crossbowicon} /> {getLoadoutTotals()["crossbow"]} </p>{" "}
                 </div>
-                <div class="skills_group" style={{ display: horseStatDisplay }}>
+                <div className="skills_group" style={{ display: horseStatDisplay }}>
                      <p><img src={horsehealthicon} />  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
                      <p><img src={horsearmoricon} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
                      <p><img src={horsespeedicon} />  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
@@ -1415,10 +1404,7 @@ function toggleSoundEnabled () {
                                 handleDrop2(index, item, accepts);
                               }}
                               key={index}
-                              img={
-                                lastDroppedItem
-                                  ? transformedLoadout[lastDroppedItem["name"]]
-                                  : ""
+                              img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""
                               }
                       />
                       ))}
@@ -1426,7 +1412,7 @@ function toggleSoundEnabled () {
               </Col>
               < Col xs={6} className="d-flex justify-content-end align-items-start" style={{width: rightInventoryBoxWidth}}>
               {showRightInventory && (
-                  <div class="inventory" style={{"margin-top": "3%", "padding-top": `${inventoryTopPadding}`, "margin-bottom": `-${inventoryBottomPadding}`,width: "95%" }}>
+                  <div className="inventory" style={{"marginTop": "3%", "paddingTop": `${inventoryTopPadding}`, "marginBottom": `-${inventoryBottomPadding}`,width: "95%" }}>
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1438,6 +1424,7 @@ function toggleSoundEnabled () {
                           image,
                           weight,
                           armor,
+                          proficiency,
                           tier
                         },
                         index
@@ -1447,12 +1434,11 @@ function toggleSoundEnabled () {
                             <Box
                               name={name}
                               type={slot}
+                              tier={tier}
                               isDropped={isDropped(name)}
                               key={index}
                               img={image}
                             />
-                            <div style={{ textAlign: "center" }}>                          
-                            </div>
                           </Col>
                         </Row>
                       )
