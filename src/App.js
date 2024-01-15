@@ -202,6 +202,7 @@ function resetSkillpoints () {
     eraserAudio.volume = .5;
     eraserAudio.play();
   }
+  setUserLoadoutValues({});
 }
 
 function saveLoadoutPrompt () {
@@ -301,6 +302,7 @@ function toggleSoundEnabled () {
       }
       
   }
+
   function handleRightDustbinClick(slot) {
       // console.log(slot);
       if (slot =="Item0") {
@@ -594,6 +596,21 @@ function toggleSoundEnabled () {
       { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
       
     ]);
+    setUserLoadoutValues({});
+    setUserLoadout({
+      Ape: "",
+      Head: "",
+      Body: "",
+      Shoulders: "",
+      Gloves: "",
+      Leg: "",
+      Item0: "",
+      Item1: "",
+      Item2: "",
+      Item3: "",
+      Horse: "",
+      HorseHarness: "",
+    });
     recenterDustbins();
     if (soundEnabled) {
     resetLoadoutAudio.volume = .5;
@@ -765,10 +782,11 @@ function toggleSoundEnabled () {
     pageAudio.volume = .5;
     pageAudio.play();
     }
+    const apeValue = Object.keys(filtered)[event]?.slice(5) || null;
     setApeSelected(true);
     setUserLoadout((prevUserLoadout) => ({
       ...prevUserLoadout,
-      Ape: Object.keys(filtered)[event].slice(5),
+      Ape: apeValue,
     }));
   }
 
@@ -1287,7 +1305,7 @@ function toggleSoundEnabled () {
                   </div>
                   )}
             </Col>
-              <Col xs={6} className="d-flex justify-content-end" style={{width: leftLoadoutBoxWidth}}>
+              <Col xs={6} className="d-flex justify-content-end align-items-start" style={{width: leftLoadoutBoxWidth}}>
                   <div className="d-flex flex-column justify-content-end align-items-start" style={{width: "95%"}}>
                   {dustbins_row1.map(({ accepts, lastDroppedItem}, index) => (
                     <Dustbin 
@@ -1314,14 +1332,13 @@ function toggleSoundEnabled () {
             <Row style={{padding: "5px"}}>
                 <div className="big_box">
                   <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
-                    {//<img src={nakedape} key={0} style={{ width: '100%'}}/>
-}
                     {filtered
                       ? Object.keys(filtered) &&
                         Object.keys(filtered).map((val, index) => {
                           return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
                         })
                       : ""}
+                      <img src={nakedape} style={{ width: '100%'}}/>
                   </Carousel>
                 </div>
               </Row>

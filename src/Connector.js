@@ -536,7 +536,6 @@ export default class Connector extends React.Component {
                         armor: data.onchain_metadata["armor"] || 0,
                         weight: data.onchain_metadata["weight"] || 0,
                         amount: this.state.contentQuantity[key],
-                        // image: `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(7)}`,
                         image: `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`,
                     });
                 }
@@ -576,8 +575,7 @@ export default class Connector extends React.Component {
                     const data = await response.json();
                     imageLinks[
                         key
-                    ] = // `https://gateway.ipfs.io/ipfs/${data.onchain_metadata.image.slice(7)}`;
-                        `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`;
+                    ] = `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`;
                 }
             } catch (err) {
                 console.log(err);
