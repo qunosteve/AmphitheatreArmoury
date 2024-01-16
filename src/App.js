@@ -1049,7 +1049,7 @@ function toggleSoundEnabled () {
                 </div>
               ) : (
                 <div className="d-flex flex-column justify-content-start align-items-start">
-                  <Button disabled={!whichWallet} className="button_tas_2" style={{ width: "100px" }}  onClick={onSubmitAddy}>
+                  <Button disabled={!whichWallet} id="button-addon1" className="button_tas_2" style={{ width: "100px" }}  onClick={onSubmitAddy}>
                     Connect
                   </Button>
                 </div>
