@@ -216,6 +216,7 @@ p {
   padding-bottom: 95%;
   border-radius: 5px;
   margin: 2px;
+  cursor: pointer;
   transition: box-shadow 0.3s ease-in-out; /* add transition for smooth effect */
 }
 .loadout_box_empty:not(:empty) {
@@ -244,7 +245,19 @@ p {
   box-shadow: 0 0 35px #ead5c2;
 }
 
-
+.amount {
+  font-family: "Charlemagne";
+  font-weight: 600;
+  margin-top: -15%;
+  margin-right: 6%;
+  position: absolute;
+  top: 1;
+  right: 0;
+  background-color: #ead5c2;
+  padding: 2%;
+  border-radius: 40%;
+  box-shadow: 0 0 5px #eec07a, 0 0 5px #eec07a, 0 0 5px #eec07a, 0 0 10px #eec07a, 0 0 10px #eec07a, 0 0 10px #eec07a;
+}
 
 .carousel {
   width: auto;
@@ -273,7 +286,7 @@ p {
 }
 
 .carousel-indicators {
-  color: #ead5c2;
+  display: none !important;
 }
 .carousel .thumbs-wrapper {
   display: none;
@@ -353,6 +366,42 @@ p {
   background-color: #eec07a00 !important;
   border-color: #eec07a !important;
 }
+
+.square-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* Set the padding-top to create a square based on the width */
+}
+
+.button_tas_inventory_1 {
+  border: none !important;
+  background: none !important;
+  color: #ead5c2 !important;
+  transition: box-shadow 1s ease-in-out;
+}
+
+.button_tas_inventory_1:hover {
+    box-shadow: 0 0 5px #ead5c2, 0 0 5px #ead5c2, 0 0 10px #ead5c2, 0 0 10px #ead5c2, 0 0 15px #ead5c2, 0 0 15px #ead5c2;
+}
+.button_tas_inventory_1:active {
+  color: #ead5c2 !important;
+  
+  background-color: #eec07a !important;
+  border-color: #f1dab0 !important;
+}
+
+.button_tas_inventory_1:visited {
+  color: #ead5c2 !important;
+  background-color: #eec07a !important;
+  border-color: #f1dab0 !important;
+}
+
+.button_tas_inventory_1:focus {
+  color: #ead5c2 !important;
+  background-color: #eec07a00 !important;
+  border-color: #f1dab0 !important;
+}
+
 
 
 .button_tas_toolbar_1 {

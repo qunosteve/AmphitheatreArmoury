@@ -28,6 +28,12 @@ import saveloadoutbuttonsound from "./audio/weapon_ui_4.wav";
 import horseuisound from "./audio/horse_ui_2.wav";
 import potionuisound from "./audio/potion_ui_1.wav";
 import society from "./images/Society.png";
+import cancelicon from "./images/cancel.png";
+import craftsmanicon from "./images/craftsman_amphi_icon.png";
+import artisticon from "./images/artist_amphi_icon.png";
+import merchanticon from "./images/merchant_amphi_icon.png";
+import moicon from "./images/military_amphi_icon.png";
+import explorericon from "./images/explorer_amphi_icon.png";
 import cardanologo from "./images/cardanologo.png";
 import amphilogo from "./images/rawamphi_small.png";
 import switchicon from "./images/open-folder.png";
@@ -197,6 +203,10 @@ function App() {
   const saveLoadoutButtonAudio = new Audio(saveloadoutbuttonsound);
   const openLoadoutAudio = new Audio(openloadoutsound);
   const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
+
+function openUrlInNewTab (url) {
+  window.open(url, '_blank');
+}
 
 function resetSkillpoints () {
   if (soundEnabled) {
@@ -1327,10 +1337,9 @@ function toggleSoundEnabled () {
                 </Col>
             </Col>
             <Col xs={(centerLoadoutColumnWidth)} className="text-center">
- 
             <Row style={{padding: "5px"}}>
                 <div className="big_box">
-                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} activeIndex={2}>
+                  <Carousel infiniteLoop={true} selectedIndex={activeCarouselIndex} onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} >
                   <img src={noape} style={{ width: '100%'}}/>
                     {filtered
                       ? Object.keys(filtered) &&
@@ -1338,7 +1347,6 @@ function toggleSoundEnabled () {
                           return <img src={filtered[val]} key={(index)} style={{width: "100%"}} />;
                         })
                       : ""}
-                      
                   </Carousel>
                 </div>
               </Row>
@@ -1383,11 +1391,13 @@ function toggleSoundEnabled () {
                 </div>
               </div>
               </Row>
- 
+              { !isLoadoutCentered && (
               <Row style={{padding: "5px"}}>
                <div className="big_box" style={{width: "100%", paddingTop: "15%"}}>
                </div>
               </Row>
+              )
+              }
             </Col>
             <Col xs={(rightLoadoutColumnWidth)} className="d-flex justify-content-start">
               < Col xs={6} className="d-flex justify-content-start align-items-start" style={{width: rightLoadoutBoxWidth}}> 
@@ -1430,6 +1440,7 @@ function toggleSoundEnabled () {
               < Col xs={6} className="d-flex justify-content-end align-items-start" style={{width: rightInventoryBoxWidth}}>
               {showRightInventory && (
                   <div className="inventory" style={{"marginTop": "3%", "paddingTop": `${inventoryTopPadding}`, "marginBottom": `-${inventoryBottomPadding}`,width: "95%" }}>
+
                   {searchList
                     .filter(item => item.slot == selectedSlot)
                     .map(
@@ -1449,17 +1460,22 @@ function toggleSoundEnabled () {
                         <Row style={{ justifyContent: "center", display: "grid" }}>
                           <Col>
                             <Box
+                              key={index}
+                              amount={amount}
                               name={name}
                               type={slot}
                               tier={tier}
-                              isDropped={isDropped(name)}
-                              key={index}
                               img={image}
+                              isDropped={isDropped(name)}
+                              onClick={resetSkillpoints}
                             />
                           </Col>
                         </Row>
                       )
                     )}
+                    <div>
+                      <img src={cancelicon} className="gear_img" />
+                    </div>
                   </div>
                   )}
                 </Col>
