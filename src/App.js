@@ -66,7 +66,7 @@ import military_amphi from "./images/military_amphi.png";
 import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
 import amphitheatre_textlogo from "./images/amphitheatre_textlogo.png"
-import nakedape from "./images/nakedape.png"
+import noape from "./images/nakedape.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
 import Connector from "./Connector.js";
@@ -196,6 +196,7 @@ function App() {
   const eraserAudio = new Audio(eraseruisound);
   const saveLoadoutButtonAudio = new Audio(saveloadoutbuttonsound);
   const openLoadoutAudio = new Audio(openloadoutsound);
+  const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
 
 function resetSkillpoints () {
   if (soundEnabled) {
@@ -611,6 +612,7 @@ function toggleSoundEnabled () {
       Horse: "",
       HorseHarness: "",
     });
+    setActiveCarouselIndex(0); 
     recenterDustbins();
     if (soundEnabled) {
     resetLoadoutAudio.volume = .5;
@@ -778,11 +780,13 @@ function toggleSoundEnabled () {
 
 
   function apeUpdateInfo(event) {
+    //had to add an ape index after I added the noape pfp for non holders
+    const apeIndex = event - 1
     if (soundEnabled) {
     pageAudio.volume = .5;
     pageAudio.play();
     }
-    const apeValue = Object.keys(filtered)[event]?.slice(5) || null;
+    const apeValue = Object.keys(filtered)[apeIndex]?.slice(5) || null;
     setApeSelected(true);
     setUserLoadout((prevUserLoadout) => ({
       ...prevUserLoadout,
@@ -1045,12 +1049,9 @@ function toggleSoundEnabled () {
                 </div>
               ) : (
                 <div className="d-flex flex-column justify-content-start align-items-start">
-                  <Button
-                    disabled={!whichWallet}
-                    className="button_tas_2"
-                    style={{ width: "100px" }}
-                    onClick={onSubmitAddy}
-                  >
+                  {/* <Button disabled={!whichWallet} className="button_tas_2" style={{ width: "100px" }}  onClick={onSubmitAddy}>
+                  */}
+                  <Button disabled={!whichWallet} onClick={onSubmitAddy} variant="outline-secondary" id="button-addon1" style={{color: "white", background: "#2b802b", marginLeft: "", }}>
                     Connect
                   </Button>
                 </div>
@@ -1331,14 +1332,15 @@ function toggleSoundEnabled () {
  
             <Row style={{padding: "5px"}}>
                 <div className="big_box">
-                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo}>
+                  <Carousel onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} activeIndex={2}>
+                  <img src={noape} style={{ width: '100%'}}/>
                     {filtered
                       ? Object.keys(filtered) &&
                         Object.keys(filtered).map((val, index) => {
-                          return <img src={filtered[val]} key={index} style={{width: "100%"}} />;
+                          return <img src={filtered[val]} key={(index)} style={{width: "100%"}} />;
                         })
                       : ""}
-                      <img src={nakedape} style={{ width: '100%'}}/>
+                      
                   </Carousel>
                 </div>
               </Row>
