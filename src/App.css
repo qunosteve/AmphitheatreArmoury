@@ -329,6 +329,7 @@ p {
   transition: box-shadow 1s ease-in-out;
   box-shadow: 0 0 5px #ead5c2, 0 0 5px #ead5c2, 0 0 10px #ead5c2, 0 0 10px #ead5c2, 0 0 15px #ead5c2, 0 0 15px #ead5c2;
   margin: 1px;
+  cursor: pointer;
 }
 
 .button_tas_2:hover {
