@@ -588,6 +588,46 @@ function toggleSoundEnabled () {
     setLookup(lookup);
   }
 
+  function ResetSingleDustbin() {
+    setDustbins1([
+      { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
+      { accepts: [ItemTypes.BODY], lastDroppedItem: null },
+      { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
+      { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
+      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
+      
+    ]);
+    setDustbins2([
+      { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
+      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
+      { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+      
+    ]);
+    setUserLoadout({
+      Ape: "",
+      Head: "",
+      Body: "",
+      Shoulders: "",
+      Gloves: "",
+      Leg: "",
+      Item0: "",
+      Item1: "",
+      Item2: "",
+      Item3: "",
+      Horse: "",
+      HorseHarness: "",
+    });
+
+    if (soundEnabled) {
+    resetLoadoutAudio.volume = .5;
+    resetLoadoutAudio.play();
+    }
+  }
+
   function ResetDustbins() {
     setDustbins1([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
@@ -726,7 +766,7 @@ function toggleSoundEnabled () {
     };
   }
 
-  const handleDrop1 = useCallback(
+  const handleDrop = useCallback(
     (index, item, accepts) => {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
@@ -736,59 +776,48 @@ function toggleSoundEnabled () {
         ...prevUserLoadout,
         [lookup[item.name]?.slot]: lookup[item.name],
       }));
-
+  
       const { name } = item;
       const { amount } = item;
-
+  
       setDroppedLoadoutNames(
         update(droppedLoadoutNames, name ? { $push: [name], $push: [amount] } : { $push: [] })
       );
-
-      setDustbins1(
-        update(dustbins_row1, {
-          [index]: {
-            lastDroppedItem: {
-              $set: item,
-            },
-          },
-        })
-      );
+  
+      switch (accepts[0]) {
+        case 'Head':
+        case 'Body':
+        case 'Shoulders':
+        case 'Gloves':
+        case 'Leg':
+        case 'HorseHarness':
+          setDustbins1(
+            update(dustbins_row1, {
+              [index]: {
+                lastDroppedItem: {
+                  $set: item,
+                },
+              },
+            })
+          );
+          break;
+  
+        default:
+          setDustbins2(
+            update(dustbins_row2, {
+              [index]: {
+                lastDroppedItem: {
+                  $set: item,
+                },
+              },
+            })
+          );
+          break;
+      }
     },
-    [droppedLoadoutNames, dustbins_row1]
+    [droppedLoadoutNames, dustbins_row1, dustbins_row2]
   );
-
-  const handleDrop2 = useCallback(
-    (index, item, accepts) => {
-      setUserLoadout((prevUserLoadout) => ({
-        ...prevUserLoadout,
-        [accepts[0]]: item.name,
-      }));
-      setUserLoadoutValues((prevUserLoadout) => ({
-        ...prevUserLoadout,
-        [lookup[item.name]?.slot]: lookup[item.name],
-      }));
-
-      const { name } = item;
-      const { amount } = item;
-
-      setDroppedLoadoutNames(
-        update(droppedLoadoutNames, name ? { $push: [name], $push: [amount] } : { $push: [] })
-      );
-
-      setDustbins2(
-        update(dustbins_row2, {
-          [index]: {
-            lastDroppedItem: {
-              $set: item,
-            },
-          },
-        })
-      );
-    },
-    [droppedLoadoutNames, dustbins_row2]
-  );
-
-
+  
   function apeUpdateInfo(event) {
     //had to add an ape index after I added the noape pfp for non holders
     const apeIndex = event - 1
@@ -1326,7 +1355,7 @@ function toggleSoundEnabled () {
                           armorEquipAudio.volume = .3;
                           armorEquipAudio.play();
                         }
-                        handleDrop1(index, item, accepts);
+                        handleDrop(index, item, accepts);
                         }}
                       onClick={() => handleLeftDustbinClick(accepts)} 
                       key={index}
@@ -1428,7 +1457,7 @@ function toggleSoundEnabled () {
                                   weaponEquipAudio.volume = .1;
                                   weaponEquipAudio.play();
                                 }
-                                handleDrop2(index, item, accepts);
+                                handleDrop(index, item, accepts);
                               }}
                               key={index}
                               img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""
@@ -1474,7 +1503,7 @@ function toggleSoundEnabled () {
                       )
                     )}
                     <div>
-                      <img src={cancelicon} className="gear_img" />
+                      <img src={reseticon} className="gear_img" />
                     </div>
                   </div>
                   )}
