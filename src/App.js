@@ -20,6 +20,7 @@ import wooduisound from "./audio/wooden_ui_5.wav";
 import audiouisound from "./audio/wooden_ui_4.wav";
 import recenteruisound from "./audio/wooden_ui_2.wav";
 import chainuisound from "./audio/chain_ui_2.wav";
+import singleresetsound from "./audio/chain_ui_1.wav";
 import armoruisound from "./audio/armor_ui_1.wav";
 import armoruiequipsound from "./audio/armor_ui_2.wav";
 import weaponuisound from "./audio/weapon_ui_2.wav";
@@ -183,7 +184,8 @@ function App() {
   const [rightInventoryBoxWidth, setRightInventoryBoxWidth] = useState("0%");
   const [showLeftInventory, setShowLeftInventory] = useState(false);
   const [showRightInventory, setShowRightInventory] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState("");
+  const [filteredSlot, setfilteredSlot] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState(["", 0, ""]);
   const [inventoryTopPadding, setInventoryTopPadding] = useState("");
   const [inventoryBottomPadding, setInventoryBottomPadding] = useState("");
   const [horseStatDisplay, setHorseStatDisplay] = useState("none");
@@ -192,6 +194,7 @@ function App() {
   const soundAudio = new Audio(audiouisound);
   const recenterAudio = new Audio(recenteruisound);
   const resetLoadoutAudio = new Audio(chainuisound);
+  const resetSlotAudio = new Audio(singleresetsound);
   const armorAudio = new Audio(armoruisound);
   const armorEquipAudio = new Audio(armoruiequipsound);
   const weaponAudio = new Audio(weaponuisound);
@@ -202,7 +205,8 @@ function App() {
   const eraserAudio = new Audio(eraseruisound);
   const saveLoadoutButtonAudio = new Audio(saveloadoutbuttonsound);
   const openLoadoutAudio = new Audio(openloadoutsound);
-  const [activeCarouselIndex, setActiveCarouselIndex] = useState(0);
+  
+
 
 function openUrlInNewTab (url) {
   window.open(url, '_blank');
@@ -270,8 +274,8 @@ function toggleSoundEnabled () {
     }
   }
 
-  function handleLeftDustbinClick (slot) {
-    // console.log(slot);
+  function handleLeftDustbinClick (index,slot) {
+    setSelectedSlot(['L',index,slot]);
     if (slot =="Head") {
       setInventoryTopPadding('0%')
       setInventoryBottomPadding('1020%')
@@ -299,7 +303,7 @@ function toggleSoundEnabled () {
       setIsLoadoutCentered(false);
       setShowLeftInventory(true);
       setShowRightInventory(false);
-      setSelectedSlot(slot);
+      setfilteredSlot(slot);
       setLeftLoadoutColumnWidth(4);
       setRightLoadoutColumnWidth(2);
       setLeftLoadoutBoxWidth("47%");
@@ -314,8 +318,8 @@ function toggleSoundEnabled () {
       
   }
 
-  function handleRightDustbinClick(slot) {
-      // console.log(slot);
+  function handleRightDustbinClick(index,slot) {
+    setSelectedSlot(["R",index,slot]);
       if (slot =="Item0") {
         setInventoryTopPadding('0%')
         setInventoryBottomPadding('1020%')
@@ -340,17 +344,16 @@ function toggleSoundEnabled () {
         setInventoryTopPadding('368%')
         setInventoryBottomPadding('1020%')
         if (soundEnabled) {
-          potionAudio.volume = .3;
-          potionAudio.play();
-        }
-        
+          horseAudio.volume = .3;
+          horseAudio.play();
+          }        
       } 
       if (slot =="Special") {
         setInventoryTopPadding('460%')
         setInventoryBottomPadding('1020%')
         if (soundEnabled) {
-        horseAudio.volume = .3;
-        horseAudio.play();
+          potionAudio.volume = .3;
+          potionAudio.play();
         }
       } 
 
@@ -363,7 +366,7 @@ function toggleSoundEnabled () {
       setIsLoadoutCentered(false);
       setShowLeftInventory(false);
       setShowRightInventory(true);
-      setSelectedSlot(slot);
+      setfilteredSlot(slot);
       setRightLoadoutColumnWidth(4);
       setLeftLoadoutColumnWidth(2);
       setLeftLoadoutBoxWidth("100%");
@@ -588,45 +591,40 @@ function toggleSoundEnabled () {
     setLookup(lookup);
   }
 
-  function ResetSingleDustbin() {
-    setDustbins1([
-      { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
-      { accepts: [ItemTypes.BODY], lastDroppedItem: null },
-      { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
-      { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
-      { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
-      
-    ]);
-    setDustbins2([
-      { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM1], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
-      { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-      { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
-      
-    ]);
-    setUserLoadout({
-      Ape: "",
-      Head: "",
-      Body: "",
-      Shoulders: "",
-      Gloves: "",
-      Leg: "",
-      Item0: "",
-      Item1: "",
-      Item2: "",
-      Item3: "",
-      Horse: "",
-      HorseHarness: "",
-    });
-
-    if (soundEnabled) {
-    resetLoadoutAudio.volume = .5;
-    resetLoadoutAudio.play();
-    }
+  function resetSingleDustbin(gearSlotArg) {
+    if (gearSlotArg[0] == "L")
+    {
+    setDustbins1(
+      update(dustbins_row1, {
+        [gearSlotArg[1]]: {
+          lastDroppedItem: {
+            $set: null,
+          },
+        },
+      })
+    );
+  } else {
+    setDustbins2(
+      update(dustbins_row2, {
+        [gearSlotArg[1]]: {
+          lastDroppedItem: {
+            $set: null,
+          },
+        },
+      })
+    );
   }
+
+  const currentLoadout = (userLoadout);
+  currentLoadout[gearSlotArg[2][0]] = "";
+  setUserLoadout(currentLoadout);
+
+
+  if (soundEnabled) {
+    resetSlotAudio.volume = .5;
+    resetSlotAudio.play();
+  }
+}
 
   function ResetDustbins() {
     setDustbins1([
@@ -662,11 +660,10 @@ function toggleSoundEnabled () {
       Horse: "",
       HorseHarness: "",
     });
-    setActiveCarouselIndex(0); 
     recenterDustbins();
     if (soundEnabled) {
-    resetLoadoutAudio.volume = .5;
-    resetLoadoutAudio.play();
+      resetLoadoutAudio.volume = .5;
+      resetLoadoutAudio.play();
     }
   }
 
@@ -1245,7 +1242,7 @@ function toggleSoundEnabled () {
                     <img src={switchicon} style={{ width: "25px"}}/>
                   </Button>
                 </OverlayTrigger>
-                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Loadout</Tooltip>}>
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Entire Loadout</Tooltip>}>
                   <Button variant="light" onClick={ResetDustbins} className="button_tas_toolbar_1">
                     <img src={reseticon} style={{ width: "25px"}}/>
                   </Button>
@@ -1285,7 +1282,6 @@ function toggleSoundEnabled () {
                         </Button>
                         </OverlayTrigger>
                       </div> 
-                
                     ) : (
                     ""
                     )}
@@ -1309,8 +1305,7 @@ function toggleSoundEnabled () {
               {showLeftInventory && (
                 <div className="inventory" style={{"marginTop": "3%", "paddingTop": `${inventoryTopPadding}`, "marginBottom": `-${inventoryBottomPadding}`,width: "95%" }}>
                   {searchList
-                    .filter(item => item.slot == selectedSlot)
-                    // .filter(item => item.slot == selectedSlot)
+                    .filter(item => item.slot == filteredSlot)
                     .map(
                       (
                         {
@@ -1340,6 +1335,9 @@ function toggleSoundEnabled () {
                         </Row>
                       )
                     )}
+                    <div style={{ display: "flex", justifyContent: "center", alignContent: "center"}}>
+                          <img src={reseticon} className="gear_img_2" onClick={() => resetSingleDustbin(selectedSlot)}/>
+                    </div>
                   </div>
                   )}
             </Col>
@@ -1357,7 +1355,7 @@ function toggleSoundEnabled () {
                         }
                         handleDrop(index, item, accepts);
                         }}
-                      onClick={() => handleLeftDustbinClick(accepts)} 
+                      onClick={() => handleLeftDustbinClick(index,accepts)} 
                       key={index}
                       img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""}
                     />
@@ -1368,14 +1366,14 @@ function toggleSoundEnabled () {
             <Col xs={(centerLoadoutColumnWidth)} className="text-center">
             <Row style={{padding: "5px"}}>
                 <div className="big_box">
-                  <Carousel infiniteLoop={true} selectedIndex={activeCarouselIndex} onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} >
-                  <img src={noape} style={{ width: '100%'}}/>
+                  <Carousel id="apeCarousel" infiniteLoop={true} selectedItem={2} onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} >
+                  <img src={noape} key={(0)} style={{ width: '100%'}}/>
                     {filtered
                       ? Object.keys(filtered) &&
                         Object.keys(filtered).map((val, index) => {
-                          return <img src={filtered[val]} key={(index)} style={{width: "100%"}} />;
+                          return <img src={filtered[val]} key={filtered[index]} style={{width: "100%"}} />;
                         })
-                      : ""}
+                      : <img src={noape} key={(0)} style={{ width: '100%'}}/> }
                   </Carousel>
                 </div>
               </Row>
@@ -1442,7 +1440,7 @@ function toggleSoundEnabled () {
                                   : accepts
                               }
                               lastDroppedItem={lastDroppedItem}
-                              onClick={() => handleRightDustbinClick(accepts)} 
+                              onClick={() => handleRightDustbinClick(index,accepts)} 
                               onDrop={(item) => {
                                 if (
                                   accepts === "Item0" ||
@@ -1471,7 +1469,7 @@ function toggleSoundEnabled () {
                   <div className="inventory" style={{"marginTop": "3%", "paddingTop": `${inventoryTopPadding}`, "marginBottom": `-${inventoryBottomPadding}`,width: "95%" }}>
 
                   {searchList
-                    .filter(item => item.slot == selectedSlot)
+                    .filter(item => item.slot == filteredSlot)
                     .map(
                       (
                         {
@@ -1502,8 +1500,8 @@ function toggleSoundEnabled () {
                         </Row>
                       )
                     )}
-                    <div>
-                      <img src={reseticon} className="gear_img" />
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+                          <img src={reseticon} className="gear_img_2" onClick={() => resetSingleDustbin(selectedSlot)}/>
                     </div>
                   </div>
                   )}
@@ -1515,7 +1513,7 @@ function toggleSoundEnabled () {
         )}              
         {!isConnected && !isLoading ? (
           /* this might where we want to integrate steam and xbox and epic */
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
             <img src={armoury_banner} alt="Armoury banner" width="75%" style={{maxWidth: "600px"}}/>
           </div>
         ) : (

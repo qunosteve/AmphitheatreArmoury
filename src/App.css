@@ -201,12 +201,28 @@ p {
   width: 100%;
 }
 
+.gear_img_2 {
+  margin: 25%; /* Ensure no unwanted margin */
+  width: 75%;
+  padding: 0; /* Ensure no unwanted padding */
+  position: relative;
+  opacity: .75;
+}
+
+.gear_img_2:hover {
+  opacity: 1;
+}
+
 .inventory_box {
   border: 2px solid #ead5c2;
   border-radius: 5px;
   margin: 2px;
   cursor: move;
   width: 95%;
+}
+
+.inventory_box:hover {
+  box-shadow: 0 0 15px #ead5c2;
 }
 
 .loadout_box_empty {
