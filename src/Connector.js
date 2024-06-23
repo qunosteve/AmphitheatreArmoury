@@ -460,13 +460,6 @@ export default class Connector extends React.Component {
                                 contentQuantity[assetNameString] =
                                     parseInt(multiassetAmt.to_str()) + amount;
                             }
-
-                            // walletContent.push({
-                            //     name: `{${assetNameString}}`,
-                            //     Quantity: `${multiassetAmt.to_str()}`,
-                            // });
-                            // console.log(assetNameString)
-                            // console.log(`Asset Name: ${assetNameHex}`)
                         }
                     }
                 }
@@ -507,6 +500,7 @@ export default class Connector extends React.Component {
     getUserAmphiGear = async () => {
         if (this.state.userLoadoutContent.length !== 0) {
             let userLoadout = [];
+            console.log("This is how many Blockfrost Iterations")
 
             try {
                 for (var key in this.state.userLoadoutContent) {
@@ -520,13 +514,24 @@ export default class Connector extends React.Component {
 
                     const data = await response.json();
 
+                    const tierLevels = {
+                        'Base': 1,
+                        'Honoured': 2,
+                        'Exalted': 3,
+                        'Majestic': 4,
+                        'Supreme': 5,
+                      };
+
+
                     userLoadout.push({
-                        id: key,
+                        id: data.asset_name,
                         name: data.onchain_metadata.name,
                         slot: this.capitalizeFirstLetter(
                             data.onchain_metadata.slot
                         ),
                         tier: data.onchain_metadata.tier,
+                        class: data.onchain_metadata["class"] || 0,
+                        command: data.onchain_metadata["command"] || 0,
                         cognition: data.onchain_metadata["cognition"] || 0,
                         conditioning: data.onchain_metadata["conditioning"] || 0,
                         proficiency: data.onchain_metadata["proficiency"] || 0,
@@ -535,7 +540,12 @@ export default class Connector extends React.Component {
                         damage: data.onchain_metadata["damage"] || 0,
                         armor: data.onchain_metadata["armor"] || 0,
                         weight: data.onchain_metadata["weight"] || 0,
+                        accuracy: data.onchain_metadata["accuracy"] || 0,
+                        ammo: data.onchain_metadata["ammo"] || 1,
+                        hitpoints: data.onchain_metadata["hitpoints"] || 0,
+                        utility: data.onchain_metadata["utility"] || 0,
                         amount: this.state.contentQuantity[key],
+                        tierLvl: tierLevels[data.onchain_metadata.tier] || 6,
                         image: `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`,
                     });
                 }
@@ -556,11 +566,10 @@ export default class Connector extends React.Component {
         });
     };
 
-    RequestImageService = async () => {
-        this.filterImageContentFunction();
-        //console.log(this.state.imageContent);
+    RequestApeMetadataService = async () => {
+        this.filterOutNonApes();
         if (this.state.imageContent) {
-            let imageLinks = {};
+            let apes = {};
             try {
                 for (var key in this.state.imageContent) {
                     // console.log(key);
@@ -573,22 +582,51 @@ export default class Connector extends React.Component {
                     });
 
                     const data = await response.json();
-                    imageLinks[
-                        key
-                    ] = `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`;
+
+                    const id = data.asset_name;
+                    const apeName = data.onchain_metadata.name;
+                    const family = Buffer.from(data.onchain_metadata.Family, 'hex').toString().slice(1);
+                    const apeClass = Buffer.from(data.onchain_metadata.Class, 'hex').toString().slice(1);
+                    const hat = Buffer.from(data.onchain_metadata.Hat, 'hex').toString().slice(1);
+                    const image = `https://cf-ipfs.com/ipfs/${data.onchain_metadata.image.slice(7)}`;
+                    let body = Buffer.from(data.onchain_metadata.Body, 'hex').toString().slice(1);
+                        if (data.onchain_metadata && data.onchain_metadata["Refined Body"]) {
+                            body = Buffer.from(data.onchain_metadata["Refined Body"], 'hex').toString().slice(1);
+                            }
+                    let weapon = Buffer.from(data.onchain_metadata.Weapon, 'hex').toString().slice(1);
+                        if (data.onchain_metadata && data.onchain_metadata["Refined Weapon"]) {
+                        weapon = Buffer.from(data.onchain_metadata["Refined Weapon"], 'hex').toString().slice(1);
+                        }
+                    let accessory = Buffer.from(data.onchain_metadata.Accessory, 'hex').toString().slice(1);
+                        if (data.onchain_metadata && data.onchain_metadata["Refined Accessory"]) {
+                            accessory = Buffer.from(data.onchain_metadata["Refined Accessory"], 'hex').toString().slice(1);
+                        }
+
+                    apes[key] = {
+                        id: id,
+                        name: apeName,
+                        family: family,
+                        class: apeClass,
+                        hat: hat,
+                        body: body,
+                        weapon: weapon,
+                        accessory: accessory,
+                        image: image
+                    };
+                    
                 }
             } catch (err) {
                 console.log(err);
                 return [];
             }
-            return imageLinks;
+            return apes;
         }
     };
 
     setFilteredFunction = async () => {
         try {
-            const images = await this.RequestImageService();
-            this.setState({ filtered: images }, () => {
+            const apes = await this.RequestApeMetadataService();
+            this.setState({ filtered: apes }, () => {
                 this.setState({ filterSuccess: true });
             });
             this.refreshData();
@@ -597,14 +635,14 @@ export default class Connector extends React.Component {
         }
     };
 
-    filterImageContentFunction = () => {
+    filterOutNonApes = () => {
         for (var key in this.state.imageContent) {
-            if (!key.startsWith("adape")) {
+            const policyId = this.state.imageContent[key].slice(0, 56);
+            if (!(policyId ==="78015c70e9ef4f76c0f01465fe16f084c4e22b6c6c34bb1ce57668c3")) {
                 delete this.state.imageContent[key];
             }
         }
     };
-
     /**
      * The collateral is need for working with Plutus Scripts
      * Essentially you need to provide collateral to pay for fees if the
@@ -937,8 +975,6 @@ export default class Connector extends React.Component {
                 await this.getTxUnspentOutputs()
             );
         }
-
-        // console.log(this.state.walletContent);
 
         if (this.state.changeAddress) {
             this.props.getChange(this.state.changeAddress);

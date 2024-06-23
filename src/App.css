@@ -25,6 +25,10 @@ h4 {
   font-family: "Charlemagne";
   color: #ead5c2
 }
+h5 {
+  font-family: "Charlemagne";
+  color: #ead5c2
+}
 
 .toastBody {
   font-family: "Cabin", sans-serif;
@@ -99,31 +103,91 @@ audio {
   color: green;
 }
 
-.skills_bar {
-  border: 2px solid #ead5c2;
-  border-radius: 10px;
+.skills_bar_top_left {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  font-size: 15px;
+  justify-content: center;
+  z-index: 3;
+  position: absolute;
+  align-items: center; 
+  top: 2.5%;
+  left: 1.5%;
+}
+
+.skills_bar_top_right {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   font-size: 15px;
   justify-content: center;
-  padding-top: 10px;
+  z-index: 3;
+  position: absolute;
+  align-items: center; 
+  top: 2.5%;
+  right: 1.5%; 
+  
+}
+
+.nav_bar_top {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1; 
+  padding-bottom: 5px;
+}
+
+
+
+
+.skills_bar_bottom_left {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  font-size: 14px;
+  justify-content: center;
+  z-index: 2;
+  position: absolute;
+  align-items: center; 
+  bottom: 2.5%; 
+  right: 1.5%; 
+  
 }
 
 .skills_group {
   display: flex;
-  flex-direction: row;
-  font-size: 15px;
-  margin-left: 10px;
-  margin-right: 10px;
+  flex-direction: column;
+  font-size: 12px;
 }
 .skills_group > * {
-  padding: 5px;
   width: "35px";
 }
 
 .skills_group p img {
+  width: 20px;
+}
+.skills_group_horizontal {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.skills_group_horizontal > * {
+  width: "35px";
+}
+
+.skills_group_horizontal p img {
   width: 25px;
+  padding-top: 10px;
+}
+.skill_img_header {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+
 }
 
 
@@ -278,6 +342,8 @@ p {
 .carousel {
   width: auto;
   margin: auto;
+  position: relative;
+  z-index: 1; 
 }
 
 .carousel-item {
@@ -311,6 +377,9 @@ p {
 .big_box {
   border: 2px solid #ead5c2;
   border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: -90%;
 }
 
 
@@ -489,4 +558,17 @@ p {
 .toolbaricon2 {
   width: 25px;
   filter: invert(100%)
+}
+
+
+.statBar{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 80%;
+  width: 100%;
+  transition: 0.4s ease-in-out;
+}
+
+.statBar:hover{
+  box-Shadow: 0 0 5px #ead5c2, 0 0 6px #ead5c2, 0 0 7px #ead5c2;
 }

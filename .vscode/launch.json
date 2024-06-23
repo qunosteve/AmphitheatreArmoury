@@ -20,6 +20,7 @@
         "<node_internals>/**"
       ],
       "type": "node"
+      
     },
       {
         "name": "Launch Chrome",

@@ -1,6 +1,6 @@
 const colorOptions = {
-  "Base": "ead5c2",
-  "Honoured": '#ivory',
+  "Base": "ivory",
+  "Honoured": '#ead5c2',
   "Exalted": '#7ed321',
   "Majestic": '#48baff',
   "Supreme": '#b86cf8',

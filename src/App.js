@@ -7,6 +7,7 @@ import { Carousel } from "react-responsive-carousel";
 import update from "immutability-helper";
 import { memo, useCallback, useState, useEffect } from "react";
 import { Box } from "./Box";
+import { classTooltips, playerAttributeTooltips, childSkillTooltips, mountAttributeTooltips, apeTraitTooltips, generalTooltips, itemStatTooltips } from './dynamicTooltipHelper.js';
 import { ItemTypes } from "./ItemTypes.js";
 import { Dustbin } from "./Dustbin.js";
 import Container from "react-bootstrap/Container";
@@ -28,13 +29,16 @@ import weaponuiequipsound from "./audio/weapon_ui_3.wav";
 import saveloadoutbuttonsound from "./audio/weapon_ui_4.wav";
 import horseuisound from "./audio/horse_ui_2.wav";
 import potionuisound from "./audio/potion_ui_1.wav";
+import flowstatesong from "./audio/warrior_flow_state.mp3";
 import society from "./images/Society.png";
 import cancelicon from "./images/cancel.png";
 import craftsmanicon from "./images/craftsman_amphi_icon.png";
 import artisticon from "./images/artist_amphi_icon.png";
+import explorericon from "./images/explorer_amphi_icon.png";
 import merchanticon from "./images/merchant_amphi_icon.png";
 import moicon from "./images/military_amphi_icon.png";
-import explorericon from "./images/explorer_amphi_icon.png";
+import raicon from "./images/royaladvisor_amphi.png";
+import nobleicon from "./images/noble_amphi.png";
 import cardanologo from "./images/cardanologo.png";
 import amphilogo from "./images/rawamphi_small.png";
 import switchicon from "./images/open-folder.png";
@@ -48,22 +52,25 @@ import weighticon from "./images/weight.png";
 import levelupicon from "./images/levelup.png";
 import reseticon from "./images/reset.png";
 import cognitionicon from "./images/cognition.png";
-import conditioningicon from "./images/conditioning.png";
+import conditioningicon from "./images/weight-lifting-up.png";
 import precisionicon from "./images/precision.png";
 import proficiencyicon from "./images/proficiency.png";
-import leadershipicon from "./images/leadership.png";
-import strategyicon from "./images/chess-pawn.png";
+import commandicon from "./images/command.png";
+import leftbar from "./images/leftbar.png"
+import rightbar from "./images/rightbar.png"
+import disciplineicon from "./images/leadership.png";
+import tacticsicon from "./images/chess-pawn.png";
 import craftingicon from "./images/anvil-impact.png";
-import healthicon from "./images/health.png";
+import resilienceicon from "./images/resilience.png";
 import speedicon from "./images/running-shoe.png";
-import horsemanshipicon from "./images/cavalry.png";
-import onehandshieldicon from "./images/battle-gear.png";
-import twohandedicon from "./images/war-axe.png";
-import polearmicon from "./images/glaive.png";
+import ridingicon from "./images/cavalry.png";
+import meleeicon from "./images/melee.png";
+import medicineicon from "./images/caduceus_icon.png";
 import bowicon from "./images/high-shot.png";
 import throwingicon from "./images/thrown-spear.png";
 import crossbowicon from "./images/crossbow.png";
 import horseicon from "./images/horse-head.png";
+import gorillaicon from "./images/gorilla.png";
 import horsehealthicon from "./images/horsehealth.png";
 import horsearmoricon from "./images/horsearmor.png";
 import horsespeedicon from "./images/horsespeed.png";
@@ -73,6 +80,7 @@ import military_amphi from "./images/military_amphi.png";
 import armoury_banner from "./images/armoury_splash.png"
 import citizen_expbar from "./images/citizen_expbar.png"
 import amphitheatre_textlogo from "./images/amphitheatre_textlogo.png"
+import tasicon from "./images/tas_icon.png"
 import noape from "./images/nakedape.png"
 import blankimage from "./images/blankimage.png"
 import Loading from "./Loading.js";
@@ -147,7 +155,8 @@ function App() {
     { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
     { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
     { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-    { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
+    { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+    
   ]);
   const [dustbins_row2, setDustbins2] = useState([
     { accepts: [ItemTypes.ITEM0], lastDroppedItem: null },
@@ -155,7 +164,8 @@ function App() {
     { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
     { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
     { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-    { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+    { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },
+    
     
   ]);  
   var truncate = function (fullStr, strLen, separator) {
@@ -189,7 +199,13 @@ function App() {
   const [inventoryTopPadding, setInventoryTopPadding] = useState("");
   const [inventoryBottomPadding, setInventoryBottomPadding] = useState("");
   const [horseStatDisplay, setHorseStatDisplay] = useState("none");
+  const [classIcon, setClassIcon] = useState("");
+  const [classTooltip, setClassTooltip] = useState("");
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [widePage, setWidePage] = useState(true);
+  const [equippedItem, setEquippedItem] = useState()
+  const [comparisonItem, setComparisonItem] = useState()
+  const [gearMaxValues, setGearMaxValues] = useState()
   const settingAudio = new Audio(wooduisound);
   const soundAudio = new Audio(audiouisound);
   const recenterAudio = new Audio(recenteruisound);
@@ -200,11 +216,11 @@ function App() {
   const weaponAudio = new Audio(weaponuisound);
   const weaponEquipAudio = new Audio(weaponuiequipsound);
   const horseAudio = new Audio(horseuisound);
-  const potionAudio = new Audio(potionuisound);
   const pageAudio = new Audio(pageuisound);
   const eraserAudio = new Audio(eraseruisound);
   const saveLoadoutButtonAudio = new Audio(saveloadoutbuttonsound);
   const openLoadoutAudio = new Audio(openloadoutsound);
+  
   
 
 
@@ -226,6 +242,137 @@ function saveLoadoutPrompt () {
     saveLoadoutButtonAudio.play();
   }
   setLgShow(true);
+}
+
+function displayItemStatNumericDifference(equippedItemValue, comparisonItemValue) {
+  equippedItemValue = parseFloat(equippedItemValue);
+  comparisonItemValue = parseFloat(comparisonItemValue);
+  const value = parseFloat(comparisonItemValue - equippedItemValue)
+  if (value < 0)
+    return " (-" + value + ")"
+  else
+  return " (+" + value + ")"
+}
+
+function determineNumericDifferenceColor(equippedItemValue, comparisonItemValue, mode) {
+  equippedItemValue = parseFloat(equippedItemValue);
+  comparisonItemValue = parseFloat(comparisonItemValue);
+
+  let indicator = comparisonItemValue - equippedItemValue
+
+  if (mode > 0)
+    {
+      indicator = indicator * -1
+    }
+
+  if (indicator > 0)
+    {
+    return "green"
+      }else {
+        return "red"
+      }
+}
+
+function renderItemStatBar(equippedItemValue, comparisonItemValue, maximumValue, comparisonMode) {
+  equippedItemValue = parseFloat(equippedItemValue);
+  comparisonItemValue = parseFloat(comparisonItemValue);
+  maximumValue = parseFloat(maximumValue);
+  
+  let gradientString = "linear-gradient(to right, ";
+  let primaryBar = "";
+
+  if (maximumValue == 0) {
+    return "linear-gradient(to right, red 100%)"
+  }
+
+  if (!equippedItemValue && !comparisonItemValue) {
+    
+    const startBar = "#ead5c233 0%,";
+    const endBar = "#ead5c233 100%)";
+    gradientString = gradientString + startBar + endBar;
+    console.log(gradientString);
+    return gradientString;
+
+  } else if (!equippedItemValue || !comparisonItemValue) {
+      let primaryBarColor = "#ead5c2";
+      let activeItemValue = equippedItemValue;
+      if (comparisonItemValue) {
+        primaryBarColor = "#eec07a";
+        activeItemValue = comparisonItemValue
+      }
+      if (comparisonMode == 1) {
+        primaryBarColor = "#632623";
+      }
+      const barDifference = maximumValue - activeItemValue;
+      const itemTotalPercentage = (activeItemValue / maximumValue) * 100;
+      const unusedBarPercentage = (barDifference / maximumValue) * 100;
+      primaryBar = primaryBarColor + " " + itemTotalPercentage + "%, ";
+      const unusedBarStart = "#ead5c233 " + itemTotalPercentage + "%, ";
+      gradientString = gradientString + primaryBar + unusedBarStart + "#ead5c233 " + unusedBarPercentage + "%)";
+      //console.log(gradientString);
+      return gradientString;
+
+    } else if (equippedItemValue && comparisonItemValue) {
+        const maxItemValue = Math.max(equippedItemValue, comparisonItemValue);
+        const minItemValue = Math.min(equippedItemValue, comparisonItemValue);
+        const barDifference = maximumValue - maxItemValue;
+        const itemTotalPercentage = (maxItemValue / maximumValue) * 100;
+        const itemMinPercentage =  (minItemValue / maximumValue) * 100;
+        const itemDiffPercentage = itemTotalPercentage - itemMinPercentage;
+        const unusedBarPercentage = (barDifference / maximumValue) * 100;
+        primaryBar = "#ead5c2 " + itemMinPercentage + "%, ";
+        let diffColor = "#ead5c2";
+
+        if (comparisonMode == 0) {
+          if (equippedItemValue < comparisonItemValue ) {
+            diffColor = '#eec07a';
+            } else {
+              diffColor = '#632623';
+            }
+            } else {
+                if (equippedItemValue < comparisonItemValue ) {
+                  diffColor = '#632623';
+                } else {
+                  diffColor = '#eec07a';
+                }
+              }
+
+        const secondBar = diffColor + " " + itemMinPercentage + "%, "
+        const differenceBar = diffColor + " " + itemTotalPercentage + "%, "
+        const unusedBarStart = "#ead5c233 " + itemTotalPercentage + "%, ";
+        gradientString = gradientString + primaryBar + secondBar + differenceBar + unusedBarStart + "#ead5c233 " + unusedBarPercentage + "%)";
+        console.log(gradientString);
+        return gradientString;
+    }
+
+}
+
+function determineStatToDisplay(equippedItemStat, comparisonItemStat) {
+
+  if (equippedItemStat == null && comparisonItemStat == null) {
+    return ''; 
+  }
+
+  if (comparisonItemStat) {
+    return comparisonItemStat; 
+  } else {
+    return equippedItemStat;
+  }
+}
+
+function conditionallyPopulateImage(equippedImage, comparisonImage) {
+  const imageTag = "<img src='"
+  const imageEnd = "' style={{ width: '100%', transform: 'scale(1)', transition: 'transform 0.3s ease-in-out'}}></img>"
+  
+  if (equippedImage == null && comparisonImage == null) {
+    return "https://amphitheatre-armoury.vercel.app/static/media/armoury_splash.94297c4726086f2d3406.png" 
+  }
+
+  if (comparisonImage) {
+    return (comparisonImage); 
+  } else {
+    return (equippedImage);
+  }
 }
 
 function recenterDustbins () {
@@ -255,6 +402,10 @@ function toggleSoundEnabled () {
   }
 }
 
+window.addEventListener('resize', function() {
+  isPageWidthOver1000px(); // Output: true or false
+});
+
   function toggleHorseStatDisplay () {
     
     if (horseStatDisplay == "none") {
@@ -274,8 +425,54 @@ function toggleSoundEnabled () {
     }
   }
 
+  function setActiveApeTraits (activeClass) {
+  }
+
+  function setActiveApeClass (activeClass) {
+    switch (activeClass) {
+      case "Craftsmen":
+            setClassIcon(craftsmanicon);
+            setClassTooltip(classTooltips.craftsman);
+          break;
+      case "Artists":
+        setClassIcon(artisticon);
+        setClassTooltip(classTooltips.artist);
+          break;
+      case "Explorers":
+        setClassIcon(explorericon);
+        setClassTooltip(classTooltips.explorer);
+          break;
+      case "Merchants":
+        setClassIcon(merchanticon);
+        setClassTooltip(classTooltips.merchanticon);
+          break;
+      case "Military Officers":
+        setClassIcon(moicon);
+        setClassTooltip(classTooltips.mo);
+          break;
+      case "Royal Advisors":
+        setClassIcon(raicon);
+        setClassTooltip(classTooltips.ra);
+          break;
+      case "Nobles":
+        setClassIcon(nobleicon);
+        setClassTooltip(classTooltips.noble);
+          break;
+      default:
+        setClassIcon("");
+        setClassTooltip("");
+          break;
+  }
+  }
+
+  function handleComparisonItem (comparison) {
+    setComparisonItem(comparison)
+  }
   function handleLeftDustbinClick (index,slot) {
-    setSelectedSlot(['L',index,slot]);
+    const thisSlot = ['L',index,slot]
+    setSelectedSlot(thisSlot);
+    setComparisonItem("");
+    setEquippedItem(getCurrentItem(thisSlot));
     if (slot =="Head") {
       setInventoryTopPadding('0%')
       setInventoryBottomPadding('1020%')
@@ -296,10 +493,10 @@ function toggleSoundEnabled () {
       setInventoryTopPadding('368%')
       setInventoryBottomPadding('1020%')
     } 
-    if (slot =="HorseHarness") {
+    if (slot =="Special") {
       setInventoryTopPadding('460%')
       setInventoryBottomPadding('1020%')
-    }
+    } 
       setIsLoadoutCentered(false);
       setShowLeftInventory(true);
       setShowRightInventory(false);
@@ -311,15 +508,18 @@ function toggleSoundEnabled () {
       setLeftInventoryBoxWidth("47%");
       setRightInventoryBoxWidth("0%");
       setCenterLoadoutColumnWidth(6);
+      setEquippedItem(getCurrentItem());
       if (soundEnabled) {
         armorAudio.volume = .3;
         armorAudio.play();
-      }
-      
+      }  
   }
 
   function handleRightDustbinClick(index,slot) {
-    setSelectedSlot(["R",index,slot]);
+    const thisSlot = ["R",index,slot]
+    setSelectedSlot(thisSlot);
+    setComparisonItem("");
+    setEquippedItem(getCurrentItem(thisSlot));
       if (slot =="Item0") {
         setInventoryTopPadding('0%')
         setInventoryBottomPadding('1020%')
@@ -348,15 +548,14 @@ function toggleSoundEnabled () {
           horseAudio.play();
           }        
       } 
-      if (slot =="Special") {
+      if (slot =="HorseHarness") {
         setInventoryTopPadding('460%')
         setInventoryBottomPadding('1020%')
         if (soundEnabled) {
-          potionAudio.volume = .3;
-          potionAudio.play();
+          armorAudio.volume = .3;
+          armorAudio.play();
         }
-      } 
-
+      }
       if (slot =="Item")  {
         if (soundEnabled) {
         weaponAudio.volume = .3;
@@ -374,6 +573,7 @@ function toggleSoundEnabled () {
       setLeftInventoryBoxWidth("0%");
       setRightInventoryBoxWidth("47%");
       setCenterLoadoutColumnWidth(6);
+      
   }
   const [beenHere, setBeenHere] = useState(false);
   const [inventoryPosition, setInventoryPosition] = useState(0);
@@ -392,7 +592,7 @@ function toggleSoundEnabled () {
   const [walletAddress, setWalletAddress] = useState("No address set");
   const [walletContent, setWalletContent] = useState({});
   const [imageContent, setImageContent] = useState({});
-  const [filtered, setFiltered] = useState({});
+  const [ownedApes, setOwnedApes] = useState({});
   const [gotContent, setGotContent] = useState(false);
   const [societyToken, setSocietyToken] = useState(0);
   const [adaToken, setAdaToken] = useState(0);
@@ -406,13 +606,13 @@ function toggleSoundEnabled () {
     Shoulders: "",
     Gloves: "",
     Leg: "",
+    Special: "",
     Item0: "",
     Item1: "",
     Item2: "",
     Item3: "",
     Horse: "",
     HorseHarness: "",
-    Special: "",
   });
   const [userLoadoutValues, setUserLoadoutValues] = useState({});
   const [searchList, setSearchList] = useState([]);
@@ -447,15 +647,16 @@ function toggleSoundEnabled () {
   const lovelaceToSend = 1001001;
 
   const [onChainLoadout, setOnChainLoadout] = useState([]);
+  const [originalWalletGear, setOriginalWalletGear] = useState([]);
   const [transformedLoadout, setTransformedLoadout] = useState({});
 
   useEffect(() => {
     pollWallets();
     lookupFunction();
-    if (!apeSelected && Object.keys(filtered).length != 0) {
+    if (!apeSelected && Object.keys(ownedApes).length != 0) {
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        Ape: Object.keys(filtered)[0].slice(5),
+        Ape: "",
       }));
       setApeSelected(true);
     }
@@ -465,6 +666,7 @@ function toggleSoundEnabled () {
         setIsLoading(false);
         // calculateAdaToken(balance);
         ResetDustbins();
+        apeUpdateInfo(0);
       });
     }
   }, [isLoading, gotContent, userLoadout]);
@@ -484,13 +686,14 @@ function toggleSoundEnabled () {
         setNoApe(true);
       } else {
         setNoApe(false);
-        setFiltered(filtered);
+        setOwnedApes(filtered);
       }
       if (userLoadoutContentArray.length == 0) {
         setNoLoadout(true);
       } else {
         setNoLoadout(false);
         setOnChainLoadout(userLoadoutContentArray);
+        setOriginalWalletGear(userLoadoutContentArray);
         setSearchList(userLoadoutContentArray);
         transformOnchainLoadout();
         setGotContent(true);
@@ -499,7 +702,7 @@ function toggleSoundEnabled () {
     }
   }
 
-  
+
 
   function getTransactionsPosted(postedTransactions) {
     if (postedTransactions && !beenHere) {
@@ -538,6 +741,9 @@ function toggleSoundEnabled () {
     }
     setLgShowLoad(true);
   }
+  function getApeName(key) {
+    return ownedApes[key].name
+  }
 
   function onTermChange(event) {
     setTerm(event.target.value);
@@ -550,8 +756,8 @@ function toggleSoundEnabled () {
   function transformOnchainLoadout() {
     let transformedLoad = {};
     if (onChainLoadout != {}) {
-      onChainLoadout.map(({ name, type, amount, image }, index) => {
-        transformedLoad[name] = image;
+      onChainLoadout.map(({ id, image }) => {
+        transformedLoad[id] = image;
       });
       setTransformedLoadout(transformedLoad);
     }
@@ -565,7 +771,7 @@ function toggleSoundEnabled () {
     setGotContent(false);
     setApeSelected(false);
     setWalletContent({});
-    setFiltered({});
+    setOwnedApes({});
     setBeenHere(false);
     setUserLoadout({
       Ape: "",
@@ -574,6 +780,7 @@ function toggleSoundEnabled () {
       Shoulders: "",
       Gloves: "",
       Leg: "",
+      Special: "",
       Item0: "",
       Item1: "",
       Item2: "",
@@ -586,7 +793,7 @@ function toggleSoundEnabled () {
   function lookupFunction() {
     var lookup = {};
     for (var i = 0, len = onChainLoadout.length; i < len; i++) {
-      lookup[onChainLoadout[i].name] = onChainLoadout[i];
+      lookup[onChainLoadout[i].id] = onChainLoadout[i];
     }
     setLookup(lookup);
   }
@@ -594,31 +801,41 @@ function toggleSoundEnabled () {
   function resetSingleDustbin(gearSlotArg) {
     if (gearSlotArg[0] == "L")
     {
-    setDustbins1(
-      update(dustbins_row1, {
-        [gearSlotArg[1]]: {
-          lastDroppedItem: {
-            $set: null,
+      setDustbins1(
+        update(dustbins_row1, {
+          [gearSlotArg[1]]: {
+            
+            lastDroppedItem: {
+              $set: "",
+              
+            },
           },
-        },
-      })
-    );
-  } else {
-    setDustbins2(
-      update(dustbins_row2, {
-        [gearSlotArg[1]]: {
-          lastDroppedItem: {
-            $set: null,
+        })
+      );
+    } else {
+      setDustbins2(
+        update(dustbins_row2, {
+          [gearSlotArg[1]]: {
+            lastDroppedItem: {
+              $set: "",
+            },
           },
-        },
-      })
-    );
-  }
+        })
+      );
+    }
 
   const currentLoadout = (userLoadout);
+  const thisCurrentItem = currentLoadout[gearSlotArg[2][0]].id
+  if (thisCurrentItem)
+  {
+    lookup[thisCurrentItem].amount = lookup[thisCurrentItem].amount + 1
+  }
   currentLoadout[gearSlotArg[2][0]] = "";
   setUserLoadout(currentLoadout);
-
+  
+  const currentLoadoutValues = (userLoadoutValues);
+  currentLoadoutValues[gearSlotArg[2][0]] = "";
+  setUserLoadoutValues(currentLoadoutValues);
 
   if (soundEnabled) {
     resetSlotAudio.volume = .5;
@@ -627,13 +844,25 @@ function toggleSoundEnabled () {
 }
 
   function ResetDustbins() {
+    isPageWidthOver1000px()
+    for (const key in userLoadout) {
+      const value = userLoadout[key].id;
+      if ( key != "Ape")
+      {
+        if (value)
+        {
+          lookup[value].amount = lookup[value].amount + 1  
+        }
+      }
+    }
+
     setDustbins1([
       { accepts: [ItemTypes.HEAD], lastDroppedItem: null },
       { accepts: [ItemTypes.BODY], lastDroppedItem: null },
       { accepts: [ItemTypes.SHOULDERS], lastDroppedItem: null },
       { accepts: [ItemTypes.GLOVES], lastDroppedItem: null },
       { accepts: [ItemTypes.LEG], lastDroppedItem: null },
-      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
+      { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },     
       
     ]);
     setDustbins2([
@@ -642,24 +871,26 @@ function toggleSoundEnabled () {
       { accepts: [ItemTypes.ITEM2], lastDroppedItem: null },
       { accepts: [ItemTypes.ITEM3], lastDroppedItem: null },
       { accepts: [ItemTypes.HORSE], lastDroppedItem: null },
-      { accepts: [ItemTypes.SPECIAL], lastDroppedItem: null },
+      { accepts: [ItemTypes.HORSEHARNESS], lastDroppedItem: null },      
+      
       
     ]);
     setUserLoadoutValues({});
-    setUserLoadout({
-      Ape: "",
+    setUserLoadout((prevUserLoadout) => ({
+      ...prevUserLoadout,
       Head: "",
       Body: "",
       Shoulders: "",
       Gloves: "",
       Leg: "",
+      Special: "",
       Item0: "",
       Item1: "",
       Item2: "",
       Item3: "",
       Horse: "",
       HorseHarness: "",
-    });
+    }));
     recenterDustbins();
     if (soundEnabled) {
       resetLoadoutAudio.volume = .5;
@@ -673,9 +904,12 @@ function toggleSoundEnabled () {
   function isDropped(boxName) {
     return droppedLoadoutNames.indexOf(boxName) > -1;
   }
+  function getCurrentItem (thisSelectedSlot) {
+    const thisCurrentItem = userLoadout[thisSelectedSlot[2][0]]
+    return thisCurrentItem
+  }
 
-
-  //get loadouttotals function to calculate armour totals
+  //get loadouttotals function to calculate attribute and skill totals
 
   function getLoadoutTotals() {
     let points = 0
@@ -685,15 +919,14 @@ function toggleSoundEnabled () {
     let conditioning = 0;
     let proficiency = 0
     let precision = 0
-    let leadership = 0
-    let strategy = 0
+    let command = 0
+    let discipline = 0
+    let tactics = 0
     let crafting = 0
-    let health = 0;
-    let horsemanship = 0
+    let resilience = 0;
+    let riding = 0
     let speed = 0
-    let onehandshield = 0;
-    let twohanded = 0
-    let polearm = 0
+    let meleeskill = 0;
     let bow = 0;
     let throwing = 0
     let crossbow = 0
@@ -710,19 +943,18 @@ function toggleSoundEnabled () {
         points += parseInt(userLoadoutValues[key]?.points || 0);
         armor += parseInt(userLoadoutValues[key]?.armor || 0);
         weight += parseInt(userLoadoutValues[key]?.weight || 0);
+        command += parseInt(userLoadoutValues[key]?.command || 0);
         cognition += parseInt(userLoadoutValues[key]?.cognition || 0);
         conditioning += parseInt(userLoadoutValues[key]?.conditioning || 0);
         proficiency += parseInt(userLoadoutValues[key]?.proficiency || 0);
         precision += parseInt(userLoadoutValues[key]?.precision || 0);
-        leadership += parseInt(userLoadoutValues[key]?.leadership || 0);
-        strategy += parseInt(userLoadoutValues[key]?.strategy || 0);
+        tactics += parseInt(userLoadoutValues[key]?.tactics || 0);
         crafting += parseInt(userLoadoutValues[key]?.crafting || 0);
-        health += parseInt(userLoadoutValues[key]?.health || 0);
-        horsemanship += parseInt(userLoadoutValues[key]?.horsemanship || 0);
+        resilience += parseInt(userLoadoutValues[key]?.resilience || 0);
+        riding += parseInt(userLoadoutValues[key]?.riding || 0);
         speed += parseInt(userLoadoutValues[key]?.cavalry || 0);
-        onehandshield += parseInt(userLoadoutValues[key]?.onehandshield || 0);
-        twohanded += parseInt(userLoadoutValues[key]?.twohanded || 0);
-        polearm += parseInt(userLoadoutValues[key]?.polearm || 0);
+        meleeskill += parseInt(userLoadoutValues[key]?.meleeskill || 0);
+        discipline += parseInt(userLoadoutValues[key]?.discipline || 0);
         bow += parseInt(userLoadoutValues[key]?.bow || 0);
         throwing += parseInt(userLoadoutValues[key]?.throwing || 0);
         crossbow += parseInt(userLoadoutValues[key]?.crossbow || 0);
@@ -742,15 +974,14 @@ function toggleSoundEnabled () {
       conditioning: conditioning,
       proficiency: proficiency,
       precision: precision,
-      leadership: leadership,
-      strategy: strategy,
+      command: command,
+      discipline: discipline,
+      tactics: tactics,
       crafting: crafting,
-      health: health,
-      horsemanship: horsemanship,
+      resilience: resilience,
+      riding: riding,
       speed: speed,
-      onehandshield: onehandshield,
-      twohanded: twohanded,
-      polearm: polearm,
+      meleeskill: meleeskill,
       bow: bow,
       throwing: throwing,
       crossbow: crossbow,
@@ -763,22 +994,42 @@ function toggleSoundEnabled () {
     };
   }
 
+  function isPageWidthOver1000px() {
+    setWidePage(window.innerWidth > 1000);
+  }
+
   const handleDrop = useCallback(
     (index, item, accepts) => {
+      const currentLoadout = (userLoadout);
+      let slotName = lookup[item.name].slot
+
+      if ( slotName == "Item")
+      {
+        slotName = lookup[item.name].slot + "" + index
+      }
+      const thisPreviousItem = currentLoadout[slotName].id
+
+      if (thisPreviousItem)
+      {
+        lookup[thisPreviousItem].amount = lookup[thisPreviousItem].amount + 1  
+      }
+
+      setEquippedItem(lookup[item.name]);
+      setComparisonItem("");
+
       setUserLoadout((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [accepts[0]]: item.name,
+        [accepts[0]]: lookup[item.name],
       }));
       setUserLoadoutValues((prevUserLoadout) => ({
         ...prevUserLoadout,
-        [lookup[item.name]?.slot]: lookup[item.name],
+        [accepts[0]]: lookup[item.name],
       }));
   
       const { name } = item;
-      const { amount } = item;
-  
+
       setDroppedLoadoutNames(
-        update(droppedLoadoutNames, name ? { $push: [name], $push: [amount] } : { $push: [] })
+        update(droppedLoadoutNames, name ? { $push: [name] } : { $push: [] })
       );
   
       switch (accepts[0]) {
@@ -787,7 +1038,7 @@ function toggleSoundEnabled () {
         case 'Shoulders':
         case 'Gloves':
         case 'Leg':
-        case 'HorseHarness':
+        case 'Special':
           setDustbins1(
             update(dustbins_row1, {
               [index]: {
@@ -811,23 +1062,39 @@ function toggleSoundEnabled () {
           );
           break;
       }
+      
     },
+    
     [droppedLoadoutNames, dustbins_row1, dustbins_row2]
   );
   
   function apeUpdateInfo(event) {
     //had to add an ape index after I added the noape pfp for non holders
     const apeIndex = event - 1
+    const apeKey = Object.keys(ownedApes)[apeIndex];
+    const selectedApe = ownedApes[apeKey];
+
+    if (selectedApe) {
+      setApeSelected(true);
+      setActiveApeClass(selectedApe.class)
+      setUserLoadout((prevUserLoadout) => ({
+        ...prevUserLoadout,
+        Ape: selectedApe,
+      }));
+      } else {
+        setActiveApeClass("None")
+        setApeSelected(true);
+        setUserLoadout((prevUserLoadout) => ({
+          ...prevUserLoadout,
+          Ape: "",
+        }));
+      }
+
+
     if (soundEnabled) {
-    pageAudio.volume = .5;
-    pageAudio.play();
-    }
-    const apeValue = Object.keys(filtered)[apeIndex]?.slice(5) || null;
-    setApeSelected(true);
-    setUserLoadout((prevUserLoadout) => ({
-      ...prevUserLoadout,
-      Ape: apeValue,
-    }));
+      pageAudio.volume = .5;
+      pageAudio.play();
+      }
   }
 
   function handleWalletSelect(val) {
@@ -1015,31 +1282,13 @@ function toggleSoundEnabled () {
 
   let acceptsItem = ["Item"];
 
-  function OnInputSubmit(term) {
-    const List = onChainLoadout.filter((obj) => {
-      if (
-        obj["name"].toLowerCase().includes(term) ||
-        obj["slot"].toLowerCase().includes(term)
-      ) {
-        return obj;
-      }
-    });
-    setSearchList(List);
-  }
-
   return (
     <div className="homepage">
-      {/*
-        <ReactAudioPlayer
-          src="http://docs.google.com/uc?export=open&id=1g0-HJ2l1bHvuEIBqiASD5JEn08bNHRY9"
-          autoPlay
-          controls
-        />
-      */}
       <Container>
-      <Row className="d-flex justify-content-center" style={{paddingTop: "20px"}}>
-      <Col xs={2} className="d-flex justify-content-start align-items-start">
-      <div style={{ paddingTop: "10px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "nowrap", width: "100%" }}>
+      <Row style={{paddingTop: "20px"}}>
+        <div className="nav_bar_top d-flex justify-content-between w-100" style={{ flexWrap: "nowrap"}}>
+          <div className="d-flex justify-content-between">
+            <div>
             {wallets ? (
               <Dropdown>
                 <Dropdown.Toggle
@@ -1077,43 +1326,40 @@ function toggleSoundEnabled () {
             ) : (
               ""
             )}
+            </div>
+            <div>
             {isConnected ? (
-                <div className="d-flex flex-column justify-content-start align-items-start">
                   <Button onClick={handleEditWallet} className="button_tas_1">
                     Disconnect
                   </Button>
-                </div>
               ) : (
-                <div className="d-flex flex-column justify-content-start align-items-start">
-                  <Button type="button" disabled={!whichWallet} id="button-addon1" className="button_tas_2" style={{ width: "100px" }}  onClick={onSubmitAddy}>
+                  <Button type="button" disabled={!whichWallet} id="button-addon1" className="button_tas_2" onClick={onSubmitAddy}>
                     Connect
                   </Button>
-                </div>
               )}
-
-             </div>
-             </Col>
-             <Col xs={8} className="text-center">
-             {isConnected ? (
-              <div style={{color: "#ead5c2"}}>
-              
-              
-                <img src={society} style={{ width: "35px" }} />
-                {" "}{societyToken} | {truncate(walletAddress, 11)} | {adaToken}{" "}
-                <img src={cardanologo} style={{ width: "35px" }} />
             </div>
+          </div>
+
+             {isConnected ? (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ color: "#ead5c2", textAlign: "center" }}>
+                  <img src={society} style={{ width: "35px" }} />
+                  {" "}{societyToken} |  {truncate(walletAddress, 11)}{" "} 
+                  <img src={amphilogo} style={{ width: "35px" }} /> 
+                </div>
+              </div>
             ): (
               ""
             )}
-            </Col>
-            <Col xs={2} className="d-flex justify-content-end align-items-start">
-            {isConnected ? (
-              <img width="200%" src={amphitheatre_textlogo} />
+            {isConnected && widePage ? (
+              <div>
+                <img src={amphitheatre_textlogo} style={{ maxWidth: "300px", width: "100%" }} />
+              </div>
             ): (
               ""
             )}
-            </Col>
-          </Row>
+            </div>
+      </Row>
             <Modal
               size="lg"
               show={lgShowLoad}
@@ -1178,46 +1424,52 @@ function toggleSoundEnabled () {
                 <div className="modal-title" style={{ fontFamily: "Cabin, sans-serif" }}>
                   <h2> Confirm your selection </h2>
                 </div>
-                {Object.keys(userLoadout).map((key, index) => {
-
-                  return (
-                    <p
-                      key={index}
-                      style={{
-                        paddingTop: "5px",
-                        fontSize: "18px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {" "}
-                      {capitalizeFirstLetter(key)} - {userLoadout[key]}
-                    </p>
-                  );
+           {Object.keys(userLoadout).map((key, index) => {
+                  let thisLoadoutObject = userLoadout[key]
+                  if ( key == "Ape") {
+                    if (thisLoadoutObject) {
+                      return (
+                        <p key={index} style={{ fontSize: "22px",fontWeight: "500"}}>
+                          <img src={tasicon} style={{ width: "30px", marginRight: "5px"}} />
+                          {thisLoadoutObject.name}
+                          <img src={tasicon} style={{ width: "30px", marginLeft: "5px"}} />
+                        </p>
+                      );
+                    }
+                  } else {
+                    if (thisLoadoutObject) {
+                      return (
+                          <p key={index} style={{ fontSize: "15px",fontWeight: "500", }}>
+                          {thisLoadoutObject.slot}:  <div style={{color: changeTextColor(thisLoadoutObject.tier)}}>{thisLoadoutObject.name }</div>
+                        </p>
+                      )};
+                  }
                 })}{" "}
+                 
+                {/*
                 <div className="characterstats">
                   {//need to include something that warns the user when they haven't use their attribute points 
                   }
-                  <p> <img src={armoricon} style={{ width: "30px" }} />Armor: {getLoadoutTotals()["armor"]} </p>{" "}
-                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                            
-                  <p> <img src={leadershipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["leadership"]} </p>{" "}
-                  <p> <img src={strategyicon} style={{ width: "30px" }} /> {getLoadoutTotals()["strategy"]} </p>{" "}
-                  <p> <img src={craftingicon} style={{ width: "30px" }} /> {getLoadoutTotals()["crafting"]} </p>{" "}
-                  <p> <img src={healthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["health"]} </p>{" "}
-                  <p> <img src={speedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["speed"]} </p>{" "}
-                  <p> <img src={horsemanshipicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsemanship"]} </p>{" "}            
-                  <p> <img src={onehandshieldicon} style={{ width: "30px" }} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
-                  <p> <img src={twohandedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
-                  <p> <img src={polearmicon} style={{ width: "30px" }} /> {getLoadoutTotals()["polearm"]} </p>{" "}            
-                  <p> <img src={bowicon} style={{ width: "30px" }} /> {getLoadoutTotals()["bow"]} </p>{" "}
-                  <p> <img src={throwingicon} style={{ width: "30px" }} /> {getLoadoutTotals()["throwing"]} </p>{" "}
-                  <p> <img src={crossbowicon} style={{ width: "30px" }} /> {getLoadoutTotals()["crossbow"]} </p>{" "}            
-                  <p> <img src={horsehealthicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsehealth"]} </p>{" "}
-                  <p> <img src={horsearmoricon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}            
-                  <p> <img src={horsespeedicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsespeed"]} </p>{" "}
-                  <p> <img src={horsemaneuvericon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsemaneuver"]} </p>{" "}
-                  <p> <img src={horsechargeicon} style={{ width: "30px" }} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}            
-                  <p> <img src={weighticon} style={{ width: "30px" }} /> {getLoadoutTotals()["horseweight"]} </p>{" "}            
+                  <p> <img src={armoricon} style={{ width: "20px" }} />Armor: {getLoadoutTotals()["armor"]} </p>{" "}
+                  <p> <img src={weighticon} style={{ width: "20px" }} /> {getLoadoutTotals()["weight"]} </p>{" "}                            
+                  <p> <img src={disciplineicon} style={{ width: "20px" }} /> {getLoadoutTotals()["discipline"]} </p>{" "}
+                  <p> <img src={tacticsicon} style={{ width: "20px" }} /> {getLoadoutTotals()["tactics"]} </p>{" "}
+                  <p> <img src={craftingicon} style={{ width: "20px" }} /> {getLoadoutTotals()["crafting"]} </p>{" "}
+                  <p> <img src={resilienceicon} style={{ width: "20px" }} /> {getLoadoutTotals()["resilience"]} </p>{" "}
+                  <p> <img src={speedicon} style={{ width: "20px" }} /> {getLoadoutTotals()["speed"]} </p>{" "}
+                  <p> <img src={ridingicon} style={{ width: "20px" }} /> {getLoadoutTotals()["riding"]} </p>{" "}            
+                  <p> <img src={meleeicon} style={{ width: "20px" }} /> {getLoadoutTotals()["meleeskill"]} </p>{" "}          
+                  <p> <img src={bowicon} style={{ width: "20px" }} /> {getLoadoutTotals()["bow"]} </p>{" "}
+                  <p> <img src={throwingicon} style={{ width: "20px" }} /> {getLoadoutTotals()["throwing"]} </p>{" "}
+                  <p> <img src={crossbowicon} style={{ width: "20px" }} /> {getLoadoutTotals()["crossbow"]} </p>{" "}            
+                  <p> <img src={horsehealthicon} style={{ width: "20px" }} /> {getLoadoutTotals()["horsehealth"]} </p>{" "}
+                  <p> <img src={horsearmoricon} style={{ width: "20px" }} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}            
+                  <p> <img src={horsespeedicon} style={{ width: "20px" }} /> {getLoadoutTotals()["horsespeed"]} </p>{" "}
+                  <p> <img src={horsemaneuvericon} style={{ width: "20px" }} /> {getLoadoutTotals()["horsemaneuver"]} </p>{" "}
+                  <p> <img src={horsechargeicon} style={{ width: "20px" }} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}            
+                  <p> <img src={weighticon} style={{ width: "20px" }} /> {getLoadoutTotals()["horseweight"]} </p>{" "}            
                 </div>
+                */}
                 <div className="modal-button ">
                   <Button className="button_tas_1" style={{marginRight: "10px"}} onClick={() => setLgShow(false)}>
                     Cancel
@@ -1232,30 +1484,21 @@ function toggleSoundEnabled () {
 </Row>
 ) : "" }        
         {isConnected ? (
-          <Row className="justify-content-center">
-              <Col className="text-center">
-              <Row className="d-flex">
-              < Col xs={4} className="d-flex justify-content-start align-items-end" style={{paddingBottom: "10px"}}>
+          <Row>
+            <div className="nav_bar_top d-flex justify-content-between w-100" style={{ flexWrap: "nowrap"}}>
                 <div className="readyButton text-center">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip" >Open Loadouts</Tooltip>}>
                   <Button variant="light" onClick={handleLoadout} className="button_tas_toolbar_1">
                     <img src={switchicon} style={{ width: "25px"}}/>
                   </Button>
                 </OverlayTrigger>
-                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Entire Loadout</Tooltip>}>
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Loadout</Tooltip>}>
                   <Button variant="light" onClick={ResetDustbins} className="button_tas_toolbar_1">
                     <img src={reseticon} style={{ width: "25px"}}/>
                   </Button>
                   </OverlayTrigger>
-                  <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Reset Skillpoints</Tooltip>}>
-                  <Button variant="light" className="button_tas_toolbar_1" onClick={resetSkillpoints}>
-                          <img src={erasericon} className="toolbaricon1"/>
-                  </Button>
-                  </OverlayTrigger>
-                  </div>
-              </Col>
-              < Col xs={4} className="d-flex justify-content-center align-items-end" style={{paddingBottom: "10px"}}>
-                  <div className="readyButton text-center">
+                </div>
+                <div className="readyButton text-center">
                   <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Re-Center</Tooltip>}>
                   <Button variant="light" className={`button_tas_toolbar_1 ${isLoadoutCentered && "button_tas_toolbar_2"}`} onClick={recenterDustbins}>
                           <img src={recentericon} className={`toolbaricon1 ${isLoadoutCentered && "toolbaricon2"}`}/>
@@ -1272,8 +1515,6 @@ function toggleSoundEnabled () {
                   </Button>
                   </OverlayTrigger>
                  </div>             
-              </Col>
-              < Col xs={4} className="d-flex justify-content-end align-items-end" style={{paddingBottom: "10px"}}>
                     {!noLoadout ? (
                       <div className="readyButton text-center">
                         <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Save Loadout</Tooltip>}>
@@ -1284,20 +1525,17 @@ function toggleSoundEnabled () {
                       </div> 
                     ) : (
                     ""
-                    )}
-                </Col>
-              </Row>
-              <Row className="d-flex">
+                    )}       
+        </div>
+          <Row className="d-flex">
               <div className="skills_bar_line">
               </div>
-              </Row>
-            </Col>
           </Row>
-          
+        </Row>
+        
         ) : (
           ""
         )}
-      
         {isConnected ? (
            <Row className="d-flex justify-content-center">           
             <Col xs={(leftLoadoutColumnWidth)} className="d-flex justify-content-end" >
@@ -1309,6 +1547,7 @@ function toggleSoundEnabled () {
                     .map(
                       (
                         {
+                          id,
                           name,
                           slot,
                           amount,
@@ -1322,14 +1561,15 @@ function toggleSoundEnabled () {
                         <Row style={{ justifyContent: "center", display: "grid" }}>
                           <Col>
                             <Box
-                              name={name}
-                              type={slot}
-                              isDropped={isDropped(name)}
                               key={index}
+                              name={id}
+                              type={slot}
                               img={image}
                               tier={tier}
                               armor={armor}
-                              amount={amount}
+                              amount={lookup[id].amount}
+                              isDropped={isDropped(id)}
+                              onClick={() => setComparisonItem(lookup[id])}
                             />
                           </Col>
                         </Row>
@@ -1348,16 +1588,20 @@ function toggleSoundEnabled () {
                       accept={accepts}
                       lastDroppedItem={lastDroppedItem}
                       
+                      
                       onDrop={(item) => {
                         if (soundEnabled) {
                           armorEquipAudio.volume = .3;
                           armorEquipAudio.play();
                         }
+                        
                         handleDrop(index, item, accepts);
+                        lookup[item.name].amount = lookup[item.name].amount - 1  
                         }}
                       onClick={() => handleLeftDustbinClick(index,accepts)} 
                       key={index}
                       img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""}
+                      
                     />
                     ))}
                     </div>
@@ -1366,65 +1610,328 @@ function toggleSoundEnabled () {
             <Col xs={(centerLoadoutColumnWidth)} className="text-center">
             <Row style={{padding: "5px"}}>
                 <div className="big_box">
-                  <Carousel id="apeCarousel" infiniteLoop={true} selectedItem={2} onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} >
-                  <img src={noape} key={(0)} style={{ width: '100%'}}/>
-                    {filtered
-                      ? Object.keys(filtered) &&
-                        Object.keys(filtered).map((val, index) => {
-                          return <img src={filtered[val]} key={filtered[index]} style={{width: "100%"}} />;
-                        })
-                      : <img src={noape} key={(0)} style={{ width: '100%'}}/> }
-                  </Carousel>
+                  <div className="skills_bar_top_left">
+                    <div className="skills_group">
+                        <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">Player Attributes</Tooltip>}>
+                          <img className='skill_img_header' src={amphilogo}/>
+                        </OverlayTrigger>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Command}</Tooltip>}>
+                            <img src={commandicon} />
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["command"]}
+                         </p>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Cognition}</Tooltip>}>
+                            <img src={cognitionicon}/>
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["cognition"]}
+                         </p>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Conditioning}</Tooltip>}>
+                            <img src={conditioningicon}/>
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["conditioning"]}
+                         </p>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Proficiency}</Tooltip>}>
+                            <img src={proficiencyicon} />
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["proficiency"]}
+                         </p>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Precision}</Tooltip>}>
+                            <img src={precisionicon} />
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["precision"]}
+                         </p>
+                        <p> 
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Armour}</Tooltip>}>
+                            <img src={armoricon} />  
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["armor"]}
+                         </p>
+                        <p>
+                          <OverlayTrigger placement="right" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Encumbrance}</Tooltip>}>
+                            <img src={weighticon} /> 
+                          </OverlayTrigger>
+                          {getLoadoutTotals()["weight"]}
+                         </p>              
+                      </div>
+                    </div>
+                    <div className="skills_bar_bottom_left">
+                      <div className="skills_group" style={{ display: horseStatDisplay }}>
+                          <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">Mount Attributes</Tooltip>}>
+                            <img className='skill_img_header' src={horseicon}/>
+                          </OverlayTrigger>
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.Health}</Tooltip>}>
+                              <img src={horsehealthicon} />
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horsehealth"]} 
+                          </p>
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.TopSpeed}</Tooltip>}>
+                              <img src={horsespeedicon} /> 
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horsespeed"]}
+                          </p>
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.Maneuverability}</Tooltip>}>
+                              <img src={horsemaneuvericon} />
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horsemaneuver"]} 
+                          </p>
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.Charge}</Tooltip>}>
+                              <img src={horsechargeicon} />
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horsecharge"]}
+                          </p>
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.Armour}</Tooltip>}>
+                              <img src={horsearmoricon} />
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horsearmor"]}
+                          </p>    
+                          <p>
+                            <OverlayTrigger placement="left" overlay={<Tooltip id="tooltip">{mountAttributeTooltips.Weight}</Tooltip>}>
+                              <img src={weighticon} />
+                            </OverlayTrigger>
+                            {getLoadoutTotals()["horseweight"]}
+                          </p>
+                      </div>
+                    </div>
+                    <div className="skills_bar_top_right">
+                      <div className="skills_group_horizontal">
+                      <p>
+                        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">{classTooltip}</Tooltip>}>
+                          <img src={classIcon} />
+                        </OverlayTrigger>
+                      </p>
+                      <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">{generalTooltips.tas}</Tooltip>}>
+                          <img className='skill_img_header' src={tasicon}/>
+                      </OverlayTrigger>    
+                      </div>
+                    </div> 
+                  {isLoadoutCentered ? ( 
+                  <Carousel id="apeCarousel" infiniteLoop={true} selectedItem={0} onChange={apeUpdateInfo} onClickItem={apeUpdateInfo} >
+                    <img src={noape} key={(0)} style={{ width: '100%'}}/>
+                      {ownedApes
+                        ? Object.keys(ownedApes) &&
+                          Object.keys(ownedApes).map((val, index) => {
+                            return <img src={ownedApes[val].image} key={ownedApes[index]} style={{width: "100%"}} />;
+                          })
+                        : <img src={noape} key={(0)} style={{ width: '100%'}}/> 
+                          }
+                    </Carousel>
+                  ) : ( 
+                    (comparisonItem && equippedItem ? 
+                    <div style={{ width: '100%', height: '100%', position: 'relative', display: 'flex'}}>
+                      <img src={equippedItem.image} style={{ width: '100%', transform: 'scale(0.5) translate(-30%, -40%)', transition: 'transform 0.3s ease-in-out'}}></img>
+                      <img src={comparisonItem.image} style={{ width: '100%', transform: 'scale(0.5) translate(-170%, 40%)', transition: 'transform 0.3s ease-in-out'}}></img>
+                    </div>
+                     : <img src={conditionallyPopulateImage(equippedItem.image,comparisonItem.image)} style={{ width: '100%', transform: 'scale(1)' , transition: 'transform 0.3s ease-in-out'}}></img>)
+                    ) 
+                    }
                 </div>
               </Row>
-              <Row style={{padding: "5px"}}>
-              <div className="skills_bar">
-              <div className="skills_group">
-                  <p><img src={levelupicon} />  {getLoadoutTotals()["points"]} </p>{"  "}
-                  <p><img src={armoricon} />  {getLoadoutTotals()["armor"]} </p>{"  "}
-                  <p><img src={weighticon} /> {getLoadoutTotals()["weight"]} </p>{" "}                
-                </div>
-                <div className="skills_group">
-                  <p><img src={cognitionicon}/> {getLoadoutTotals()["cognition"]} </p>{" "}
-                  <p><img src={leadershipicon}/> {getLoadoutTotals()["leadership"]} </p>{" "}
-                  <p><img src={strategyicon}/> {getLoadoutTotals()["strategy"]} </p>{" "}
-                  <p><img src={craftingicon}/> {getLoadoutTotals()["crafting"]} </p>{" "}
-                </div>
-                <div className="skills_group">
-                  <p><img src={conditioningicon}/> {getLoadoutTotals()["conditioning"]} </p>{" "}
-                  <p><img src={healthicon} /> {getLoadoutTotals()["health"]} </p>{" "}
-                  <p><img src={speedicon} /> {getLoadoutTotals()["speed"]} </p>{" "}
-                  <p><img src={horsemanshipicon} /> {getLoadoutTotals()["horsemanship"]} </p>{" "}
-                </div>
-                <div className="skills_group">
-                  <p><img src={proficiencyicon} /> {getLoadoutTotals()["proficiency"]} </p>{" "}
-                  <p><img src={onehandshieldicon} /> {getLoadoutTotals()["onehandshield"]} </p>{" "}
-                  <p><img src={twohandedicon} /> {getLoadoutTotals()["twohanded"]} </p>{" "}
-                  <p><img src={polearmicon} /> {getLoadoutTotals()["polearm"]} </p>{" "}
-                </div>
-                <div className="skills_group">
-                  <p><img src={precisionicon} /> {getLoadoutTotals()["precision"]} </p>{" "}
-                  <p><img src={bowicon} /> {getLoadoutTotals()["bow"]} </p>{" "}
-                  <p><img src={throwingicon} /> {getLoadoutTotals()["throwing"]} </p>{" "}
-                  <p><img src={crossbowicon} /> {getLoadoutTotals()["crossbow"]} </p>{" "}
-                </div>
-                <div className="skills_group" style={{ display: horseStatDisplay }}>
-                     <p><img src={horsehealthicon} />  {getLoadoutTotals()["horsehealth"]} </p>{"  "}
-                     <p><img src={horsearmoricon} /> {getLoadoutTotals()["horsearmor"]} </p>{" "}                
-                     <p><img src={horsespeedicon} />  {getLoadoutTotals()["horsespeed"]} </p>{"  "}
-                     <p><img src={horsemaneuvericon} />  {getLoadoutTotals()["horsemaneuver"]} </p>{"  "}
-                     <p><img src={horsechargeicon} /> {getLoadoutTotals()["horsecharge"]} </p>{" "}
-                     <p><img src={weighticon} /> {getLoadoutTotals()["horseweight"]} </p>{" "}
-                </div>
-              </div>
+              
+              { !isLoadoutCentered && (             
+              <Row className="d-flex flex-row" style={{padding: "10px"}}>
+                { 
+                (determineStatToDisplay(equippedItem.slot,comparisonItem.slot) == "Item") ? (
+                    <><Col xs={2} className="d-flex flex-column justify-content-end align-items-end">
+                      <p>-</p>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Length")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Accuracy")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Damage")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Ammo")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Hitpoints")}
+                      </div>
+ 
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Weight")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Tier")}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {capitalizeFirstLetter("Utility")}
+                      </div>
+                    </Col>
+                    <Col xs={8} className="d-flex flex-column justify-content-end align-items-start">
+                         <p style={{ color: changeTextColor(determineStatToDisplay(equippedItem.tier,comparisonItem.tier)) }}>
+                          {determineStatToDisplay(equippedItem.name,comparisonItem.name)}
+                         </p>
+                         <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Length}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.length,comparisonItem.length,250,0)}}>
+                          </div>
+                        </OverlayTrigger> 
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Accuracy}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.accuracy,comparisonItem.accuracy,100,0),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Damage}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.damage,comparisonItem.damage,5,0),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Ammo}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.ammo,comparisonItem.ammo,25,0),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Hitpoints}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.hitpoints,comparisonItem.hitpoints,1000,0),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Weight}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.weight,comparisonItem.weight,10,1),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Tier}</Tooltip>}>
+                          <div className="statBar" style={{background: renderItemStatBar(equippedItem.tierLvl,comparisonItem.tierLvl,6,0),}}>
+                          </div>
+                        </OverlayTrigger>
+                        <div className="statBar" style={{background: renderItemStatBar(equippedItem.utility,comparisonItem.utility,4,0),}}>
+                        </div>
+                      </Col>
+                      <Col xs={2} className="d-flex flex-column justify-content-end align-items-start">
+                      <p>-</p>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.length,comparisonItem.length) || 0}
+                        <span style={{color: determineNumericDifferenceColor(equippedItem.Length, comparisonItem.Length,0)}}>
+                        {comparisonItem ? displayItemStatNumericDifference(equippedItem.Length, comparisonItem.Length) : ""}
+                        </span>
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.accuracy,comparisonItem.accuracy) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.damage,comparisonItem.damage) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.ammo,comparisonItem.ammo) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.hitpoints,comparisonItem.hitpoints) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.weight,comparisonItem.weight) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.tierLvl,comparisonItem.tierLvl) || 0}
+                      </div>
+                      <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                        {determineStatToDisplay(equippedItem.utility,comparisonItem.utility) || 0}
+                      </div>
+                    </Col>
+                      </>
+                  ) : (
+                    <><Col xs={2} className="d-flex flex-column justify-content-end align-items-end">
+                        <p>-</p>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Armor")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Command")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Cognition")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Conditioning")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Proficiency")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Precision")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Weight")}
+                        </div>
+                        <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                          {capitalizeFirstLetter("Tier")}
+                        </div>
+                      </Col><Col xs={8} className="d-flex flex-column justify-content-end align-items-start">
+                          <p style={{ color: changeTextColor(determineStatToDisplay(equippedItem.tier,comparisonItem.tier)) }}>
+                          {(comparisonItem && equippedItem ? equippedItem.name + " vs " + comparisonItem.name : determineStatToDisplay(equippedItem.name,comparisonItem.name) )}
+                          </p>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Armour}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.armor,comparisonItem.armor,20,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Command}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.command,comparisonItem.command,5,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Cognition}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.cognition,comparisonItem.cognition,5,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Conditioning}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.conditioning,comparisonItem.conditioning,5,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Proficiency}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.proficiency,comparisonItem.proficiency,5,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Precision}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.precision,comparisonItem.precision,5,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{playerAttributeTooltips.Weight}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.weight,comparisonItem.weight,15,1),}}>
+                            </div>
+                          </OverlayTrigger>
+                          <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{itemStatTooltips.Tier}</Tooltip>}>
+                            <div className="statBar" style={{background: renderItemStatBar(equippedItem.tierLvl,comparisonItem.tierLvl,6,0),}}>
+                            </div>
+                          </OverlayTrigger>
+                        </Col>
+                        <Col xs={2} className="d-flex flex-column justify-content-end align-items-start">
+                          <p>-</p>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.armor,comparisonItem.armor ) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.command,comparisonItem.command) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.cognition,comparisonItem.cognition) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.conditioning,comparisonItem.conditioning) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.proficiency,comparisonItem.proficiency) || 0}
+                          </div>
+
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.precision,comparisonItem.precision) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.weight,comparisonItem.weight) || 0}
+                          </div>
+                          <div style={{ marginTop: '5px', marginBottom: '5px', height: '80%', color: '#ead5c2' }}>
+                            {determineStatToDisplay(equippedItem.tierLvl,comparisonItem.tierLvl) || 0}
+                          </div>
+                        </Col></>
+                    )
+                  }
               </Row>
-              { !isLoadoutCentered && (
-              <Row style={{padding: "5px"}}>
-               <div className="big_box" style={{width: "100%", paddingTop: "15%"}}>
-               </div>
-              </Row>
-              )
-              }
+             )
+             }
             </Col>
             <Col xs={(rightLoadoutColumnWidth)} className="d-flex justify-content-start">
               < Col xs={6} className="d-flex justify-content-start align-items-start" style={{width: rightLoadoutBoxWidth}}> 
@@ -1456,6 +1963,7 @@ function toggleSoundEnabled () {
                                   weaponEquipAudio.play();
                                 }
                                 handleDrop(index, item, accepts);
+                                lookup[item.name].amount = lookup[item.name].amount - 1  
                               }}
                               key={index}
                               img={lastDroppedItem ? transformedLoadout[lastDroppedItem["name"]] : ""
@@ -1473,13 +1981,13 @@ function toggleSoundEnabled () {
                     .map(
                       (
                         {
+                          id,
                           name,
                           slot,
                           amount,
                           image,
                           weight,
                           armor,
-                          proficiency,
                           tier
                         },
                         index
@@ -1489,12 +1997,12 @@ function toggleSoundEnabled () {
                             <Box
                               key={index}
                               amount={amount}
-                              name={name}
+                              name={id}
                               type={slot}
                               tier={tier}
                               img={image}
-                              isDropped={isDropped(name)}
-                              onClick={resetSkillpoints}
+                              isDropped={isDropped(id)}
+                              onClick={() => setComparisonItem(lookup[id])}
                             />
                           </Col>
                         </Row>
@@ -1513,9 +2021,9 @@ function toggleSoundEnabled () {
         )}              
         {!isConnected && !isLoading ? (
           /* this might where we want to integrate steam and xbox and epic */
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-            <img src={armoury_banner} alt="Armoury banner" width="75%" style={{maxWidth: "600px"}}/>
-          </div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh"}}>
+              <img src={armoury_banner} alt="Armoury banner" width="100%" style={{maxWidth: "600px"}}/>
+            </div>
         ) : (
           ""
         )}
@@ -1526,7 +2034,7 @@ function toggleSoundEnabled () {
             <Connector
               walletContent={onWalletContent}
               getChange={getChangeAddy}
-              filtered={onWalletContent}
+              ownedApes={onWalletContent}
               whichWalletSet={whichWallet}
               isError={handleIsError}
               userLoadoutContentArray={onWalletContent}

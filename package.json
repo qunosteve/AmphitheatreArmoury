@@ -1,5 +1,5 @@
 {
-  "name": "cardano-wallet-connector",
+  "name": "amphitheatre-armoury",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,7 +17,6 @@
     "fullcalendar": "^6.1.6",
     "immutability-helper": "^3.1.1",
     "lucid-cardano": "^0.3.5",
-    "npm": "^2.1.0",
     "react": "^18.2.0",
     "react-audio-player": "^0.17.0",
     "react-bootstrap": "^2.5.0",
