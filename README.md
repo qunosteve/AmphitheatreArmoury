@@ -1,6 +1,6 @@
 # Ape Society Amphitheatre Armoury dApp
 
-# DISCLAIMER: This Branch is nopt currently maintained. It is used as a reference point for Cardano blockchain #
+# DISCLAIMER: This Branch is not currently maintained. It is used as a reference point for Cardano blockchain #
 
 ## What is this?
 This react app is where Ape Society Amphitheatre users can undergo loadout management, match scheduling, and eventually use as an Amphitheatre gear inventory system that queries a user's cardano wallet and allows a user to equip onchain gear onto different slots (armor, weapon, mount, etc.)
